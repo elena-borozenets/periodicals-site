@@ -1,0 +1,12 @@
+﻿@model Periodicals.Areas.Account.Models.AccountViewModel
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Account</h2>
+
+<p>Ваш логин</p>
+@Html.LabelFor(m => m.Username);
+<p>Ваш email</p>
+@Html.LabelFor(m => m.Email);

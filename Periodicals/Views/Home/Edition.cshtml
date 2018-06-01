@@ -1,0 +1,34 @@
+﻿@model Periodicals.Models.EditionModel
+@{
+
+    ViewBag.Title = "Edition";
+}
+
+<h2>Edition</h2>
+
+
+@if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
+{
+    <br />
+    @Html.ActionLink("Edit", "EditArticle", "Home", new { editionId = Model.Id }, new { @class = "button" })
+    <br />
+    @Html.ActionLink("Delete", "DeleteArticle", "Home", new { editionId = Model.Id }, new { @class = "button" })
+}
+
+<h2>@Model.Name</h2>
+<time>@Model.DateNextPublication</time>
+<p>@Model.Description</p>
+
+@if (HttpContext.Current.User.IsInRole("Subscriber"))
+{
+
+    if (ViewBag.Subscpiption)
+    {
+        <p>You subscribe for this edition!</p>
+    }
+    else
+    {
+        <br />
+        @Html.ActionLink("Subscribe", "Subscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-primary btn-lg", @role = "button" })
+    }
+}

@@ -1,0 +1,12 @@
+﻿@using Periodicals.Areas.Account.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Areas/Account/Views/Account/_Login.cshtml", new LoginViewModel())
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
