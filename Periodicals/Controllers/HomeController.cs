@@ -84,19 +84,28 @@ namespace Periodicals.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = userManager.FindById(userId);
-                var edition = _editionRepository.GetById(editionId);
-                if (user.Subscription == null) user.Subscription = new List<Edition>();
-                user.Subscription.Add(edition);
-                user.Prop = 11;
+                using (var db = new PeriodicalDbContext())
+                {
+                    var user = db.Users.Find(userId);
+                    var editionDb = db.Editions.Find(editionId);
+                    user.Subscription.Add(editionDb);
+                    db.SaveChanges();
 
-                edition.Subscribers.Add(user);
+                }
+                //var user = userManager.FindById(userId);
+                //var edition = _editionRepository.GetById(editionId);
+                //if (user.Subscription == null) user.Subscription = new List<Edition>();
+                //user.Subscription.Add(edition);
+                //user.Prop = 11;
+
+                //edition.Subscribers.Add(user);
                 //userManager.Update(user);
                 /*using (var dbContext = new PeriodicalDbContext())
                 {
                     dbContext.SaveChanges();
                 }*/
-                _editionRepository.Update(edition);
+                //_editionRepository.Update(edition);
+                
             }
             catch { }
             return RedirectToAction("Edition", new { area = "", editionId = editionId } );

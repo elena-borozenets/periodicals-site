@@ -11,7 +11,7 @@ using Periodicals.Core.Entities;
 
 namespace Periodicals.Core
 {
-    public class Edition : BaseEntity
+    public class Edition : BaseEntity, IEquatable<Edition>
     {
         public string Name { get; set; }
         public float Price { get; set; }
@@ -24,5 +24,17 @@ namespace Periodicals.Core
         public string Language { get; set; }
 
         public virtual IList<ApplicationUser> Subscribers { get; set; }
+
+        public bool Equals(Edition other)
+        {
+            if (this.Id == other.Id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
