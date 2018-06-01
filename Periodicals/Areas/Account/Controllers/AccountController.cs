@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Periodicals.Areas.Account.Models;
 using Periodicals.Core.Identity;
+using Periodicals.Models;
+using Periodicals.Infrastructure.Data;
 
 namespace Periodicals.Areas.Account.Controllers
 {
@@ -87,9 +89,22 @@ namespace Periodicals.Areas.Account.Controllers
 
         public ActionResult Account()
         {
-            var user = new AccountViewModel() { Username = User.Identity.Name };
+            AccountViewModel userModel;
+            using (var db = new PeriodicalDbContext())
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                userModel = new AccountViewModel() {
+                    Username = user.UserName,
+                    Email = user.Email,
+                    Credit = user.Credit,
+                    Subscribes = EditionModel.ToModelList(user.Subscription) };
 
-            return View(user);
+            }
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            //var user = userManager.FindByName(User.Identity.Name);// var m =user.Subscription;
+            
+
+            return View(userModel);
         }
 
         public ActionResult LogOut()

@@ -12,8 +12,8 @@ using Periodicals.Core.Entities;
 
 namespace Periodicals.Infrastructure.Data
 {
-    //public class PeriodicalContextInitializer : DropCreateDatabaseIfModelChanges<PeriodicalDbContext>
-    public class PeriodicalContextInitializer : DropCreateDatabaseAlways<PeriodicalDbContext>
+    public class PeriodicalContextInitializer : DropCreateDatabaseIfModelChanges<PeriodicalDbContext>
+    //public class PeriodicalContextInitializer : DropCreateDatabaseAlways<PeriodicalDbContext>
     {
         protected override void Seed(PeriodicalDbContext db)
         {

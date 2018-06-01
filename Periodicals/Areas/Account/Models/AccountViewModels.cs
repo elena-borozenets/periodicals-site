@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Periodicals.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -56,13 +57,20 @@ namespace Periodicals.Areas.Account.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Your email")]
         public string Email { get; set; }
 
         [Required]
         //[DataType(Dat)]
-        [Display(Name = "Username")]
+        [Display(Name = "Your username")]
         public string Username { get; set; }
+
+        [Display(Name = "Credit")]
+        public float Credit { get; set; }
+
+        [Display(Name = "Your subscriptions:")]
+        public List<EditionModel> Subscribes { get; set; }
+
 
     }
 }

@@ -5,8 +5,27 @@
 }
 
 <h2>Account</h2>
+<div>
+    <div class="acc">
+        @Html.LabelFor(m => m.Username)
+        @Model.Username
+        <br />
+        @Html.LabelFor(m => m.Email)
+        @Model.Email
+    </div>
+    <br />
+    <div class="alert alert-info acc-credit">
+        <h3>Your account: @Model.Credit</h3>
+        @Html.ActionLink("Top up", "TopUp", "Account", new { area = "Account" }, new { @class = "btn btn-primary btn-lg", @role = "button" })
+    </div>
+    <br />
+    @Html.LabelFor(m => m.Subscribes)
 
-<p>Ваш логин</p>
-@Html.LabelFor(m => m.Username);
-<p>Ваш email</p>
-@Html.LabelFor(m => m.Email);
+    @foreach (var m in Model.Subscribes)
+    {
+        <br />
+        @Html.ActionLink(m.Name, "Edition", "Home", new { area = "", editionId = m.Id }, new { @class = "btn btn-link btn-lg", @role = "button" })
+    }
+    <br />
+</div>
+<br />

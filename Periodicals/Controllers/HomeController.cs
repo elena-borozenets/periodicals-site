@@ -27,27 +27,16 @@ namespace Periodicals.Controllers
 
         }
 
-        public List<EditionModel> ToModelList(List<Edition> items)
-        {
-            var editions = new List<EditionModel>();
-            foreach (var item in items)
-            {
-                editions.Add(EditionModel.FromEdition(item));
-            }
-
-            return editions;
-        }
-
         public ActionResult Index()
         {
-            var editions = ToModelList(_editionRepository.List());
+            var editions = EditionModel.ToModelList(_editionRepository.List());
             return View(editions);
         }
 
         public ActionResult Topics(int topicId)
         {
             var topic = _topicRepository.GetById(topicId);
-            var editions = ToModelList(topic.Editions.ToList());
+            var editions = EditionModel.ToModelList(topic.Editions.ToList());
             return View("Index",editions);
         }
 
@@ -60,12 +49,7 @@ namespace Periodicals.Controllers
                 var userId = User.Identity.GetUserId();
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var user = userManager.FindById(userId);
-                try
-                {
-                    int k = user.Prop;
-                }
-                catch { };
-                if(user.Subscription!=null&&user.Subscription.Contains(item))
+                if(user!=null&&user.Subscription!=null&&user.Subscription.Contains(item))
                 {
                     ViewBag.Subscpiption = true;
                 }
@@ -89,26 +73,64 @@ namespace Periodicals.Controllers
                     var user = db.Users.Find(userId);
                     var editionDb = db.Editions.Find(editionId);
                     user.Subscription.Add(editionDb);
+                    editionDb.Subscribers.Add(user);
                     db.SaveChanges();
 
                 }
-                //var user = userManager.FindById(userId);
-                //var edition = _editionRepository.GetById(editionId);
-                //if (user.Subscription == null) user.Subscription = new List<Edition>();
-                //user.Subscription.Add(edition);
-                //user.Prop = 11;
-
-                //edition.Subscribers.Add(user);
-                //userManager.Update(user);
-                /*using (var dbContext = new PeriodicalDbContext())
-                {
-                    dbContext.SaveChanges();
-                }*/
-                //_editionRepository.Update(edition);
-                
             }
             catch { }
             return RedirectToAction("Edition", new { area = "", editionId = editionId } );
+        }
+
+        public ActionResult Unsubscribe(int editionId)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                using (var db = new PeriodicalDbContext())
+                {
+                    var user = db.Users.Find(userId);
+                    var editionDb = db.Editions.Find(editionId);
+                    if (user.Subscription.Contains(editionDb))
+                    {
+                        user.Subscription.Remove(editionDb);
+                    }
+                    db.SaveChanges();
+
+                }
+            }
+            catch { }
+            return RedirectToAction("Edition", new { area = "", editionId = editionId });
+        }
+
+        public ActionResult SortByName(bool order)
+        {
+            var items = _editionRepository.List();
+            var editions = EditionModel.ToModelList(items);
+                editions.Sort(delegate (EditionModel x, EditionModel y)
+                {
+                    if (x.Name == null && y.Name == null) return 0;
+                    else if (x.Name == null) return -1;
+                    else if (y.Name == null) return 1;
+                    else return x.Name.CompareTo(y.Name);
+                });
+                if (!order) editions.Reverse();
+
+            
+            return View("Index", editions);
+        }
+
+        public ActionResult SortByPrice(bool order)
+        {
+            var items = _editionRepository.List();
+            var editions = EditionModel.ToModelList(items);
+                editions.Sort(delegate (EditionModel x, EditionModel y)
+                {
+                    return x.Price.CompareTo(y.Price);
+                });
+            if (!order) editions.Reverse();
+            return View("Index", editions);
         }
 
         public ActionResult About()

@@ -157,3 +157,59 @@ em.tag :hover {
         background-color: #636262;
         border-color: transparent;
     }
+
+.acc {
+    display: inline-block;
+}
+
+
+.acc-credit {
+    display: inline-block;
+    top: 0;
+    right: 0;
+}
+
+.sort1 {
+    font-size: 14pt;
+    color: #999999;
+    border: 1px solid #999999;
+    border-radius: 3px;
+    padding: 3px 3px 5px 3px;
+}
+    .sort1:hover,
+    .sort1:focus,
+    .sort1:active,
+    .sort1.active,
+    .open .dropdown-toggle.sort1 {
+        color: #ffffff;
+        background-color: transparent;
+        border-color: #ffffff;
+    }
+
+.sort2 {
+    font-size: 14pt;
+    color: #999999;
+    background-color: #222222;
+}
+
+.dropdown-menu {
+    background-color: #222222;
+}
+
+    .dropdown-menu > li > a {
+        color: #999999;
+}
+
+.sort2:hover,
+.sort2:focus,
+.sort2:active,
+.sort2.active,
+.open .dropdown-toggle.sort2 {
+    color: #ffffff;
+    background-color: transparent;
+    border-color: #ffffff;
+}
+
+input.form-control{
+    max-width: 175px;
+}

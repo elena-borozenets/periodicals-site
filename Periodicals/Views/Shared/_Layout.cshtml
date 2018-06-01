@@ -33,33 +33,57 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (HttpContext.Current.User.Identity.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("Account", "Account", "Account", new { area = "Account" }, null)</li>
-                    }
+    {
+                <li>@Html.ActionLink("Account", "Account", "Account", new { area = "Account" }, null)</li>
+}
                     @if (HttpContext.Current.User.IsInRole("Administrator"))
-                    {
-                        <li>@Html.ActionLink("Administration", "Index", "Admin", new { area = "Admin" }, null)</li>
-                    }
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default my-btn1">Отправить</button>
-                        </form>
-                    </li>
+    {
+                <li>@Html.ActionLink("Administration", "Index", "Admin", new { area = "Admin" }, null)</li>
+}
+
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-sort-by-alphabet sort1" data-toggle="dropdown"></span>
+                            <b class="caret"></b>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">ru</a></li>
-                            <li><a href="#">eng</a></li>
+                            <li> @Html.ActionLink("Ascendingly", "SortByName", "Home", new { area = "", order=true}, new { @class = "glyphicon glyphicon-sort-by-alphabet sort2" })</li>
+                            <li> @Html.ActionLink("Descendingly", "SortByName", "Home", new { area = "", order = false}, new { @class = "glyphicon glyphicon-sort-by-alphabet-alt sort2" })</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-sort-by-order sort1" data-toggle="dropdown"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li> @Html.ActionLink("Ascendingly", "SortByPrice", "Home", new { area = "", order = true}, new { @class = "glyphicon glyphicon-sort-by-attributes sort2" })</li>
+                            <li> @Html.ActionLink("Descendingly", "SortByPrice", "Home", new { area = "", order = false }, new { @class = "glyphicon glyphicon-sort-by-attributes-alt sort2" })</li>
                         </ul>
                     </li>
                 </ul>
 
-            </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-default my-btn1">Отправить</button>
+                                </form>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">ru</a></li>
+                                    <li><a href="#">eng</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+</div>
         </div>
     </div>
     <h1 class="title"><img src="~/Content/im.png" height=15> Periodicals! </h1>
@@ -72,6 +96,7 @@
         <div class="right-sidebar">
             <ul class="nav nav-pills nav-stacked">
                 <li> @Html.ActionLink("Главная", "Index", "Home", new { area = "" }, null)</li>
+
                 @*<li> @Html.ActionLink("Гостевая", "Guest", "Guest", new { area = "" }, null)</li>*@
                 @* <li> @Html.ActionLink("Анкета", "Blank", "Blank", new { area = "" }, null)</li>*@
                 <li> @RenderSection("Login", false) </li>
@@ -79,11 +104,9 @@
                 @* <li> @RenderSection("Vote", false) </li>*@
             </ul>
         </div>
-
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Elena Borozenets ASP.NET Application</p>
         </footer>
-    </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

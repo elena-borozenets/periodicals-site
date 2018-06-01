@@ -24,11 +24,10 @@
 
     if (ViewBag.Subscpiption)
     {
-        <p>You subscribe for this edition!</p>
+        @Html.ActionLink("Unsubscribe", "Unsubscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-success btn-lg", @role = "button" })
     }
     else
     {
-        <br />
         @Html.ActionLink("Subscribe", "Subscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-primary btn-lg", @role = "button" })
     }
 }
