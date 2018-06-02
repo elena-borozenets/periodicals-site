@@ -14,10 +14,17 @@
         @Model.Email
     </div>
     <br />
-    <div class="alert alert-info acc-credit">
-        <h3>Your account: @Model.Credit</h3>
-        @Html.ActionLink("Top up", "TopUp", "Account", new { area = "Account" }, new { @class = "btn btn-primary btn-lg", @role = "button" })
-    </div>
+    @if (!ViewBag.Blocked)
+    {
+        <div class="alert alert-info acc-credit">
+            <h3>Your account: @Model.Credit</h3>
+            @Html.ActionLink("Top up", "TopUp", "Account", new { area = "Account" }, new { @class = "btn btn-primary btn-lg", @role = "button" })
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">You account is blocked and cann't subscribe on editions</div>
+    }
     <br />
     @Html.LabelFor(m => m.Subscribes)
 

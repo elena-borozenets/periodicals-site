@@ -44,12 +44,12 @@ namespace Periodicals.Controllers
         {
             var item = _editionRepository.GetById(editionId);
             EditionModel edition = EditionModel.FromEdition(item);
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var user = userManager.FindById(userId);
-                if(user!=null&&user.Subscription!=null&&user.Subscription.Contains(item))
+                if (user != null && user.Subscription != null && user.Subscription.Contains(item))
                 {
                     ViewBag.Subscpiption = true;
                 }
@@ -57,11 +57,15 @@ namespace Periodicals.Controllers
                 {
                     ViewBag.Subscpiption = false;
                 }
+
+                ViewBag.Blocked = user.LockoutEnabled;
             }
+            
+
             return View(edition);
         }
 
-        //[Authorize(Roles = "Subscription")]
+        [Authorize(Roles = "Subscriber")]
         public ActionResult Subscribe(int editionId)
         {
             try
@@ -131,6 +135,80 @@ namespace Periodicals.Controllers
                 });
             if (!order) editions.Reverse();
             return View("Index", editions);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteEdition(int editionId)
+        {
+            var item = _editionRepository.GetById(editionId);
+            _editionRepository.Delete(item);
+
+            foreach (var topic in _topicRepository.List())
+            {
+                if(topic.Editions.Count==0) _topicRepository.Delete(topic);
+            }
+            return RedirectToAction("Index");
+        }
+
+
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult EditEdition(int editionId)
+        {
+            var item = _editionRepository.GetById(editionId);
+            var editionModel = EditionModel.FromEdition(item);
+            return View(editionModel);
+        }
+        
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public ActionResult EditEdition(EditionModel edition)
+        {
+            var item = _editionRepository.GetById(edition.Id);
+            //_editionRepository.
+            if (ModelState.IsValid)
+            {
+                item.Name = edition.Name;
+                item.Description = edition.Description;
+                _editionRepository.Update(item);
+                return RedirectToAction("Edition", new{ editionId=edition.Id} );
+            }
+            return View();
+        }
+
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddEdition()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public ActionResult AddEdition(EditionModel newEdition)
+        {
+            if (ModelState.IsValid)
+            {
+                var edition = newEdition.ToEdition();
+                using (var db = new PeriodicalDbContext())
+                {
+                    var topic = db.Topics.FirstOrDefault(t => t.TopicName == newEdition.TopicName);
+                    if (topic == null)
+                    {
+                        topic = new Topic() {TopicName = newEdition.TopicName};
+                        _topicRepository.Add(topic);
+                        
+                    }
+
+                    edition.Topic = topic;
+                    db.SaveChanges();
+                }
+                _editionRepository.Add(edition);
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult About()

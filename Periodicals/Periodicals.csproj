@@ -184,6 +184,7 @@
     <Compile Include="Areas\Account\Models\AccountViewModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Models\UserModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -215,6 +216,10 @@
     <Content Include="Areas\Account\Views\Account\RegisterResult.cshtml" />
     <Content Include="Areas\Account\Views\Account\Account.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Administration.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\UserPage.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ButtonScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -243,12 +248,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Home\Edition.cshtml" />
+    <Content Include="Views\Home\EditEdition.cshtml" />
+    <Content Include="Views\Home\AddEdition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Admin\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Views\Subscription\" />
   </ItemGroup>
   <ItemGroup>

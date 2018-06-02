@@ -1,0 +1,29 @@
+﻿@using Periodicals.Models
+@model EditionModel
+@{
+    ViewBag.Title = "AddEdition";
+}
+
+<h2>AddEdition</h2>
+
+
+@{
+
+    var newEdition = new EditionModel();
+} 
+@using (Html.BeginForm("AddEdition", "Home", FormMethod.Post))
+{
+    <div>@Html.LabelFor(m => newEdition.Name)</div>
+    <div>@Html.TextBoxFor(m => newEdition.Name)</div>
+    <div>@Html.ValidationMessageFor(m => newEdition.Name)</div>
+    <div>@Html.LabelFor(m=>newEdition.Description)</div>
+    <div>@Html.TextAreaFor(m => newEdition.Description)</div>
+    <div>@Html.ValidationMessageFor(m => newEdition.Description)</div>
+    <div>@Html.LabelFor(m => newEdition.TopicName)</div>
+    <div>@Html.TextBoxFor(m => newEdition.TopicName)</div>
+    <div>@Html.ValidationMessageFor(m => newEdition.TopicName)</div>
+
+    <br />
+    <input type="submit" class="btn" value="Добавить" />
+
+}

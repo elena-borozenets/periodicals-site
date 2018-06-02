@@ -70,6 +70,9 @@ namespace Periodicals.Areas.Account.Controllers
             {
                 ViewBag.o0 = "Все ок!";
                 ViewBag.o1 = newUser.UserName;
+
+                var signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                var signInStatus =signInManager.PasswordSignIn(model.Username, model.Password, false, false);
                 var addUserRoleResult = userManager.AddToRole(newUser.Id, "Subscriber");
                 if(addUserRoleResult.Succeeded)
                 {
@@ -98,9 +101,9 @@ namespace Periodicals.Areas.Account.Controllers
                     Email = user.Email,
                     Credit = user.Credit,
                     Subscribes = EditionModel.ToModelList(user.Subscription) };
+                ViewBag.Blocked = user.LockoutEnabled;
 
             }
-            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             //var user = userManager.FindByName(User.Identity.Name);// var m =user.Subscription;
             
 

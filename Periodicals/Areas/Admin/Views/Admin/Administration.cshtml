@@ -1,0 +1,48 @@
+﻿@using Periodicals.Areas.Admin.Models
+@model List<UserModel>
+@{
+    ViewBag.Title = "Administration";
+}
+
+<h2>Administration</h2>
+
+@*<ul class="list-group">
+    @foreach (var m in Model)
+    {
+        <a class="list-group-item">@m.Username 
+        
+        </a>
+        
+    }
+</ul>*@
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Panel administration</div>
+
+    <!-- Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Credit</th>
+                <th>isBlocked</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Id</td>
+                <td>@m.Username</td>
+                <td>@m.Email</td>
+                <td>@m.Credit</td>
+                <td>@Html.ActionLink(m.isBlocked.ToString(), "BlockUser", "Admin", new { area = "Admin", userId = m.Id }, null) </td>
+               
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

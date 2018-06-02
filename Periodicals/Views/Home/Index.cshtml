@@ -9,12 +9,30 @@
 <div>
     @foreach (var m in Model)
     {
+        @*<div class="media">
+
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="..." alt="...">
+                </a>
+                <div class="media-body">
+                    <h2 class="media-heading">@m.Name</h2>
+                    <time>@m.DateNextPublication</time>
+                    <p>@m.Description</p>
+                    @Html.ActionLink("Подробнее", "Edition", new { editionId = m.Id })
+                </div>
+            </div>*@
+
         <h2>@m.Name</h2>
         <time>@m.DateNextPublication</time>
         <p>@m.Description</p>
         @Html.ActionLink("Подробнее", "Edition", new { editionId = m.Id })
     }
 </div>
+
+@if (HttpContext.Current.User.IsInRole("Administrator"))
+{
+    @Html.ActionLink("Add new", "AddEdition")
+}
 
 @section Login{
     @Html.Partial("~/Areas/Account/Views/Account/_Login.cshtml", new LoginViewModel())

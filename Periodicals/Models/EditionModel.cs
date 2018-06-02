@@ -11,18 +11,21 @@ namespace Periodicals.Models
 {
     public class EditionModel
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         
         [Required]
-        public string Name { get; private set; }
-        [Required]
+        [Display(Name = "Title")]
+        public string Name { get; set; }
+        //[Required]
         public float Price { get; set; }
 
-        public DateTime DateNextPublication { get; private set; }
+        public DateTime DateNextPublication { get; set; }
 
         public string ISSN { get; set; }
-        public Topic Topic { get; set; }
+        public string TopicName { get; set; }
         public int Periodicity { get; set; }
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
         public string Type { get; set; }
         public string Language { get; set; }
@@ -36,7 +39,7 @@ namespace Periodicals.Models
             Price=item.Price,
             DateNextPublication = item.DateNextPublication,
             ISSN=item.ISSN,
-            Topic=item.Topic,
+            TopicName=item.Topic.TopicName,
             Periodicity=item.Periodicity,
             Description=item.Description,
             Type=item.Type,
@@ -45,20 +48,23 @@ namespace Periodicals.Models
                            //select i.UserName).ToList<string>()
         };
 
-        public Edition ToEdition() => new Edition()
+        public Edition ToEdition()
         {
-            Id = this.Id,
-            Name = this.Name,
-            Price = this.Price,
-            DateNextPublication = this.DateNextPublication,
-            ISSN = this.ISSN,
-            Topic = this.Topic,
-            Periodicity = this.Periodicity,
-            Description=this.Description,
-            Type = this.Type,
-            Language=this.Language
-
-        };
+            
+            var newEdition = new Edition();
+            newEdition.Name = (this.Name == null) ? "Noname" : this.Name;
+            newEdition.Price = this.Price;
+            newEdition.DateNextPublication = DateTime.Now;
+            newEdition.ISSN = (this.ISSN == null) ? "####-####" : this.ISSN;
+            //newEdition.Topic = new Topic(){TopicName = (this.TopicName==null)? "Without topic": this.TopicName};
+            newEdition.Periodicity = this.Periodicity;
+            newEdition.Description = (this.Description == null) ? "None" : this.Description;
+            newEdition.Type = (this.Type == null) ? "DefaultType" : this.Type;
+            newEdition.Language = (this.Type == null) ? "???" : this.Language;
+            //newEdition.Subscribers=new List<ApplicationUser>();
+            
+            return newEdition;
+        }
 
         public static List<EditionModel> ToModelList(IList<Edition> items)
         {
