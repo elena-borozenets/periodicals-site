@@ -4,23 +4,25 @@
     ViewBag.Title = "Edition";
 }
 
-<h2>Edition</h2>
 
-
-@if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
-{
-    <br />
-    @Html.ActionLink("Edit", "EditEdition", "Home", new { editionId = Model.Id }, new { @class = "button" })
-    <br />
-    @Html.ActionLink("Delete", "DeleteEdition", "Home", new { editionId = Model.Id }, new { @class = "button" })
-}
 
 <h2>@Model.Name</h2>
 <time>@Model.DateNextPublication</time>
+
+
 <p>@Model.Description</p>
+
+@if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
+{
+    @Html.ActionLink("Edit", "EditEdition", "Home", new { editionId = Model.Id }, new { @class = "btn btn-info crud" })
+    @Html.ActionLink("Delete", "DeleteEdition", "Home", new { editionId = Model.Id }, new { @class = "btn btn-info crud" })
+    @Html.ActionLink("Add new", "AddEdition", null, new { @class = "btn btn-info crud" })
+}
+
 @if (HttpContext.Current.User.IsInRole("Subscriber"))
 {
-    if (!ViewBag.Blocked) {
+    if (!ViewBag.Blocked)
+    {
         if (ViewBag.Subscpiption)
         {
             @Html.ActionLink("Unsubscribe", "Unsubscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-success btn-lg", @role = "button" })
@@ -28,10 +30,13 @@
         else
         {
             @Html.ActionLink("Subscribe", "Subscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-primary btn-lg", @role = "button" })
-            }
         }
+    }
     else
     {
         <div class="alert alert-danger">You account is blocked and you cann't subscribe on editions</div>
     }
 }
+
+<br/>
+<br/>

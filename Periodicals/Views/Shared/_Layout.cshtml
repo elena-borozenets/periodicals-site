@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="~/Content/bootstrap.css">
     <link rel="stylesheet" href="~/Content/Site.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    @Scripts.Render("~/scripts/jquery-1.10.2.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
     <script src="~/Scripts/ButtonScript.js"></script>
+   <script src="~/Scripts/SearchScript.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Styles.Render("~/Content/css")
@@ -68,12 +71,33 @@
                         </ul>
                     </li>
                     <li>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default my-btn1">Отправить</button>
-                        </form>
+                        @*<form class="navbar-form navbar-left" role="search">*@
+
+                        @* @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left", @role = "search", @onsubmit = "return false;", @name="form" }))*@
+                        @using (Ajax.BeginForm("Search", "Home",
+                            new { area = "" },
+                            new AjaxOptions
+                            {
+                                UpdateTargetId = "resSearch"
+
+                            },
+                            new { @class = "navbar-form navbar-left", @role = "search", @onsubmit = "return false;", @name = "form" }))
+                        {
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="search" id="search" />
+                    </div>
+                    
+                    @*<input type="submit" class="btn btn-default my-btn1" value="Поиск" />*@
+}
+
+
+                        @* @Scripts.Render("~/scripts/jquery-1.10.2.min.js")*@
+                        @*@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")*@
+                        @*<div class="form-group">*@
+                        @*<input type="text" class="form-control" placeholder="Search">*@
+                        @* </div> *@
+                        @*<button type="submit" class="btn btn-default my-btn1">Отправить</button>*@
+                        @*</form>*@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>

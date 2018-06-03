@@ -5,19 +5,19 @@
 }
 
 <h2>EditEdition</h2>
-
+<nav class="navbar navbar-default" role="navigation">
 
 @using (Html.BeginForm("EditEdition", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <div>@Html.LabelFor(m => m.Id)</div>
-    <div>@Html.LabelFor(m => m.Name)</div>
-    <div>@Html.TextBoxFor(m => m.Name)</div>
+    <div>@Html.LabelFor(m => m.Name, new{@class= "navbar-brand " })</div>
+    <div>@Html.TextBoxFor(m => m.Name,new{ @class = "form-control" })</div>
     <div>@Html.ValidationMessageFor(m => m.Name)</div>
     <div>@Html.LabelFor(m => m.Description)</div>
-    <div>@Html.TextAreaFor(m => m.Description)</div>
+    <div>@Html.TextAreaFor(m => m.Description, new { @class = "form-control" })</div>
     <div>@Html.ValidationMessageFor(m => m.Description)</div>
     <div>@Html.HiddenFor(m=>m.Id)</div>
 
     <br />
     <input type="submit" class="btn" value="Добавить" />
 }
+</nav>

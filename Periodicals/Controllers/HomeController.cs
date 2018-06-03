@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Periodicals.Controllers
 {
@@ -32,6 +33,11 @@ namespace Periodicals.Controllers
             var editions = EditionModel.ToModelList(_editionRepository.List());
             return View(editions);
         }
+
+        /*public ActionResult Index(List<EditionModel> editions)
+        {
+            return View(editions);
+        }*/
 
         public ActionResult Topics(int topicId)
         {
@@ -57,7 +63,6 @@ namespace Periodicals.Controllers
                 {
                     ViewBag.Subscpiption = false;
                 }
-
                 ViewBag.Blocked = user.LockoutEnabled;
             }
             
@@ -71,7 +76,6 @@ namespace Periodicals.Controllers
             try
             {
                 var userId = User.Identity.GetUserId();
-                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 using (var db = new PeriodicalDbContext())
                 {
                     var user = db.Users.Find(userId);
@@ -91,7 +95,6 @@ namespace Periodicals.Controllers
             try
             {
                 var userId = User.Identity.GetUserId();
-                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 using (var db = new PeriodicalDbContext())
                 {
                     var user = db.Users.Find(userId);
@@ -101,7 +104,6 @@ namespace Periodicals.Controllers
                         user.Subscription.Remove(editionDb);
                     }
                     db.SaveChanges();
-
                 }
             }
             catch { }
@@ -150,8 +152,6 @@ namespace Periodicals.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         [Authorize(Roles = "Administrator")]
         public ActionResult EditEdition(int editionId)
         {
@@ -159,7 +159,6 @@ namespace Periodicals.Controllers
             var editionModel = EditionModel.FromEdition(item);
             return View(editionModel);
         }
-        
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
@@ -172,11 +171,10 @@ namespace Periodicals.Controllers
                 item.Name = edition.Name;
                 item.Description = edition.Description;
                 _editionRepository.Update(item);
-                return RedirectToAction("Edition", new{ editionId=edition.Id} );
+                return RedirectToAction("Edition", new{ editionId=edition.Id});
             }
             return View();
         }
-
 
         [Authorize(Roles = "Administrator")]
         public ActionResult AddEdition()
@@ -200,28 +198,50 @@ namespace Periodicals.Controllers
                         _topicRepository.Add(topic);
                         
                     }
-
                     edition.Topic = topic;
                     db.SaveChanges();
                 }
                 _editionRepository.Add(edition);
                 return RedirectToAction("Index");
             }
-
             return RedirectToAction("Index");
+        }
+
+        /*public ActionResult Search()
+        {
+            return View();
+        }*/
+
+        [HttpPost]
+        public ActionResult Search(string search)
+        {
+            List<EditionModel> editions;
+            using (var db = new PeriodicalDbContext())
+            {
+                var searchResult = db.Editions.Where(a => a.Name.Contains(search)).ToList();
+                editions = EditionModel.ToModelList(searchResult);
+            }
+                
+                //db.Books.Where(a => a.Author.Contains(name)).ToList();
+            ViewBag.searchString = search;
+            if (editions.Count <= 0)
+            {
+                //return HttpNotFound();
+            }
+
+            if (search.IsEmpty()) return RedirectToAction("Index");
+            return PartialView("_EditionSearch", editions);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

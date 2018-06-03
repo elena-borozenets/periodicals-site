@@ -1,0 +1,48 @@
+﻿@using Periodicals.Models
+@model List<EditionModel>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@using (Ajax.BeginForm("Search", "Home", null, new AjaxOptions { UpdateTargetId = "results" }, new { @class = "navbar-form navbar-left", @role = "search" }))
+{
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search" name="name" />
+    </div>
+    <input type="submit" class="btn btn-default" value="Поиск" />
+
+    <div id="results"></div>
+}
+
+@Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+
+<div id="searchresults">
+    <h2>Результаты поиска : @Model.First().Name</h2>
+
+    @foreach (var m in Model)
+    {
+
+        @*<div class="media">
+
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="..." alt="...">
+                </a>
+                <div class="media-body">
+                    <h2 class="media-heading">@m.Name</h2>
+                    <time>@m.DateNextPublication</time>
+                    <p>@m.Description</p>
+                    @Html.ActionLink("Подробнее", "Edition", new { editionId = m.Id })
+                </div>
+            </div>*@
+
+        <h2>@m.Name</h2>
+        <time>@m.DateNextPublication</time>
+        <p>@m.Description</p>
+
+        @Html.ActionLink("More", "Edition", new { editionId = m.Id }, new { @class = "" })
+    }
+</div>
