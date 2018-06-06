@@ -43,7 +43,7 @@ namespace Periodicals.Controllers
         {
             var topic = _topicRepository.GetById(topicId);
             var editions = EditionModel.ToModelList(topic.Editions.ToList());
-            return View("Index",editions);
+            return View("Index", editions);
         }
 
         public ActionResult Edition(int editionId)
@@ -65,7 +65,7 @@ namespace Periodicals.Controllers
                 }
                 ViewBag.Blocked = user.LockoutEnabled;
             }
-            
+
 
             return View(edition);
         }
@@ -87,7 +87,7 @@ namespace Periodicals.Controllers
                 }
             }
             catch { }
-            return RedirectToAction("Edition", new { area = "", editionId = editionId } );
+            return RedirectToAction("Edition", new { area = "", editionId = editionId });
         }
 
         public ActionResult Unsubscribe(int editionId)
@@ -114,16 +114,16 @@ namespace Periodicals.Controllers
         {
             var items = _editionRepository.List();
             var editions = EditionModel.ToModelList(items);
-                editions.Sort(delegate (EditionModel x, EditionModel y)
-                {
-                    if (x.Name == null && y.Name == null) return 0;
-                    else if (x.Name == null) return -1;
-                    else if (y.Name == null) return 1;
-                    else return x.Name.CompareTo(y.Name);
-                });
-                if (!order) editions.Reverse();
+            editions.Sort(delegate (EditionModel x, EditionModel y)
+            {
+                if (x.Name == null && y.Name == null) return 0;
+                else if (x.Name == null) return -1;
+                else if (y.Name == null) return 1;
+                else return x.Name.CompareTo(y.Name);
+            });
+            if (!order) editions.Reverse();
 
-            
+
             return View("Index", editions);
         }
 
@@ -131,15 +131,15 @@ namespace Periodicals.Controllers
         {
             var items = _editionRepository.List();
             var editions = EditionModel.ToModelList(items);
-                editions.Sort(delegate (EditionModel x, EditionModel y)
-                {
-                    return x.Price.CompareTo(y.Price);
-                });
+            editions.Sort(delegate (EditionModel x, EditionModel y)
+            {
+                return x.Price.CompareTo(y.Price);
+            });
             if (!order) editions.Reverse();
             return View("Index", editions);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Moderator")]
         public ActionResult DeleteEdition(int editionId)
         {
             var item = _editionRepository.GetById(editionId);
@@ -147,12 +147,12 @@ namespace Periodicals.Controllers
 
             foreach (var topic in _topicRepository.List())
             {
-                if(topic.Editions.Count==0) _topicRepository.Delete(topic);
+                if (topic.Editions.Count == 0) _topicRepository.Delete(topic);
             }
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Moderator")]
         public ActionResult EditEdition(int editionId)
         {
             var item = _editionRepository.GetById(editionId);
@@ -160,7 +160,7 @@ namespace Periodicals.Controllers
             return View(editionModel);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost]
         public ActionResult EditEdition(EditionModel edition)
         {
@@ -171,18 +171,18 @@ namespace Periodicals.Controllers
                 item.Name = edition.Name;
                 item.Description = edition.Description;
                 _editionRepository.Update(item);
-                return RedirectToAction("Edition", new{ editionId=edition.Id});
+                return RedirectToAction("Edition", new { editionId = edition.Id });
             }
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Moderator")]
         public ActionResult AddEdition()
         {
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost]
         public ActionResult AddEdition(EditionModel newEdition)
         {
@@ -194,9 +194,9 @@ namespace Periodicals.Controllers
                     var topic = db.Topics.FirstOrDefault(t => t.TopicName == newEdition.TopicName);
                     if (topic == null)
                     {
-                        topic = new Topic() {TopicName = newEdition.TopicName};
+                        topic = new Topic() { TopicName = newEdition.TopicName };
                         _topicRepository.Add(topic);
-                        
+
                     }
                     edition.Topic = topic;
                     db.SaveChanges();
@@ -221,8 +221,8 @@ namespace Periodicals.Controllers
                 var searchResult = db.Editions.Where(a => a.Name.Contains(search)).ToList();
                 editions = EditionModel.ToModelList(searchResult);
             }
-                
-                //db.Books.Where(a => a.Author.Contains(name)).ToList();
+
+            //db.Books.Where(a => a.Author.Contains(name)).ToList();
             ViewBag.searchString = search;
             if (editions.Count <= 0)
             {

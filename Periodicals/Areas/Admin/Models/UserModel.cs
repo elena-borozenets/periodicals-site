@@ -14,6 +14,7 @@ namespace Periodicals.Areas.Admin.Models
         public string Id { get; set; }
         public  float Credit { get; set; }
         public bool isBlocked { get; set; }
+        public bool isModerator { get; set; }
 
         public static UserModel FromUser(ApplicationUser user)
         {
@@ -25,7 +26,8 @@ namespace Periodicals.Areas.Admin.Models
                     Email = user.Email,
                     Id = user.Id,
                     Credit=user.Credit,
-                    isBlocked = user.LockoutEnabled
+                    isBlocked = user.LockoutEnabled,
+                    isModerator = user.Roles.Any(m=>m.RoleId == "333")
                 };
                 return userModel;
             }

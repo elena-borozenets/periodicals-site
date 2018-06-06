@@ -100,8 +100,20 @@ namespace Periodicals.Infrastructure.Data
                 Name = "Administrator",
                 Users = { new IdentityUserRole() { RoleId = "222", UserId = "444" } }
             });
+            manager.Create(new ApplicationUser()
+            {
+                UserName = "Moderator",
+                Id = "555"
+
+            }, "moder0000");
+            var roleCreateResult2 = roleManager.Create(new PeriodicalsRole()
+            {
+                Id = "333",
+                Name = "Moderator",
+                Users = { new IdentityUserRole() { RoleId = "333", UserId = "555" } }
+            });
             var roleCreateResult1 = roleManager.Create(new PeriodicalsRole("Subscriber"));
-            var roleCreateResult2 = roleManager.Create(new PeriodicalsRole("Moderator"));
+            //var roleCreateResult2 = roleManager.Create(new PeriodicalsRole("Moderator"));
             if (!roleCreateResult.Succeeded)
             {
                 throw new Exception(string.Join("; ", roleCreateResult.Errors));

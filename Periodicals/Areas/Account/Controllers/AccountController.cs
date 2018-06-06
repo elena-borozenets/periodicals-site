@@ -115,6 +115,11 @@ namespace Periodicals.Areas.Account.Controllers
             var autentificationManager = HttpContext.GetOwinContext().Authentication;
             autentificationManager.SignOut();
             return RedirectToAction("Index", "Home", new { area = "" });
-        }        
+        }
+
+        public ActionResult TopUp()
+        {
+            return RedirectToAction("Account");
+        }
     }
 }

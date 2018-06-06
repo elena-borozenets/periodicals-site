@@ -3,15 +3,15 @@
 
 
 
-    <h2>Результаты поиска : @ViewBag.searchString</h2>
+<h2>Результаты поиска : @ViewBag.searchString</h2>
 
-    @foreach (var m in Model)
-    {
+@foreach (var m in Model)
+{
 
 
-        <h2>@m.Name</h2>
-        <time>@m.DateNextPublication</time>
-        <p>@m.Description</p>
+    <h2>@m.Name</h2>
+    <time>@m.DateNextPublication</time>
+    <p>@m.Description</p>
 
-        @Html.ActionLink("More", "Edition", new { editionId = m.Id }, new { @class = "" })
-    }
+    @Html.ActionLink("More", "Edition", new { editionId = m.Id }, new { @class = "" })
+}

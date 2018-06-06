@@ -52,5 +52,26 @@ namespace Periodicals.Areas.Admin.Controllers
 
                 return RedirectToAction("Administration");
         }
+
+        public ActionResult AppointmentModerators(string userId)
+        {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindById(userId);
+            if (user.LockoutEnabled) return RedirectToAction("Administration"); 
+            //user.LockoutEnabled = !user.LockoutEnabled;
+            var addModeratorRoleResult = userManager.AddToRole(userId, "Moderator");
+
+            if (addModeratorRoleResult.Succeeded)
+            {
+
+            }
+            else
+            {
+                var removeModeratorRoleResult = userManager.RemoveFromRole(userId, "Moderator");
+            }
+            return RedirectToAction("Administration");
+        }
+
+
     }
 }
