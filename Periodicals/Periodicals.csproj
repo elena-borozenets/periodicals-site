@@ -256,6 +256,7 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Administration.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\UserPage.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\_SearchUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ButtonScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -270,6 +271,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\SearchUserScript.js" />
     <Content Include="Scripts\SearchScript.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

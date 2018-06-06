@@ -18,7 +18,7 @@ namespace Periodicals.Areas.Admin.Controllers
         // GET: Admin/Admin
         public ActionResult Administration()
         {
-            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            //var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             List<UserModel> users;
             using (var db = new PeriodicalDbContext())
             {
@@ -72,6 +72,20 @@ namespace Periodicals.Areas.Admin.Controllers
             return RedirectToAction("Administration");
         }
 
+        [HttpPost]
+        public ActionResult SearchUser(string search)
+        {
+            List<UserModel> users;
+            using (var db = new PeriodicalDbContext())
+            {
+                
+                var userList = db.Users.Where(user => user.UserName.Contains(search)).ToList();
+                var admin = db.Users.First(adm => adm.UserName == "admin");
+                if(admin!=null) userList.Remove(admin);
+                users = UserModel.FromUserList(userList);
+            }
+            return PartialView("_SearchUser", users);
+        }
 
     }
 }

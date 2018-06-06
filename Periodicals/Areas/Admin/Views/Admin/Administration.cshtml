@@ -7,64 +7,74 @@
 <h2>Administration</h2>
 
 
-@*<ul class="list-group">
-    @foreach (var m in Model)
+@using (Ajax.BeginForm("SearchUser", "Admin",
+    new { area = "Admin" },
+    new AjaxOptions
     {
-        <a class="list-group-item">@m.Username 
-        
-        </a>
-        
-    }
-</ul>*@
+        UpdateTargetId = "resSearchUser"
+
+    },
+    new { @class = "my-user-form", @role = "search", @onsubmit = "return false;", @name = "form" }))
+{
+    
+        <input type="text" class="form-control" placeholder="Search user" name="search" id="searchUser" />
+}
+
+
 
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">Panel administration</div>
 
-    <!-- Table -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Credit</th>
-                <th>isBlocked</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var m in Model)
-        {
-            <tr>
-                <td>@m.Id</td>
-                <td>@m.Username</td>
-                <td>@m.Email</td>
-                <td>@m.Credit</td>
-                <td>@Html.ActionLink(m.isBlocked.ToString(), "BlockUser", "Admin", new { area = "Admin", userId = m.Id }, null) </td>
-                @if (!m.isBlocked)
-                {
-                    if (m.isModerator)
-                    {
-                            <td>
-                                @Html.ActionLink("Disappoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new {@class="btn btn-default"})
-                            </td>
-                    }
-                    else
-                    {
-                            <td>
-                                @Html.ActionLink("Appoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new { @class = "btn btn-default" })
-                            </td>
-                    }
-                }
-                else
-                {
-                    <td>
-                        Blocked
-                    </td>
-                }
 
-            </tr>
-        }
-        </tbody>
-    </table>
+
+    <div id="resSearchUser">
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Credit</th>
+                    <th>isBlocked</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@m.Id</td>
+                        <td>@m.Username</td>
+                        <td>@m.Email</td>
+                        <td>@m.Credit</td>
+                        <td>@Html.ActionLink(m.isBlocked.ToString(), "BlockUser", "Admin", new { area = "Admin", userId = m.Id }, null) </td>
+                        @if (!m.isBlocked)
+                        {
+                            if (m.isModerator)
+                            {
+                                <td>
+                                    @Html.ActionLink("Disappoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new { @class = "btn btn-default" })
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.ActionLink("Appoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new { @class = "btn btn-default" })
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            <td>
+                                Blocked
+                            </td>
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

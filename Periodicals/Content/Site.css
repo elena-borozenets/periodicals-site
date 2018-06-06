@@ -218,3 +218,9 @@ em.tag :hover {
 /*input.form-control{
     max-width: 175px;
 }*/
+
+.my-user-form {
+    margin-top: 7px;
+    margin-bottom: 10px;
+    display: inline-block;
+}

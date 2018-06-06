@@ -1,0 +1,49 @@
+﻿@using Periodicals.Areas.Admin.Models
+@model List<UserModel>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Credit</th>
+        <th>isBlocked</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var m in Model)
+    {
+        <tr>
+            <td>@m.Id</td>
+            <td>@m.Username</td>
+            <td>@m.Email</td>
+            <td>@m.Credit</td>
+            <td>@Html.ActionLink(m.isBlocked.ToString(), "BlockUser", "Admin", new { area = "Admin", userId = m.Id }, null) </td>
+            @if (!m.isBlocked)
+            {
+                if (m.isModerator)
+                {
+                    <td>
+                        @Html.ActionLink("Disappoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new { @class = "btn btn-default" })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Appoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new { @class = "btn btn-default" })
+                    </td>
+                }
+            }
+            else
+            {
+                <td>
+                    Blocked
+                </td>
+            }
+
+        </tr>
+    }
+    </tbody>
+</table>
