@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using Periodicals.Infrastructure.Repositories;
+using Ninject;
 
 namespace Periodicals.Controllers
 {
@@ -23,10 +24,15 @@ namespace Periodicals.Controllers
         private readonly IRepository<Topic> _topicRepository;
         private readonly EditionServices _editionService;
 
-        public HomeController()
+        public HomeController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository)
         {
-            _editionRepository = new EditionRepository();
-            _topicRepository = new EfRepository<Topic>(new PeriodicalDbContext());
+            //IKernel ninjectKernel = new StandardKernel();
+            //ninjectKernel.Bind<IRepository<Edition>>().To<EditionRepository>();
+            //_editionRepository = ninjectKernel.Get<IRepository<Edition>>();
+            //_editionRepository = new EditionRepository();
+            //_topicRepository = new EfRepository<Topic>(new PeriodicalDbContext());
+            _editionRepository = editionRepository;
+            _topicRepository = topicRepository;
             TopicModel.SetTopicsList(_topicRepository.List());
             _editionService = new EditionServices(_editionRepository);
 

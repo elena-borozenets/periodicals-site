@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Periodicals.Util;
 
 namespace Periodicals
 {
@@ -19,6 +20,9 @@ namespace Periodicals
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             PeriodicalContextInitializer db = new PeriodicalContextInitializer();
             System.Data.Entity.Database.SetInitializer(db);
+
+            // внедрение зависимостей
+            AutofacConfig.ConfigureContainer();
         }
     }
 }

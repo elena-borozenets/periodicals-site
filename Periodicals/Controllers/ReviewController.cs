@@ -21,10 +21,10 @@ namespace Periodicals.Controllers
 
         // GET: Review
 
-        public ReviewController()
+        public ReviewController(IRepository<Review> reviewRepository, IRepository<Edition> editionRepository)
         {
-            _reviewRepository = new ReviewRepository();
-            _editionRepository = new EditionRepository();
+            _reviewRepository = reviewRepository;
+            _editionRepository = editionRepository;
         }
         public ActionResult Reviews(int editionId)
         {
