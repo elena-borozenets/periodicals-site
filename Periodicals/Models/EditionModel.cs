@@ -61,8 +61,9 @@ namespace Periodicals.Models
             newEdition.Description = (this.Description == null) ? "None" : this.Description;
             newEdition.Type = (this.Type == null) ? "DefaultType" : this.Type;
             newEdition.Language = (this.Type == null) ? "???" : this.Language;
+            newEdition.Reviews = new List<Review>();
             //newEdition.Subscribers=new List<ApplicationUser>();
-            
+
             return newEdition;
         }
 

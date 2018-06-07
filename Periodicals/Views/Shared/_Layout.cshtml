@@ -106,8 +106,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">ru</a></li>
-                            <li><a href="#">eng</a></li>
+                            <li>@Html.ActionLink("ru", "Languages", "Home", new { area = "", language="ru" }, new { @class = "" })</li>
+                            <li>@Html.ActionLink("eng", "Languages", "Home", new { area = "", language = "eng" }, new { @class = "" })</li>
                         </ul>
                     </li>
                 </ul>

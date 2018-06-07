@@ -1,0 +1,44 @@
+﻿@using Periodicals.Models
+@model List<ReviewModel>
+
+
+<h3>Reviews</h3>
+
+<div>
+    @foreach (var m in Model)
+    {
+        <h3>@m.NameAuthor</h3>
+        <time>@m.TimeCreation</time>
+        <p>@m.TextReview</p>
+        if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
+         {
+             @Html.ActionLink("Delete", "DeleteReview", "Review", new {reviewId = m.Id, editionId = m.EditionId}, new {@class = ""});
+
+         }
+    }
+</div>
+
+@{
+    var newReview = new ReviewModel();
+    newReview.EditionId = ViewBag.EditionId;
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        newReview.NameAuthor = HttpContext.Current.User.Identity.Name;
+    }
+
+}
+
+@using (Html.BeginForm("AddNew", "Review"))
+{
+    <div>@Html.Label("Имя")</div>
+    <div>@Html.TextBoxFor(m => newReview.NameAuthor)</div>
+    <div>@Html.ValidationMessageFor(m => newReview.NameAuthor)</div>
+    <div>@Html.Label("Отзыв")</div>
+    <div>@Html.TextAreaFor(m => newReview.TextReview)</div>
+    <div>@Html.ValidationMessageFor(m => newReview.TextReview)</div>
+    <div>@Html.HiddenFor(m=> newReview.EditionId)</div>
+
+    <br />
+    <input type="submit" class="btn" value="Добавить" />
+
+}

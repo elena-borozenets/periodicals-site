@@ -33,7 +33,8 @@ namespace Periodicals.Infrastructure.Data
                 "in 1919, and was the first U.S. daily printed in tabloid " +
                 "format. Since 2017, it has been owned by the news publishing " +
                 "company Tronc.",
-                Language="eng"
+                Language="eng",
+                Reviews = new List<Review>()
 
             });
             db.Editions.Add(new Edition()
@@ -60,7 +61,8 @@ namespace Periodicals.Infrastructure.Data
                 "Sweden, Malaysia, Singapore, The Middle East Region, Latin America Region, " +
                 "Hungary, Finland, Netherlands, South Africa, France, Portugal, Armenia and Russia " +
                 "and is printed in 35 languages, and is distributed in more than 110 countries.",
-                Language = "eng"
+                Language = "eng",
+                Reviews = new List<Review>()
             });
         db.Editions.Add(new Edition()
         {
@@ -80,10 +82,12 @@ namespace Periodicals.Infrastructure.Data
             "It was first published in 1880, is currently circulated weekly and has a print " +
             "subscriber base of around 130,000. Because institutional subscriptions and online " +
             "access serve a larger audience, its estimated readership is 570,400 people.",
-            Language = "eng"
+            Language = "eng",
+            Reviews = new List<Review>() {
+                new Review() {NameAuthor = "Scientist", TextReview = "Like this journal!", TimeCreation = DateTime.UtcNow},
+                new Review() {NameAuthor = "Someone", TextReview = "Don't understand some teories", TimeCreation = DateTime.UtcNow}}
         });
             db.SaveChanges();
-
             UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(db);
             ApplicationUserManager manager = new ApplicationUserManager(store);
             manager.Create(new ApplicationUser()

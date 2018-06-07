@@ -222,10 +222,12 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\EditionModel.cs" />
+    <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\TopicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -293,6 +295,7 @@
     <Content Include="Views\Home\AddEdition.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\_EditionSearch.cshtml" />
+    <Content Include="Views\Review\_Reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

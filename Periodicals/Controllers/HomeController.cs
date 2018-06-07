@@ -46,6 +46,17 @@ namespace Periodicals.Controllers
             return View("Index", editions);
         }
 
+        public ActionResult Languages(string language)
+        {
+            List<EditionModel> editions;
+            using (var db = new PeriodicalDbContext())
+            {
+                var dbEditions = db.Editions.Where(e => e.Language == language);
+                editions = EditionModel.ToModelList(dbEditions.ToList());
+            }
+            return View("Index", editions);
+        }
+
         public ActionResult Edition(int editionId)
         {
             var item = _editionRepository.GetById(editionId);
@@ -66,7 +77,7 @@ namespace Periodicals.Controllers
                 ViewBag.Blocked = user.LockoutEnabled;
             }
 
-
+            
             return View(edition);
         }
 
@@ -81,7 +92,7 @@ namespace Periodicals.Controllers
                     var user = db.Users.Find(userId);
                     var editionDb = db.Editions.Find(editionId);
                     user.Subscription.Add(editionDb);
-                    editionDb.Subscribers.Add(user);
+                    editionDb?.Subscribers.Add(user);
                     db.SaveChanges();
 
                 }

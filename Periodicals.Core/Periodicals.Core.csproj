@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Edition.cs" />
+    <Compile Include="Entities\Review.cs" />
     <Compile Include="Entities\Topic.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Identity\PeriodicalsRole.cs" />

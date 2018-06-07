@@ -38,5 +38,8 @@
     }
 }
 
-<br/>
-<br/>
+<br />
+<br />
+
+@Html.Action("Reviews", "Review", new{editionId = Model.Id})
+@*@Html.RenderAction("Reviews", "Review", new { editionId = Model.Id })*@

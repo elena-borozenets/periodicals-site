@@ -25,6 +25,8 @@ namespace Periodicals.Core
 
         public virtual IList<ApplicationUser> Subscribers { get; set; }
 
+        public virtual IList<Review> Reviews { get; set; }
+
         public bool Equals(Edition other)
         {
             if (this.Id == other.Id)

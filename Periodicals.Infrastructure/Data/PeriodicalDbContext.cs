@@ -15,6 +15,7 @@ namespace Periodicals.Infrastructure.Data
     public class PeriodicalDbContext: IdentityDbContext<ApplicationUser>
     {
         public DbSet<Edition> Editions { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public PeriodicalDbContext() : base()
         {
