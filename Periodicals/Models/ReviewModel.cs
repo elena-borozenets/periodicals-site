@@ -46,7 +46,7 @@ namespace Periodicals.Models
             NameAuthor = item.NameAuthor,
             TimeCreation = item.TimeCreation,
             TextReview = item.TextReview,
-            EditionId = item.Edition.Periodicity
+            EditionId = item.EditionId
         };
 
         /// <summary>

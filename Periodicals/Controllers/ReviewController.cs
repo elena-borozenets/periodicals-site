@@ -7,6 +7,8 @@ using Periodicals.Core;
 using Periodicals.Core.Entities;
 using Periodicals.Core.Interfaces;
 using Periodicals.Infrastructure.Data;
+using Periodicals.Infrastructure.Repositories;
+using Periodicals.Services;
 using Periodicals.Models;
 
 namespace Periodicals.Controllers
@@ -21,8 +23,8 @@ namespace Periodicals.Controllers
 
         public ReviewController()
         {
-            _reviewRepository = new EfRepository<Review>(new PeriodicalDbContext());
-            _editionRepository = new EfRepository<Edition>(new PeriodicalDbContext());
+            _reviewRepository = new ReviewRepository();
+            _editionRepository = new EditionRepository();
         }
         public ActionResult Reviews(int editionId)
         {
@@ -57,16 +59,12 @@ namespace Periodicals.Controllers
                     item.Edition = edition;
                     _reviewRepository.Add(item);
                 }*/
-                using (var db = new PeriodicalDbContext())
-                {
-                    var edition = db.Editions.Find(newReview.EditionId);
-                    if (edition != null)
-                    {
-                        edition.Reviews.Add(newItem.ToReview());
-                        db.SaveChanges();
-                    }
-                }
-                   // _reviewRepository.Add(newItem.ToReview());
+                var review = newItem.ToReview();
+                    review.EditionId = newReview.EditionId;
+
+                _reviewRepository.Add(review);
+
+                // _reviewRepository.Add(newItem.ToReview());
             }
 
             return RedirectToAction("Edition", "Home", new{editionId=newReview.EditionId});

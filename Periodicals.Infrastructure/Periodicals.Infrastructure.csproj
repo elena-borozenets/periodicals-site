@@ -77,9 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\EfRepository.cs" />
+    <Compile Include="Repositories\EditionRepository.cs" />
+    <Compile Include="Repositories\EfRepository.cs" />
     <Compile Include="Data\PeriodicalDbContext.cs" />
     <Compile Include="Data\PeriodicalContextInitializer.cs" />
+    <Compile Include="Repositories\ReviewRepository.cs" />
+    <Compile Include="Repositories\TopicRepository.cs" />
     <Compile Include="Identity\IdentityConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

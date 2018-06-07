@@ -323,6 +323,10 @@
       <Project>{aac1e7b3-6ed5-49bc-8ee8-9f5e827b5037}</Project>
       <Name>Periodicals.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Periodicals.Services\Periodicals.Services.csproj">
+      <Project>{2627d1d7-0581-48f1-bf05-024c975371b2}</Project>
+      <Name>Periodicals.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
