@@ -18,7 +18,7 @@ namespace Periodicals.Core
         public string ISSN { get; set; }
         public DateTime DateNextPublication { get; set; }
         public string Type{ get; set; }
-        public virtual Topic Topic { get; set; }
+        public Topic Topic { get; set; }
         public int Periodicity { get; set; }
         public string Description { get; set; }
         public string Language { get; set; }

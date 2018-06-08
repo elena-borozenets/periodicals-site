@@ -1,9 +1,12 @@
-﻿@using Periodicals.Models
+﻿@using Microsoft.Ajax.Utilities
+@using Periodicals.Models
 @model List<EditionModel>
 
 
-
+@if (ViewBag.searchString!="")
+{
 <h2>Результаты поиска : @ViewBag.searchString</h2>
+}
 
 @foreach (var m in Model)
 {

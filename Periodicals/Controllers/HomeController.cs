@@ -198,7 +198,7 @@ namespace Periodicals.Controllers
                 //return HttpNotFound();
             }
 
-            if (search.IsEmpty()) return RedirectToAction("Index");
+            //if (search.IsEmpty()) return RedirectToAction("Index");
             return PartialView("_EditionSearch", editions);
         }
 

@@ -60,7 +60,7 @@ namespace Periodicals.Services
 
         public List<Edition> SearchByName(string search)
         {
-            var searchResult =(from edition in _editionRepository.List() where  edition.Name.Contains(search) select edition).ToList();
+            var searchResult =(from edition in _editionRepository.List() where  edition.Name.ToUpper().Contains(search.ToUpper()) select edition).ToList();
             return searchResult;
 
             /*using (var db = new PeriodicalDbContext())

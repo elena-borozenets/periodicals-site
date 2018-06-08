@@ -18,7 +18,7 @@ namespace Periodicals.Core.Identity
         public float Credit { get; set; }
         //public virtual IList<int> SubscriptionEditionsId { get; set;}
 
-        public virtual IList<Edition> Subscription { get; set; }
+        public IList<Edition> Subscription { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

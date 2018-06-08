@@ -13,6 +13,6 @@ namespace Periodicals.Core.Entities
         public DateTime TimeCreation { get; set; }
         public string TextReview { get; set; }
         public int EditionId { get; set; }
-        public virtual Edition Edition { get; set; }
+        public Edition Edition { get; set; }
     }
 }
