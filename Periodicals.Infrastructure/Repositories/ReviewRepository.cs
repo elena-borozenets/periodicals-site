@@ -48,12 +48,16 @@ namespace Periodicals.Infrastructure.Repositories
             return entity;
         }
 
-        public void Delete(Review entity)
+        public void Delete(int entityId)
         {
             using (var db = new PeriodicalDbContext())
             {
-                db.Reviews.Remove(entity);
-                db.SaveChanges();
+                var entity = db.Reviews.Find(entityId);
+                if (entity != null)
+                {
+                    db.Reviews.Remove(entity);
+                    db.SaveChanges();
+                }
             }
         }
 

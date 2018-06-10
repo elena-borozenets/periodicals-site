@@ -43,12 +43,16 @@ namespace Periodicals.Infrastructure.Repositories
             }
         }
 
-        public void Delete(Topic entity)
+        public void Delete(int entityId)
         {
             using (var db = new PeriodicalDbContext())
             {
-                db.Topics.Remove(entity);
-                db.SaveChanges();
+                var entity = db.Topics.Find(entityId);
+                if (entity != null)
+                {
+                    db.Topics.Remove(entity);
+                    db.SaveChanges();
+                }
             }
         }
 

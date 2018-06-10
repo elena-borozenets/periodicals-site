@@ -8,11 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using Periodicals.Areas.Account.Models;
 using Periodicals.Core.Identity;
+using Periodicals.Exceptions;
 using Periodicals.Models;
 using Periodicals.Infrastructure.Data;
 
 namespace Periodicals.Areas.Account.Controllers
 {
+    [PeriodicalsException]
+    [IndexOutOfRangePeriodicalsException]
+    [ArgumentPeriodicalsException]
+    [NullReferencePeriodicalsException]
+    [InvalidOperationPeriodicalsException]
+    [ArgumentNullPeriodicalsException]
+    [ArgumentOutOfRangePeriodicalsException]
     public class AccountController : Controller
     {
         // GET: Login/Login

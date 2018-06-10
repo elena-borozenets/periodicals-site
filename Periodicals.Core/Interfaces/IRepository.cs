@@ -13,6 +13,6 @@ namespace Periodicals.Core.Interfaces
         List<T> List();
         T Add(T entity);
         void Update(T entity);
-        void Delete(T entity);
+        void Delete(int entityId);
     }
 }

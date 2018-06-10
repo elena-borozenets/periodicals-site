@@ -15,9 +15,19 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using Periodicals.Infrastructure.Repositories;
 using Ninject;
+using NLog;
+using Periodicals.Exceptions;
 
 namespace Periodicals.Controllers
 {
+    [PeriodicalsException]
+    [IndexOutOfRangePeriodicalsException]
+    [ArgumentPeriodicalsException]
+    [NullReferencePeriodicalsException]
+    [InvalidOperationPeriodicalsException]
+    [ArgumentNullPeriodicalsException]
+    [ArgumentOutOfRangePeriodicalsException]
+    //
     public class HomeController : Controller
     {
         private readonly IRepository<Edition> _editionRepository;
@@ -26,6 +36,9 @@ namespace Periodicals.Controllers
 
         public HomeController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository)
         {
+
+
+
             //IKernel ninjectKernel = new StandardKernel();
             //ninjectKernel.Bind<IRepository<Edition>>().To<EditionRepository>();
             //_editionRepository = ninjectKernel.Get<IRepository<Edition>>();
@@ -38,9 +51,11 @@ namespace Periodicals.Controllers
 
         }
 
+        
         public ActionResult Index()
         {
             var editions = EditionModel.ToModelList(_editionRepository.List());
+            //throw new ArgumentOutOfRangeException();
             return View(editions);
         }
 
@@ -126,12 +141,12 @@ namespace Periodicals.Controllers
         [Authorize(Roles = "Administrator, Moderator")]
         public ActionResult DeleteEdition(int editionId)
         {
-            var item = _editionRepository.GetById(editionId);
-            _editionRepository.Delete(item);
+            //var item = _editionRepository.GetById(editionId);
+            _editionRepository.Delete(editionId);
 
             foreach (var topic in _topicRepository.List())
             {
-                if (topic.Editions.Count == 0) _topicRepository.Delete(topic);
+                if (topic.Editions.Count == 0) _topicRepository.Delete(topic.Id);
             }
             return RedirectToAction("Index");
         }
@@ -187,8 +202,6 @@ namespace Periodicals.Controllers
         [HttpPost]
         public ActionResult Search(string search)
         {
-           
-
             var result =_editionService.SearchByName(search);
             List<EditionModel> editions = EditionModel.ToModelList(result);
             //db.Books.Where(a => a.Author.Contains(name)).ToList();
@@ -197,8 +210,6 @@ namespace Periodicals.Controllers
             {
                 //return HttpNotFound();
             }
-
-            //if (search.IsEmpty()) return RedirectToAction("Index");
             return PartialView("_EditionSearch", editions);
         }
 

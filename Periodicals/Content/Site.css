@@ -200,6 +200,14 @@ em.tag :hover {
         color: #999999;
 }
 
+.mynav {
+    background-color: #222222;
+}
+
+    .mynav > li > a {
+        color: #999999;
+    }
+
 .sort2:hover,
 .sort2:focus,
 .sort2:active,
@@ -223,4 +231,8 @@ em.tag :hover {
     margin-top: 7px;
     margin-bottom: 10px;
     display: inline-block;
+}
+
+.edit {
+    padding: 10px;
 }

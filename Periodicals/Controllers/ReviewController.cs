@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Periodicals.Core;
 using Periodicals.Core.Entities;
 using Periodicals.Core.Interfaces;
+using Periodicals.Exceptions;
 using Periodicals.Infrastructure.Data;
 using Periodicals.Infrastructure.Repositories;
 using Periodicals.Services;
@@ -13,6 +14,13 @@ using Periodicals.Models;
 
 namespace Periodicals.Controllers
 {
+    [PeriodicalsException]
+    [IndexOutOfRangePeriodicalsException]
+    [ArgumentPeriodicalsException]
+    [NullReferencePeriodicalsException]
+    [InvalidOperationPeriodicalsException]
+    [ArgumentNullPeriodicalsException]
+    [ArgumentOutOfRangePeriodicalsException]
     public class ReviewController : Controller
     {
         private readonly IRepository<Review> _reviewRepository;
@@ -73,8 +81,8 @@ namespace Periodicals.Controllers
         [Authorize(Roles = "Administrator, Moderator")]
         public ActionResult DeleteReview(int reviewId, int editionId)
         {
-           var review= _reviewRepository.GetById(reviewId);
-            _reviewRepository.Delete(review);
+           //var review= _reviewRepository.GetById(reviewId);
+            _reviewRepository.Delete(reviewId);
             return RedirectToAction("Edition", "Home", new { editionId = editionId});
         }
     }

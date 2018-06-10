@@ -124,6 +124,9 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -140,6 +143,10 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -242,6 +249,7 @@
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="Exceptions\PeriodicalsExceptionFilters.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,7 +263,20 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ErrorsInfo\ArgumentError.html" />
+    <Content Include="Content\ErrorsInfo\ArgumentOutOfRangeError.html" />
+    <Content Include="Content\ErrorsInfo\ArgumentNullError.html" />
+    <Content Include="Content\ErrorsInfo\img\5.jpg" />
+    <Content Include="Content\ErrorsInfo\img\6.jpg" />
+    <Content Include="Content\ErrorsInfo\InvalidOperationError.html" />
+    <Content Include="Content\ErrorsInfo\img\1.jpg" />
+    <Content Include="Content\ErrorsInfo\img\2.jpeg" />
+    <Content Include="Content\ErrorsInfo\img\3.jpg" />
+    <Content Include="Content\ErrorsInfo\img\4.jpg" />
+    <Content Include="Content\ErrorsInfo\Error.html" />
+    <Content Include="Content\ErrorsInfo\NullReferenceError.html" />
     <Content Include="Content\im.png" />
+    <Content Include="Content\ErrorsInfo\IndexOutOfRangeError.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -279,6 +300,12 @@
     <Content Include="Areas\Admin\Views\Admin\Administration.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\UserPage.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\_SearchUser.cshtml" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ButtonScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

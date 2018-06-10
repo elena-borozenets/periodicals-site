@@ -12,6 +12,7 @@ using Periodicals.Infrastructure.Identity;
 
 namespace Periodicals.Areas.Admin.Controllers
 {
+
     [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {

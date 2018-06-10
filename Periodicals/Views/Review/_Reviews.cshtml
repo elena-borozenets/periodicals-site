@@ -31,10 +31,10 @@
 @using (Html.BeginForm("AddNew", "Review"))
 {
     <div>@Html.Label("Имя")</div>
-    <div>@Html.TextBoxFor(m => newReview.NameAuthor)</div>
+    <div>@Html.TextBoxFor(m => newReview.NameAuthor, new { @class = "form-control" })</div>
     <div>@Html.ValidationMessageFor(m => newReview.NameAuthor)</div>
     <div>@Html.Label("Отзыв")</div>
-    <div>@Html.TextAreaFor(m => newReview.TextReview)</div>
+    <div>@Html.TextAreaFor(m => newReview.TextReview, new { @class = "form-control" })</div>
     <div>@Html.ValidationMessageFor(m => newReview.TextReview)</div>
     <div>@Html.HiddenFor(m=> newReview.EditionId)</div>
 

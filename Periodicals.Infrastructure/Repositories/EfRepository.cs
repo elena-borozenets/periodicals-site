@@ -35,11 +35,15 @@ namespace Periodicals.Infrastructure.Data
                 return entity;
             }
 
-        public void Delete(T entity)
+        public void Delete(int entityId)
+        {
+            var entity = _dbContext.Set<T>().Find(entityId);
+            if (entity != null)
             {
                 _dbContext.Set<T>().Remove(entity);
                 _dbContext.SaveChanges();
             }
+        }
 
         public void Update(T entity)
             {
