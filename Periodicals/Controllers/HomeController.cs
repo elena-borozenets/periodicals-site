@@ -10,6 +10,7 @@ using Periodicals.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -154,7 +155,7 @@ namespace Periodicals.Controllers
 
             foreach (var topic in _topicRepository.List())
             {
-                if (topic.Editions.Count == 0) _topicRepository.Delete(topic.Id);
+                if (topic.Editions?.Count == 0) _topicRepository.Delete(topic.Id);
             }
             return RedirectToAction("Index");
         }
@@ -169,11 +170,22 @@ namespace Periodicals.Controllers
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost]
-        public ActionResult EditEdition(EditionModel edition)
+        public ActionResult EditEdition(EditionModel edition, HttpPostedFileBase image)
         {
             var item = _editionRepository.GetById(edition.Id);
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+
+                    var filename = image.FileName;
+                    var filePathOriginal = Server.MapPath("~/Content/dbImg");
+                    //var filePathThumbnail = Server.MapPath("/Content/Uploads/Thumbnails");
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    image.SaveAs(savedFileName);
+                    item.Image = filename;
+                }
+
                 item.Name = edition.Name;
                 item.Description = edition.Description;
                 _editionRepository.Update(item);
@@ -190,14 +202,29 @@ namespace Periodicals.Controllers
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost]
-        public ActionResult AddEdition(EditionModel newEdition)
+        public ActionResult AddEdition(EditionModel newEdition, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
                 var edition = newEdition.ToEdition();
-                edition.Topic=new Topic(){TopicName = newEdition.TopicName };
+                edition.Topic = new Topic() { TopicName = newEdition.TopicName };
+
+                if (image != null)
+                {
+
+                    var filename = image.FileName;
+                    var filePathOriginal = Server.MapPath("~/Content/dbImg");
+                    //var filePathThumbnail = Server.MapPath("/Content/Uploads/Thumbnails");
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    image.SaveAs(savedFileName);
+                    edition.Image = filename;
+                }
                 _editionRepository.Add(edition);
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(newEdition);
             }
             return RedirectToAction("Index");
         }

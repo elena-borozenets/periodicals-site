@@ -34,7 +34,8 @@ namespace Periodicals.Infrastructure.Data
                 "format. Since 2017, it has been owned by the news publishing " +
                 "company Tronc.",
                 Language="eng",
-                Reviews = new List<Review>()
+                Reviews = new List<Review>(),
+                Image = "daily_news.jpg"
 
             });
             db.Editions.Add(new Edition()
@@ -62,7 +63,8 @@ namespace Periodicals.Infrastructure.Data
                 "Hungary, Finland, Netherlands, South Africa, France, Portugal, Armenia and Russia " +
                 "and is printed in 35 languages, and is distributed in more than 110 countries.",
                 Language = "eng",
-                Reviews = new List<Review>()
+                Reviews = new List<Review>(),
+                Image = "cosmopolitan.jpg"
             });
         db.Editions.Add(new Edition()
         {
@@ -85,7 +87,8 @@ namespace Periodicals.Infrastructure.Data
             Language = "eng",
             Reviews = new List<Review>() {
                 new Review() {NameAuthor = "Scientist", TextReview = "Like this journal!", TimeCreation = DateTime.UtcNow},
-                new Review() {NameAuthor = "Someone", TextReview = "Don't understand some teories", TimeCreation = DateTime.UtcNow}}
+                new Review() {NameAuthor = "Someone", TextReview = "Don't understand some teories", TimeCreation = DateTime.UtcNow}},
+            Image = "science.jpg"
         });
             db.SaveChanges();
             UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(db);

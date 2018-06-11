@@ -7,7 +7,7 @@
 <h2>EditEdition</h2>
 <nav class="navbar navbar-default edit" role="navigation">
 
-    @using (Html.BeginForm("EditEdition", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("EditEdition", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
         <div>@Html.LabelFor(m => m.Name, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</div>
@@ -39,6 +39,7 @@
 
         <div>@Html.HiddenFor(m => m.Id)</div>
 
+        <div><input name="image" type="file" /></div>
         <br />
         <input type="submit" class="btn" value="Добавить" />
     }

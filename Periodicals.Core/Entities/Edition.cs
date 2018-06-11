@@ -22,6 +22,7 @@ namespace Periodicals.Core
         public int Periodicity { get; set; }
         public string Description { get; set; }
         public string Language { get; set; }
+        public string Image { get; set; }
 
         public virtual IList<ApplicationUser> Subscribers { get; set; }
 

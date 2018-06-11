@@ -10,40 +10,40 @@
 
     @foreach (var m in Model)
     {
-        <div>
-            @*<div class="media">
+    <div>
+        <div class="media">
 
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="..." alt="...">
-                </a>
-                <div class="media-body">
-                    <h2 class="media-heading">@m.Name</h2>
-                    <time>@m.DateNextPublication</time>
-                    <p>@m.Description</p>
-                    @Html.ActionLink("Подробнее", "Edition", new { editionId = m.Id })
-                </div>
-            </div>*@
-
-            <h2>@m.Name</h2>
-            <time>@m.DateNextPublication</time>
-            <p>@m.Description</p>
-
-            @Html.ActionLink("More", "Edition", new { editionId = m.Id }, new { @class = "" })
+            <a class="pull-left" href="#">
+                <img class="media-object" src="~/Content/dbImg/@m.Image" alt="...">
+            </a>
+            <div class="media-body">
+                <h2 class="media-heading">@m.Name</h2>
+                <time>@m.DateNextPublication</time>
+                <p>@m.Description</p>
+                @Html.ActionLink("More", "Edition", new { editionId = m.Id })
 
 
-            @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
-            {
-                <p class="navbar-text navbar-right">
-                    @Html.ActionLink("Edit", "EditEdition", "Home", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
+        @*<h2>@m.Name</h2>
+        <time>@m.DateNextPublication</time>
+        <p>@m.Description</p>
 
-                    @Html.ActionLink("Delete", "DeleteEdition", "Home", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
+        @Html.ActionLink("More", "Edition", new { editionId = m.Id }, new { @class = "" })*@
 
-                    @Html.ActionLink("Add new", "AddEdition", null, new { @class = "btn btn-info crud" })
 
-                </p>
-            }
+        @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
+    {
+        <p class="navbar-text navbar-right">
+            @Html.ActionLink("Edit", "EditEdition", "Home", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
 
+            @Html.ActionLink("Delete", "DeleteEdition", "Home", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
+
+            @Html.ActionLink("Add new", "AddEdition", null, new { @class = "btn btn-info crud" })
+
+        </p>
+}
+            </div>
         </div>
+    </div>
 
     }
 

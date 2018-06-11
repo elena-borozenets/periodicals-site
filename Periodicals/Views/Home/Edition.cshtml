@@ -4,13 +4,23 @@
     ViewBag.Title = "Edition";
 }
 
+<div class="media">
+
+    <a class="pull-right" href="#">
+        <img class="media-object" src="~/Content/dbImg/@Model.Image" alt="...">
+    </a>
+    <div class="media-body">
+        <h2 class="media-heading">@Model.Name</h2>
+        <time>@Model.DateNextPublication</time>
+        <p>@Model.Description</p>
+    </div>
+</div>
+@*
+    <h2>@Model.Name</h2>
+    <time>@Model.DateNextPublication</time>
 
 
-<h2>@Model.Name</h2>
-<time>@Model.DateNextPublication</time>
-
-
-<p>@Model.Description</p>
+    <p>@Model.Description</p>*@
 
 @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
 {
@@ -41,5 +51,5 @@
 <br />
 <br />
 
-@Html.Action("Reviews", "Review", new{editionId = Model.Id})
+@Html.Action("Reviews", "Review", new { editionId = Model.Id })
 @*@Html.RenderAction("Reviews", "Review", new { editionId = Model.Id })*@

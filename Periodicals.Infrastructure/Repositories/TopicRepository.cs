@@ -29,7 +29,7 @@ namespace Periodicals.Infrastructure.Repositories
         {
             using (var db = new PeriodicalDbContext())
             {
-                return db.Topics.ToList();
+                return db.Topics.Include(e=>e.Editions).ToList();
             }
         }
 

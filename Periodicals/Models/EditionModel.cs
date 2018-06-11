@@ -29,6 +29,7 @@ namespace Periodicals.Models
         public string Description { get; set; }
         public string Type { get; set; }
         public string Language { get; set; }
+        public string Image { get; set; }
 
         //public List<string> SubscribersNames { get; set; }
 
@@ -44,6 +45,7 @@ namespace Periodicals.Models
             Description=item.Description,
             Type=item.Type,
             Language=item.Language,
+            Image = item.Image
             //SubscribersNames= (from i in item.Subscribers
                            //select i.UserName).ToList<string>()
         };
@@ -60,10 +62,10 @@ namespace Periodicals.Models
             newEdition.Periodicity = this.Periodicity;
             newEdition.Description = (this.Description == null) ? "None" : this.Description;
             newEdition.Type = (this.Type == null) ? "DefaultType" : this.Type;
-            newEdition.Language = (this.Type == null) ? "???" : this.Language;
+            newEdition.Language = (this.Language == null) ? "???" : this.Language;
             newEdition.Reviews = new List<Review>();
             //newEdition.Subscribers=new List<ApplicationUser>();
-
+            newEdition.Image = (this.Image == null) ? "" : this.Image;
             return newEdition;
         }
 

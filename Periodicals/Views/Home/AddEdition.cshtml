@@ -12,7 +12,7 @@
 
         var newEdition = new EditionModel();
     }
-    @using (Html.BeginForm("AddEdition", "Home", FormMethod.Post))
+    @using (Html.BeginForm("AddEdition", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div>@Html.LabelFor(m => newEdition.Name, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => newEdition.Name, new { @class = "form-control" })</div>
@@ -55,6 +55,9 @@
         <div>@Html.DropDownListFor(m => newEdition.Periodicity, new SelectList(new List<int>(){1, 7, 14, 30, 365}), new { @class = "form-control" })</div>
         @*<div>@Html.TextBoxFor(m => newEdition.Periodicity, new { @class = "form-control" })</div>*@
         <div>@Html.ValidationMessageFor(m => newEdition.Periodicity)</div>
+
+
+        <div><input name="image" type="file" /></div>
 
         <br />
         <input type="submit" class="btn" value="Добавить" />
