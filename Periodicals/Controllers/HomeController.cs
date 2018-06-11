@@ -9,6 +9,7 @@ using Periodicals.Models;
 using Periodicals.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -89,14 +90,19 @@ namespace Periodicals.Controllers
                 var userId = User.Identity.GetUserId();
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var user = userManager.FindById(userId);
-                if (user != null && user.Subscription != null && user.Subscription.Contains(item))
+                using (var db = new PeriodicalDbContext())
                 {
-                    ViewBag.Subscpiption = true;
+                    user =  (from user1 in db.Users where user1.Id == userId select user1)
+                        .Include(e => e.Subscription).FirstOrDefault();
                 }
-                else
-                {
-                    ViewBag.Subscpiption = false;
-                }
+                    if (user != null && user.Subscription != null && user.Subscription.Contains(item))
+                    {
+                        ViewBag.Subscpiption = true;
+                    }
+                    else
+                    {
+                        ViewBag.Subscpiption = false;
+                    }
                 ViewBag.Blocked = user?.LockoutEnabled;
             }
 
@@ -115,10 +121,12 @@ namespace Periodicals.Controllers
 
         public ActionResult Unsubscribe(int editionId)
         {
+            var url = HttpContext.Request.UrlReferrer;
                 var userId = User.Identity.GetUserId();
                 (_editionRepository as EditionRepository)?.RemoveSubscription(userId, editionId);
-            
-            return RedirectToAction("Edition", new { area = "", editionId = editionId });
+
+            if(url==null) return RedirectToAction("Edition", new { area = "", editionId = editionId });
+            return Redirect(url.AbsoluteUri);
         }
 
         public ActionResult SortByName(bool order)

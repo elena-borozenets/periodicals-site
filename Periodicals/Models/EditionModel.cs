@@ -70,11 +70,15 @@ namespace Periodicals.Models
         public static List<EditionModel> ToModelList(IList<Edition> items)
         {
             var editions = new List<EditionModel>();
-            foreach (var item in items)
+            if (items != null)
             {
-                editions.Add(EditionModel.FromEdition(item));
-            }
+                foreach (var item in items)
+                {
+                    editions.Add(EditionModel.FromEdition(item));
 
+                }
+
+            }
             return editions;
         }
     }

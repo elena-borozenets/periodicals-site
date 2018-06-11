@@ -26,13 +26,23 @@
         <div class="alert alert-danger">You account is blocked and cann't subscribe on editions</div>
     }
     <br />
-    @Html.LabelFor(m => m.Subscribes)
+    @Html.LabelFor(m => m.Subscriptions)
 
-    @foreach (var m in Model.Subscribes)
+    @if (Model.Subscriptions != null && Model.Subscriptions?.Count != 0)
     {
-        <br />
-        @Html.ActionLink(m.Name, "Edition", "Home", new { area = "", editionId = m.Id }, new { @class = "btn btn-link btn-lg", @role = "button" })
+        foreach (var m in Model.Subscriptions)
+        {
+            <br />
+            @Html.ActionLink(m.Name, "Edition", "Home", new { area = "", editionId = m.Id }, new { @class = "btn btn-link btn-lg", @role = "button" })
+            @Html.ActionLink("Unsubscribe", "Unsubscribe", "Home", new { area = "", editionId = m.Id }, new { @class = "btn btn-success btn-lg btn-xs", @role = "button" })
+        }
     }
+    else
+    {
+        <p>You do not have any subscriptions</p>
+    }
+
     <br />
 </div>
 <br />
+

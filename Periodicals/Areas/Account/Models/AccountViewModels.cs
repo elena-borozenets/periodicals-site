@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Periodicals.Areas.Account.Models;
 
 namespace Periodicals.Areas.Account.Models
 {
@@ -69,7 +70,7 @@ namespace Periodicals.Areas.Account.Models
         public float Credit { get; set; }
 
         [Display(Name = "Your subscriptions:")]
-        public List<EditionModel> Subscribes { get; set; }
+        public List<EditionAccountModel> Subscriptions { get; set; }
 
 
     }

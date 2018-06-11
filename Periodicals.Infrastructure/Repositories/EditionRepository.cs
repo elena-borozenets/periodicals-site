@@ -90,10 +90,17 @@ namespace Periodicals.Infrastructure.Repositories
         {
                 using (var db = new PeriodicalDbContext())
                 {
-                    var user = db.Users.Find(userId);
-                    var editionDb = db.Editions.Find(editionId);
-                    //user.Subscription.Add(editionDb);
-                    editionDb?.Subscribers.Add(user);
+                    var resultUser = (from user in db.Users where user.Id == userId select user)
+                        .Include(e => e.Subscription).FirstOrDefault();
+                    var resultEdition = (from edition in db.Editions where edition.Id == editionId select edition)
+                        .Include(e => e.Subscribers).FirstOrDefault();
+                    resultUser?.Subscription.Add(resultEdition);
+                    
+                /*var user = db.Users.Find(userId);
+                var editionDb = db.Editions.Find(editionId);
+                    //if (user.Subscription == null) user.Subscription = new List<Edition>();
+                    user.Subscription.Add(editionDb);
+                    //editionDb?.Subscribers.Add(user);*/
                     db.SaveChanges();
                     return true;
                 }
@@ -103,12 +110,24 @@ namespace Periodicals.Infrastructure.Repositories
         {
             using (var db = new PeriodicalDbContext())
                 {
-                    var user = db.Users.Find(userId);
+
+                    var resultUser = (from user in db.Users where user.Id == userId select user)
+                        .Include(e => e.Subscription).FirstOrDefault();
+                    var resultEdition = (from edition in db.Editions where edition.Id == editionId select edition)
+                        .Include(e => e.Subscribers).FirstOrDefault();
+                    if (resultUser!=null&&resultUser.Subscription.Contains(resultEdition))
+                    {
+                        resultUser.Subscription.Remove(resultEdition);
+                        //editionDb?.Subscribers.Remove(user);
+                    }
+
+               /* var user = db.Users.Find(userId);
                     var editionDb = db.Editions.Find(editionId);
                     if (user.Subscription.Contains(editionDb))
                     {
                         user.Subscription.Remove(editionDb);
-                    }
+                        //editionDb?.Subscribers.Remove(user);
+                }*/
                     db.SaveChanges();
                     return true;
                 }

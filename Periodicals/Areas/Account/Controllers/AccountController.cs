@@ -3,14 +3,15 @@ using Periodicals.Infrastructure.Identity;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Periodicals.Areas.Account.Models;
 using Periodicals.Core.Identity;
 using Periodicals.Exceptions;
-using Periodicals.Models;
 using Periodicals.Infrastructure.Data;
+using Periodicals.Models;
 
 namespace Periodicals.Areas.Account.Controllers
 {
@@ -100,15 +101,19 @@ namespace Periodicals.Areas.Account.Controllers
 
         public ActionResult Account()
         {
+            var userId = User.Identity.GetUserId();
             AccountViewModel userModel;
             using (var db = new PeriodicalDbContext())
             {
-                var user = db.Users.Find(User.Identity.GetUserId());
+                   var user = (from user1 in db.Users where user1.Id == userId select user1)
+                        .Include(e => e.Subscription).FirstOrDefault();
+
+
                 userModel = new AccountViewModel() {
                     Username = user.UserName,
                     Email = user.Email,
                     Credit = user.Credit,
-                    Subscribes = EditionModel.ToModelList(user.Subscription) };
+                    Subscriptions = EditionAccountModel.ToModelList(user.Subscription) };
                 ViewBag.Blocked = user.LockoutEnabled;
 
             }
@@ -117,6 +122,7 @@ namespace Periodicals.Areas.Account.Controllers
 
             return View(userModel);
         }
+
 
         public ActionResult LogOut()
         {
