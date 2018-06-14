@@ -35,6 +35,7 @@ namespace Periodicals.Controllers
         private readonly IRepository<Edition> _editionRepository;
         private readonly IRepository<Topic> _topicRepository;
         private readonly EditionServices _editionService;
+        private readonly UserRepository _userRepository;
 
         public HomeController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository)
         {
@@ -50,10 +51,9 @@ namespace Periodicals.Controllers
             _topicRepository = topicRepository;
             TopicModel.SetTopicsList(_topicRepository.List());
             _editionService = new EditionServices(_editionRepository);
-
+            _userRepository = new UserRepository();
         }
 
-        
         public ActionResult Index()
         {
             var editions = EditionModel.ToModelList(_editionRepository.List());
@@ -89,13 +89,9 @@ namespace Periodicals.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
-                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = userManager.FindById(userId);
-                using (var db = new PeriodicalDbContext())
-                {
-                    user =  (from user1 in db.Users where user1.Id == userId select user1)
-                        .Include(e => e.Subscription).FirstOrDefault();
-                }
+                //var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                //var user = userManager.FindById(userId);
+                    var user = _userRepository.GetById(userId);
                     if (user != null && user.Subscription != null && user.Subscription.Contains(item))
                     {
                         ViewBag.Subscpiption = true;
@@ -114,8 +110,8 @@ namespace Periodicals.Controllers
         [Authorize(Roles = "Subscriber")]
         public ActionResult Subscribe(int editionId)
         {
-                var userId = User.Identity.GetUserId();
-            (_editionRepository as EditionRepository)?.AddSubscription(userId,editionId);
+            var userId = User.Identity.GetUserId();
+        (_editionRepository as EditionRepository)?.AddSubscription(userId,editionId);
 
             return RedirectToAction("Edition", new { area = "", editionId = editionId });
         }

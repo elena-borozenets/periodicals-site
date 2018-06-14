@@ -245,6 +245,7 @@
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\Account\Models\AccountViewModels.cs" />
     <Compile Include="Areas\Account\Models\EditionAccountModel.cs" />
+    <Compile Include="Areas\Account\Models\TopUpModel.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
@@ -278,6 +279,7 @@
     <Content Include="Content\ErrorsInfo\NullReferenceError.html" />
     <Content Include="Content\im.png" />
     <Content Include="Content\ErrorsInfo\IndexOutOfRangeError.html" />
+    <Content Include="Content\Payment.new.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -304,6 +306,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Account\Views\Account\TopUp.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

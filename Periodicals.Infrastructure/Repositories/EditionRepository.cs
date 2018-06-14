@@ -88,21 +88,31 @@ namespace Periodicals.Infrastructure.Repositories
 
         public bool AddSubscription(string userId, int editionId)
         {
-                using (var db = new PeriodicalDbContext())
+            using (var db = new PeriodicalDbContext())
+            {
+                var resultUser = (from user in db.Users where user.Id == userId select user)
+                    .Include(e => e.Subscription).FirstOrDefault();
+                var resultEdition = (from edition in db.Editions where edition.Id == editionId select edition)
+                    .Include(e => e.Subscribers).FirstOrDefault();
+
+                if (resultEdition!=null&&resultUser!=null&&resultUser.Credit >= resultEdition.Price)
                 {
-                    var resultUser = (from user in db.Users where user.Id == userId select user)
-                        .Include(e => e.Subscription).FirstOrDefault();
-                    var resultEdition = (from edition in db.Editions where edition.Id == editionId select edition)
-                        .Include(e => e.Subscribers).FirstOrDefault();
-                    resultUser?.Subscription.Add(resultEdition);
-                    
-                /*var user = db.Users.Find(userId);
-                var editionDb = db.Editions.Find(editionId);
-                    //if (user.Subscription == null) user.Subscription = new List<Edition>();
-                    user.Subscription.Add(editionDb);
-                    //editionDb?.Subscribers.Add(user);*/
+                    resultUser.Credit -= resultEdition.Price;
+                    resultUser.Subscription.Add(resultEdition);
                     db.SaveChanges();
                     return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            /*var user = db.Users.Find(userId);
+            var editionDb = db.Editions.Find(editionId);
+                //if (user.Subscription == null) user.Subscription = new List<Edition>();
+                user.Subscription.Add(editionDb);
+                //editionDb?.Subscribers.Add(user);*/
+
                 }
         }
 

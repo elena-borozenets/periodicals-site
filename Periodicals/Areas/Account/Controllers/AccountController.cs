@@ -11,6 +11,7 @@ using Periodicals.Areas.Account.Models;
 using Periodicals.Core.Identity;
 using Periodicals.Exceptions;
 using Periodicals.Infrastructure.Data;
+using Periodicals.Infrastructure.Repositories;
 using Periodicals.Models;
 
 namespace Periodicals.Areas.Account.Controllers
@@ -24,6 +25,11 @@ namespace Periodicals.Areas.Account.Controllers
     [ArgumentOutOfRangePeriodicalsException]
     public class AccountController : Controller
     {
+        private readonly UserRepository _userRepository;
+        public AccountController()
+        {
+            _userRepository = new UserRepository();
+        }
         // GET: Login/Login
         [AllowAnonymous]
         public ActionResult Login()
@@ -102,21 +108,17 @@ namespace Periodicals.Areas.Account.Controllers
         public ActionResult Account()
         {
             var userId = User.Identity.GetUserId();
-            AccountViewModel userModel;
-            using (var db = new PeriodicalDbContext())
-            {
-                   var user = (from user1 in db.Users where user1.Id == userId select user1)
-                        .Include(e => e.Subscription).FirstOrDefault();
+            
+                var user = _userRepository.GetById(userId);
 
 
-                userModel = new AccountViewModel() {
+                var userModel = new AccountViewModel() {
                     Username = user.UserName,
                     Email = user.Email,
                     Credit = user.Credit,
                     Subscriptions = EditionAccountModel.ToModelList(user.Subscription) };
                 ViewBag.Blocked = user.LockoutEnabled;
 
-            }
             //var user = userManager.FindByName(User.Identity.Name);// var m =user.Subscription;
             
 
@@ -133,6 +135,25 @@ namespace Periodicals.Areas.Account.Controllers
 
         public ActionResult TopUp()
         {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TopUp(TopUpModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                _userRepository.TopUp(userId, model.Amount);
+
+                ViewBag.TopUpResult = "Your account has been credited";
+            }
+            else
+            {
+                ViewBag.TopUpResult = "Your account has not been credited";
+            }
+
             return RedirectToAction("Account");
         }
     }

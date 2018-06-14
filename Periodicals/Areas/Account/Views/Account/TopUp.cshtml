@@ -1,0 +1,59 @@
+﻿@using Periodicals.Areas.Account.Models
+@model TopUpModel
+
+
+<link rel="stylesheet" href="~/Content/Payment.new.css">
+<div id="main_content">
+
+    <div id="page_content">
+        <div class="payment-form">
+
+            <div class="forms type-card">
+                @*<form autocomplete="off" method="post" action="" name="pay_form" data-cid="zh90">*@
+                @using (Html.BeginForm("TopUp", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+                {
+
+                    <div class="card">
+                        <div class="num-block">
+                            <span>Card number</span><br />
+                            @Html.TextBoxFor(m => m.Card, new {  placeholder = "XXXX-XXXX-XXXX-XXXX", maxlength = "19", type = "tel", pattern = "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}" })
+                            @*<input name="cnum" type="tel" value="" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" />*@
+                        </div>
+                        <div class="dates-block">
+                            <span>Validity</span><br />
+                            @Html.TextBoxFor(m => m.DateMonth, new { maxlength = "2", type = "tel", pattern = "[0-9]{2}" }) / @Html.TextBoxFor(m => m.DateYear, new { maxlength = "2", type = "tel", pattern= "[0-9]{2}" })
+                            @*<input name="expire_month" type="tel" maxlength="2" value=""> / <input type="tel" name="expire_year" maxlength="2" value="">*@
+                        </div>
+                        <div class="cvv-block">
+                            <span>CVV2</span><a class="q" href="#" target="_">?</a><br />
+                            @Html.TextBoxFor(m => m.CVV, new { id = "input-cvv", @class="cvv", name ="cvv[new]", type="password", placeholder="", autocomplete="new-password", maxlength="3", pattern= "[0-9]{3}" })
+                            @*<input id="input-cvv" class="cvv" name="cvv[new]" type="password" value="" placeholder="" autocomplete="new-password" maxlength="3" pattern="\d{3}" data-map="" />*@
+                            <div class="cvvkb"></div>
+                        </div>
+                    </div>
+
+                    <p class="total-amount">
+                        Amount due: @Html.TextBoxFor(m => m.Amount, new{ @class="price" }) $</p>
+
+
+
+
+        <p class="continue">
+
+            <input id = "service_confirm_payment_button" type="submit" class="btn  btn-info" value="Pay"/>
+        </p>
+    }
+                    @*</form>*@
+            </div>
+        </div>
+    </div>
+</div>
+                    @*@using (Html.BeginForm("TopUp", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+            </div>
+        </div>
+    }*@
