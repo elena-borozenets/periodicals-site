@@ -1,4 +1,5 @@
-﻿@model Periodicals.Areas.Account.Models.AccountViewModel
+﻿@using Periodicals.Areas.Account.Models
+@model AccountViewModel
 @{
     ViewBag.Title = "Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,6 +13,12 @@
         <br />
         @Html.LabelFor(m => m.Email)
         @Model.Email
+        <br />
+        @Html.ActionLink("Change info", "ChangeInfo", "Account", new
+   {
+       area = "Account"
+
+   }, new { @class = "btn btn-success btn-lg btn-xs", @role = "button" })
     </div>
     <br />
     @if (!ViewBag.Blocked)

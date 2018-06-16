@@ -307,6 +307,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Account\Views\Account\TopUp.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ChangeInfo.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

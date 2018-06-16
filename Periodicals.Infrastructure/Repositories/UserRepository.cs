@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Periodicals.Core.Identity;
+using Periodicals.Core.Interfaces;
 using Periodicals.Infrastructure.Data;
 
 namespace Periodicals.Infrastructure.Repositories
 {
-    public class UserRepository
+    public class UserRepository: IUserRepository
     {
 
         public ApplicationUser GetById(string userId)

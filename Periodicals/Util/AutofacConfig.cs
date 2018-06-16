@@ -29,6 +29,7 @@ namespace Periodicals.Util
             builder.RegisterType<EditionRepository>().As<IRepository<Edition>>();
             builder.RegisterType<TopicRepository>().As<IRepository<Topic>>();
             builder.RegisterType<ReviewRepository>().As<IRepository<Review>>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
 
             // создаем новый контейнер с теми зависимостями, которые определены выше
             var container = builder.Build();

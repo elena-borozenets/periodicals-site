@@ -35,9 +35,10 @@ namespace Periodicals.Controllers
         private readonly IRepository<Edition> _editionRepository;
         private readonly IRepository<Topic> _topicRepository;
         private readonly EditionServices _editionService;
-        private readonly UserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
+        Logger logger = LogManager.GetCurrentClassLogger();
 
-        public HomeController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository)
+        public HomeController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository, IUserRepository userRepository)
         {
 
 
@@ -51,7 +52,7 @@ namespace Periodicals.Controllers
             _topicRepository = topicRepository;
             TopicModel.SetTopicsList(_topicRepository.List());
             _editionService = new EditionServices(_editionRepository);
-            _userRepository = new UserRepository();
+            _userRepository = userRepository;
         }
 
         public ActionResult Index()
@@ -89,7 +90,7 @@ namespace Periodicals.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
-                //var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                //var userManager = HttpContext.GetOwinCon text().GetUserManager<ApplicationUserManager>();
                 //var user = userManager.FindById(userId);
                     var user = _userRepository.GetById(userId);
                     if (user != null && user.Subscription != null && user.Subscription.Contains(item))
@@ -111,7 +112,10 @@ namespace Periodicals.Controllers
         public ActionResult Subscribe(int editionId)
         {
             var userId = User.Identity.GetUserId();
-        (_editionRepository as EditionRepository)?.AddSubscription(userId,editionId);
+            if ((_editionRepository as EditionRepository).AddSubscription(userId, editionId))
+            {
+                logger.Info("user " + User.Identity.Name + " subscribe for " + editionId + " edition");
+            };
 
             return RedirectToAction("Edition", new { area = "", editionId = editionId });
         }
@@ -121,8 +125,9 @@ namespace Periodicals.Controllers
             var url = HttpContext.Request.UrlReferrer;
                 var userId = User.Identity.GetUserId();
                 (_editionRepository as EditionRepository)?.RemoveSubscription(userId, editionId);
+            logger.Info("user " + User.Identity.Name + " unsubscribe for " + editionId + " edition");
 
-            if(url==null) return RedirectToAction("Edition", new { area = "", editionId = editionId });
+            if (url==null) return RedirectToAction("Edition", new { area = "", editionId = editionId });
             return Redirect(url.AbsoluteUri);
         }
 

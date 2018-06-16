@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Periodicals.Core", "Periodi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Periodicals.Services", "Periodicals.Services\Periodicals.Services.csproj", "{2627D1D7-0581-48F1-BF05-024C975371B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Periodicals.Test", "Periodicals.Test\Periodicals.Test.csproj", "{DF8A2BD7-6E5E-42E6-B225-43418A9622F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2627D1D7-0581-48F1-BF05-024C975371B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2627D1D7-0581-48F1-BF05-024C975371B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2627D1D7-0581-48F1-BF05-024C975371B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF8A2BD7-6E5E-42E6-B225-43418A9622F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF8A2BD7-6E5E-42E6-B225-43418A9622F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF8A2BD7-6E5E-42E6-B225-43418A9622F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF8A2BD7-6E5E-42E6-B225-43418A9622F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,55 @@
+﻿@using Periodicals.Areas.Account.Models
+@model AccountViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "ChangeInfo";
+}
+
+<h2>Enter the filds you want to change</h2>
+<div class="form-group">
+    @using (Html.BeginForm("ChangeUsername", "Account", new { area = "Account" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+
+        <div>@Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })</div>
+        <div>@Html.TextBoxFor(m => m.Username, new { @class = "form-control" })</div>
+        <br />
+        <input type="submit" value="Change" class="btn btn-default" />
+
+        @Html.ActionLink("Cancel", "Account", "Account", new { area = "Account" }, new { @class = "btn btn-default", @role = "button" })
+    }
+    <hr />
+    @using (Html.BeginForm("ChangeEmail", "Account", new { area = "Account" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div>@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })</div>
+        <div>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</div>
+        <br />
+        <input type="submit" value="Change" class="btn btn-default" />
+
+        @Html.ActionLink("Cancel", "Account", "Account", new { area = "Account" }, new { @class = "btn btn-default", @role = "button" })
+    }
+    <hr />
+    @using (Html.BeginForm("ChangePassword", "Account", new { area = "Account" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        if (Html.ViewBag.PassMessage != null) { 
+            <div class="alert alert - danger">@Html.ViewBag.PassMessage</div>
+        }
+
+        <div>@Html.Label("Old password", new { @class = "col-md-2 control-label" })</div>
+        <div>@Html.TextBox("oldPassword", null, new { @class = "form-control", type = "password" })</div>
+        <br />
+
+        <div>@Html.Label("New password", new { @class = "col-md-2 control-label" })</div>
+        <div>@Html.TextBox("password", null, new { @class = "form-control", type = "password" })</div>
+        <br />
+
+        <div>@Html.Label("Confirm password", new { @class = "col-md-2 control-label" })</div>
+        <div>@Html.TextBox("confirmPassword", null, new { @class = "form-control", type = "password" })</div>
+        <br />
+        <input type="submit" value="Change" class="btn btn-default" />
+        @Html.ActionLink("Cancel", "Account", "Account", new { area = "Account" }, new { @class = "btn btn-default", @role = "button" })
+
+
+    }
+</div>
