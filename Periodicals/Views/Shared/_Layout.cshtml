@@ -124,7 +124,7 @@
 
         <div class="right-sidebar">
             <ul class="nav nav-pills nav-stacked">
-                <li> @Html.ActionLink("Главная", "Index", "Home", new { area = "" }, null)</li>
+                @*<li> @Html.ActionLink("Главная", "Index", "Home", new { area = "" }, null)</li>*@
 
                 @*
                 <li> @Html.ActionLink("Гостевая", "Guest", "Guest", new { area = "" }, null)</li>*@
@@ -136,6 +136,7 @@
                 <li> @RenderSection("Vote", false) </li>*@
             </ul>
         </div>
+        <hr/>
         <footer>
             <p>&copy; @DateTime.Now.Year - Elena Borozenets ASP.NET Application</p>
         </footer>

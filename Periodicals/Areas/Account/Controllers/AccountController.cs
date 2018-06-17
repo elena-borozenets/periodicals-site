@@ -5,8 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Owin.Security.DataProtection;
 using NLog;
 using Periodicals.Areas.Account.Models;
 using Periodicals.Core.Identity;
@@ -54,12 +57,15 @@ namespace Periodicals.Areas.Account.Controllers
                    signInManager.PasswordSignIn(model.Username, model.Password, model.RememberMe, shouldLockout);
             if (signInStatus == SignInStatus.Success)
             {
-                ViewBag.iii = 1;
+                ViewBag.signInStatus = 1;
+                logger.Info("user login to site " + model.Username);
             }
             else
             {
-                ViewBag.iii = 0;
+                ViewBag.signInStatus = false;
+                ViewBag.signInMessage = "Incorrectly entered login or password";
                 logger.Info("user failed to login " + model.Username );
+                return View(model);
             }
             return RedirectToAction("Index", "Home", new { area = "" });
         }
@@ -194,6 +200,7 @@ namespace Periodicals.Areas.Account.Controllers
                 if (result.Succeeded)
                 {
                     ViewBag.PassMessage = "Your password has been changed successfully!";
+                    logger.Info("user changed password " + User.Identity.Name);
                 }
                 else
                 {
@@ -223,7 +230,8 @@ namespace Periodicals.Areas.Account.Controllers
                 if (result.Succeeded)
                 {
                     ViewBag.UsernameMessage = "Your username has been changed successfully!";
-                }
+                    logger.Info("user changed username " + userId);
+            }
                 else
                 {
                 ViewBag.UsernameMessage = "Your username has not been changed!";
@@ -250,6 +258,7 @@ namespace Periodicals.Areas.Account.Controllers
             if (result.Succeeded)
             {
                 ViewBag.EmailMessage = "Your email has been changed successfully!";
+                logger.Info("user changed email " + userId);
             }
             else
             {
@@ -258,5 +267,133 @@ namespace Periodicals.Areas.Account.Controllers
 
             return RedirectToAction("ChangeInfo");
         }
+
+        public ActionResult ForgotPassword()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(string userString)
+        {
+
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var resultEmail = userManager.FindByEmail(userString);
+            var resultName = userManager.FindByName(userString);
+            if (resultName == null && resultEmail == null)
+            {
+                ViewBag.ForgotPasswordResult = "User with such email or username is not found";
+                return View();
+            }
+            else
+            {
+                ApplicationUser user;
+                if(resultName?.Email!=null)
+                {
+                    user = resultName;
+                //userManager.SendEmail(resultName.Id, "Confirm changing password", "");
+                }
+                else if (resultEmail != null)
+                {
+                    user = resultEmail;
+                    //userManager.SendEmail();
+                }
+                else
+                {
+                    return View();
+
+                }
+
+                var provider = new DpapiDataProtectionProvider("Sample");
+                userManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
+                    provider.Create("EmailConfirmation"));
+
+                string code = userManager.GeneratePasswordResetToken(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account",
+                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                MailAddress from = new MailAddress("elena.borozenets.applications@gmail.com");
+                MailAddress to = new MailAddress(user.Email);
+                MailMessage message = new MailMessage(from, to);
+
+                message.Subject = "Сброс пароля";
+                message.Body = $" {"Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>"}";
+                message.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+                smtp.Credentials = new NetworkCredential("elena.borozenets.applications@gmail.com", "Some00Pass11");
+                smtp.EnableSsl = true;
+
+                smtp.Send(message);
+                //userManager.SendEmail(user.Id, "Сброс пароля",
+                //    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
+                return RedirectToAction("ForgotPasswordConformation", "Account");
+              }
+            return View();
+        }
+
+        public ActionResult ForgotPasswordConformation()
+        {
+            return View();
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(string userString, string password, string confirmPassword)
+        {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var resultEmail = userManager.FindByEmail(userString);
+            var resultName = userManager.FindByName(userString);
+            if (resultName == null && resultEmail == null)
+            {
+                ViewBag.ResetPasswordResult = "User with such email or username is not found";
+                return View();
+            }
+            ApplicationUser user;
+            if (resultName?.Email != null)
+            {
+                user = resultName;
+                //userManager.SendEmail(resultName.Id, "Confirm changing password", "");
+            }
+            else if (resultEmail != null)
+            {
+                user = resultEmail;
+                //userManager.SendEmail();
+            }
+            else
+            {
+                    return View();
+
+            }
+            if (password != confirmPassword)
+            {
+                ViewBag.ResetPasswordResult ="Your password has not been changed! The password and confirm password fields do not match!";
+                return View();
+
+            }
+            var provider = new DpapiDataProtectionProvider("Sample");
+            userManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
+                provider.Create("ResetingPassword"));
+
+            string token = userManager.GeneratePasswordResetToken(user.Id);
+            var result = userManager.ResetPassword(user.Id, token, password);
+            if (result.Succeeded) {
+                return View("ResetPasswordConfirmation");
+                //ViewBag.ResetPasswordResult = "Your password has been changed successfully!";
+
+            }
+                return View();
+        }
+
+        /*public ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }*/
     }
 }

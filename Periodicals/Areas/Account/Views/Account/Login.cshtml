@@ -5,7 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Partial("~/Areas/Account/Views/Account/_Login.cshtml", new LoginViewModel())
+
+
+@if (Html.ViewBag.signInMessage != null)
+{
+    <div class="alert-danger">@Html.ViewBag.signInMessage</div>
+}
+<br/>
+
+@Html.Partial("~/Areas/Account/Views/Account/_Login.cshtml", Model)
+
+@if (Html.ViewBag.signInStatus != null && ViewBag.signInStatus == false)
+{
+    @Html.ActionLink("Forgot Password", "ForgotPassword", "Account", new { area = "Account" }, new { @class = "" })
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

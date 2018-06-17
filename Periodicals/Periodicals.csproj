@@ -308,6 +308,10 @@
     </Content>
     <Content Include="Areas\Account\Views\Account\TopUp.cshtml" />
     <Content Include="Areas\Account\Views\Account\ChangeInfo.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ForgotPasswordConformation.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ResetPassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ResetPasswordConfirmation.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
