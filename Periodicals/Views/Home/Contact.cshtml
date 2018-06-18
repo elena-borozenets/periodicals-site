@@ -1,17 +1,38 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
+@using (Html.BeginForm("Contact", "Home", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            <div>@Html.Label("Your email", new { @class = "" })</div>
+            <div>@Html.TextBox("email", null, new { @class = "form-control", type="email" })</div>
+            <div>@Html.ValidationMessage("Enter you email we can contact you")</div>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+            <div>@Html.Label("Your name", new { @class = "" })</div>
+            <div>@Html.TextBox("name", null, new { @class = "form-control" })</div>
+            <div>@Html.ValidationMessage("Enter you name")</div>
+        }
 
+        <div>@Html.Label("Subject", new { @class = "" })</div>
+        <div>@Html.TextBox("subject", null, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessage("Enter subject of yor text")</div>
+
+        <div>@Html.Label("Your text", new { @class = "" })</div>
+        <div>@Html.TextArea("text", null, new { @class = "form-control", @rows = "10", @cols = "45" })</div>
+        <div>@Html.ValidationMessage("Enter you information for us")</div>
+    </div>
+
+    <input type="submit" value="Send" class="btn btn-default" />
+}
+<br />
+<br />
 <address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>Support:</strong>   <a href="mailto:elena.borozenets.applications@gmail.com">elena.borozenets.applications@gmail.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:elena.borozenets.applications@gmail.com">elena.borozenets.applications@gmail.com</a>
 </address>

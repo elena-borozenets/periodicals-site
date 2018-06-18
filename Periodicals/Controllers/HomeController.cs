@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -257,8 +259,36 @@ namespace Periodicals.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Leave a message and we will contact with you";
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(string email, string name, string subject, string text)
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var userId = HttpContext.User.Identity.GetUserId();
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = userManager.FindById(userId);
+                email = user.Email;
+                name = User.Identity.Name;
+            }
+
+            MailAddress from = new MailAddress("elena.borozenets.applications@gmail.com");
+            MailAddress to = new MailAddress("elena.borozenets.applications@gmail.com");
+            MailMessage message = new MailMessage(from, to);
+
+            
+            message.Subject = (!string.IsNullOrEmpty(subject))?subject:"Message from Periodicals!";
+            message.Body = $"(From: {email} User: {name}) \nMessage: {text}";
+            message.IsBodyHtml = false;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.Credentials = new NetworkCredential("elena.borozenets.applications@gmail.com", "Some00Pass11");
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+            ViewBag.ContactMessage = "Your message has been sent successfully!";
+            return View("ContactMessageResult");
         }
     }
 }

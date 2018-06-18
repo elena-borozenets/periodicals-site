@@ -329,12 +329,12 @@ namespace Periodicals.Areas.Account.Controllers
                 smtp.Send(message);
                 //userManager.SendEmail(user.Id, "Сброс пароля",
                 //    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
-                return RedirectToAction("ForgotPasswordConformation", "Account");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
               }
             return View();
         }
 
-        public ActionResult ForgotPasswordConformation()
+        public ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }

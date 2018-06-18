@@ -33,8 +33,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @Html.Partial("_Navbar");
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
                     @if(HttpContext.Current.User.IsInRole("Subscriber"))
                     {
                     <li>@Html.ActionLink("Account", "Account", "Account", new { area = "Account" }, null)</li>
