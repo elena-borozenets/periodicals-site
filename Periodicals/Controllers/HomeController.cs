@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using System.Web.WebPages;
 using Periodicals.Infrastructure.Repositories;
 using Ninject;
@@ -153,6 +154,8 @@ namespace Periodicals.Controllers
         [Authorize(Roles = "Administrator, Moderator")]
         public ActionResult DeleteEdition(int editionId)
         {
+            var image = _editionRepository.GetById(editionId).Image;
+
             //var item = _editionRepository.GetById(editionId);
             _editionRepository.Delete(editionId);
 
@@ -160,6 +163,14 @@ namespace Periodicals.Controllers
             {
                 if (topic.Editions?.Count == 0) _topicRepository.Delete(topic.Id);
             }
+
+            if (!string.IsNullOrEmpty(image))
+            {
+                var imagePath = "~/Content/" + image;
+                System.IO.File.Delete(imagePath);
+            }
+            
+
             return RedirectToAction("Index");
         }
 
@@ -253,7 +264,7 @@ namespace Periodicals.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Periodicals! ";
             return View();
         }
 

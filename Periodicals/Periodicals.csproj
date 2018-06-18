@@ -312,6 +312,7 @@
     <Content Include="Areas\Account\Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Areas\Account\Views\Account\ResetPassword.cshtml" />
     <Content Include="Areas\Account\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Account\Views\Account\RegisterNew.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

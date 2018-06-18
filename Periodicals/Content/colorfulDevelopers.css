@@ -1,0 +1,84 @@
+body
+{
+  /*display: flex;*/
+  justify-content: center;
+}
+
+.str1 
+{
+  stroke:#2B2A29;
+  stroke-width:49.5657;
+}
+.str0 
+{
+  stroke:#2B2A29;
+  stroke-width:49.5657
+}
+.fil1 
+{
+  fill:none
+}
+.fil0 
+{
+  fill:#5B5B5B;
+  -webkit-animation: colors 4s infinite linear;
+          animation: colors 4s infinite linear;
+}
+
+@-webkit-keyframes colors {
+  0% {
+    fill: #FF0000;
+  }
+  
+  15% {
+    fill: #FF7F00;
+  }
+  
+  30% {
+    fill: #FFFF00;
+  }
+  
+  45% {
+    fill: #00FF00;
+  }
+  
+  60% {
+    fill: #0000FF;
+  }
+  
+  75% {
+    fill: #4B0082;
+  }
+  100% {
+    fill: #8F00FF;
+  }
+}
+
+@keyframes colors {
+  0% {
+    fill: #FF0000;
+  }
+  
+  15% {
+    fill: #FF7F00;
+  }
+  
+  30% {
+    fill: #FFFF00;
+  }
+  
+  45% {
+    fill: #00FF00;
+  }
+  
+  60% {
+    fill: #0000FF;
+  }
+  
+  75% {
+    fill: #4B0082;
+  }
+  100% {
+    fill: #8F00FF;
+  }
+}

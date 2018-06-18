@@ -73,7 +73,7 @@ namespace Periodicals.Areas.Account.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return View("RegisterNew");
         }
 
         [HttpPost]
@@ -81,7 +81,7 @@ namespace Periodicals.Areas.Account.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("RegisterNew", model);
             }
 
             var newUser = new ApplicationUser

@@ -1,0 +1,87 @@
+﻿@using Periodicals.Areas.Account.Models
+@model RegisterViewModel
+
+
+
+@{
+    ViewBag.Title = "Register";
+}
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "well form-horizontal", id = "register_form" }))
+        {
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.AntiForgeryToken()
+            <h4>Create a new account.</h4>
+            <hr />
+            <fieldset>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Username</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.Username, new { name = "username", placeholder = "Username", @class = "form-control", type = "text" })
+
+    </div>
+    </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label">E-Mail</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                @Html.TextBoxFor(m => m.Email, new { name = "email", placeholder = "E-Mail Address", @class = "form-control", type = "text" })
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label">Password</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                @Html.PasswordFor(m => m.Password, new { name = "password", placeholder = "Password", @class = "form-control", type = "password" })
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label">Confirm password</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { name = "confirm_password", placeholder = "Confirm password", @class = "form-control", type = "password" })
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label"></label>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-warning">Send <span class="glyphicon glyphicon-send"></span></button>
+        </div>
+    </div>
+
+    </fieldset>
+    }
+
+<script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.10.2/validator.min.js"></script>*@
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+
+
+
+    <script src="~/Scripts/registerValidate.js"></script>
