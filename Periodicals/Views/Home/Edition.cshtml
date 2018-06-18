@@ -4,10 +4,16 @@
     ViewBag.Title = "Edition";
 }
 
-<div class="media">
+<link rel="stylesheet" href="~/Content/pictureZoom.css">
 
-    <a class="pull-right" href="#">
-        <img class="media-object" src="~/Content/dbImg/@Model.Image" alt="...">
+<div class="media">
+<a class="pull-right" href="#">
+    <div class="hover02 column">
+        <div>
+            <figure><img src="~/Content/dbImg/@Model.Image" /></figure>
+            <span>@Model.Name</span>
+        </div>
+    </div>
     </a>
     <div class="media-body">
         <h2 class="media-heading">@Model.Name</h2>

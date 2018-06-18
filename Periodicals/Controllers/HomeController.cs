@@ -166,7 +166,8 @@ namespace Periodicals.Controllers
 
             if (!string.IsNullOrEmpty(image))
             {
-                var imagePath = "~/Content/" + image;
+                var appPath = AppDomain.CurrentDomain.BaseDirectory;
+                var imagePath = appPath+ "Content\\dbImg\\" + image;
                 System.IO.File.Delete(imagePath);
             }
             
