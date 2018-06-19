@@ -18,6 +18,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Web.WebPages;
+using Microsoft.Owin.Security;
 using Periodicals.Infrastructure.Repositories;
 using Ninject;
 using NLog;
@@ -32,7 +33,7 @@ namespace Periodicals.Controllers
     [InvalidOperationPeriodicalsException]
     [ArgumentNullPeriodicalsException]
     [ArgumentOutOfRangePeriodicalsException]
-    //
+    [RequireHttps]
     public class HomeController : Controller
     {
         private readonly IRepository<Edition> _editionRepository;
@@ -302,5 +303,7 @@ namespace Periodicals.Controllers
             ViewBag.ContactMessage = "Your message has been sent successfully!";
             return View("ContactMessageResult");
         }
+
+
     }
 }

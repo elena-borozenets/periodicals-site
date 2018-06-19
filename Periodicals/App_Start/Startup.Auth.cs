@@ -4,9 +4,11 @@ using Periodicals.Infrastructure.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Periodicals.Core.Identity;
-//using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.Facebook;
 using Owin;
 
 namespace Periodicals
@@ -67,15 +69,24 @@ namespace Periodicals
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+              appId: "226576694792844",
+              appSecret: "4ba6d2c9efa371a16fdb8f2c289226d2");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                //AuthenticationType = "Google",
+                ClientId = "721699416214-bhcqvldmeket8jvpqgn4d88oorvsk791.apps.googleusercontent.com",
+                ClientSecret = "YkuyU8Uo9F4e4fsYFWOGxa-m",
+                /*Caption = "Authorizing with Google+",
+                CallbackPath = new PathString("/Account/Account/GoogleLoginCallback"),
+                 AuthenticationMode = AuthenticationMode.Passive,
+                 SignInAsAuthenticationType = app.GetDefaultSignInAsAuthenticationType(),
+                 BackchannelTimeout = TimeSpan.FromSeconds(60),
+                 BackchannelHttpHandler = new System.Net.Http.WebRequestHandler(),
+                 BackchannelCertificateValidator = null,
+                 Provider = new GoogleOAuth2AuthenticationProvider()*/
+            });
         }
     }
 }

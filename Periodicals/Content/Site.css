@@ -236,3 +236,21 @@ em.tag :hover {
 .edit {
     padding: 10px;
 }
+/*
+.icon{
+    width: 3%;
+
+    display: inline-block;
+    border-radius: 2px;
+    padding: 5px;	
+    border: 1px solid white;
+    margin-top: 1%;
+    margin-right: 7px;
+    margin-left: 7px;
+    margin-bottom: 1%;
+
+} 
+
+.icon:hover{
+    border: 1px solid #de2b24;
+}*/

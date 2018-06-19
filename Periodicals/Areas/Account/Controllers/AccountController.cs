@@ -7,8 +7,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using NLog;
 using Periodicals.Areas.Account.Models;
@@ -28,10 +31,12 @@ namespace Periodicals.Areas.Account.Controllers
     [InvalidOperationPeriodicalsException]
     [ArgumentNullPeriodicalsException]
     [ArgumentOutOfRangePeriodicalsException]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private readonly IUserRepository _userRepository;
         Logger logger = LogManager.GetCurrentClassLogger();
+        private IAuthenticationManager AuthManager => HttpContext.GetOwinContext().Authentication;
         public AccountController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -395,5 +400,124 @@ namespace Periodicals.Areas.Account.Controllers
         {
             return View();
         }*/
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult GoogleLogin(string returnUrl)
+        {
+            if(returnUrl==null) returnUrl= "http://localhost:58373";
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("ExternalLoginCallback",
+                    new { returnUrl = returnUrl })
+            };
+
+            HttpContext.GetOwinContext().Authentication.Challenge(properties, "Google");
+            return new HttpUnauthorizedResult();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult FbLogin(string returnUrl)
+        {
+            if (returnUrl == null) returnUrl = "http://localhost:58373";
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("ExternalLoginCallback",
+                    new { returnUrl = returnUrl })
+            };
+
+            HttpContext.GetOwinContext().Authentication.Challenge(properties, "Facebook");
+            return new HttpUnauthorizedResult();
+        }
+        /*
+        [AllowAnonymous]
+        public ActionResult GoogleLoginCallback(string returnUrl)
+        {
+            ExternalLoginInfo loginInfo = AuthManager.GetExternalLoginInfo();
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.Find(loginInfo.Login);
+
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Email = loginInfo.Email,
+                    UserName = loginInfo.DefaultUserName,
+                    Credit = 0
+                };
+
+                IdentityResult result = userManager.Create(user);
+                if (!result.Succeeded)
+                {
+                    return View("Error", result.Errors);
+                }
+                else
+                {
+                    result = userManager.AddLogin(user.Id, loginInfo.Login);
+                    if (!result.Succeeded)
+                    {
+                        return View("Error", result.Errors);
+                    }
+                }
+            }
+
+            ClaimsIdentity ident = userManager.CreateIdentity(user,
+                DefaultAuthenticationTypes.ApplicationCookie);
+
+            ident.AddClaims(loginInfo.ExternalIdentity.Claims);
+
+            AuthManager.SignIn(new AuthenticationProperties
+            {
+                IsPersistent = false
+            }, ident);
+
+            return Redirect(returnUrl ?? "/");
+        }*/
+
+        [AllowAnonymous]
+      public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+         {
+             ExternalLoginInfo loginInfo = await AuthManager.GetExternalLoginInfoAsync();
+             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = await userManager.FindAsync(loginInfo.Login);
+
+             if (user == null)
+             {
+                 user = new ApplicationUser
+                 {
+                     Email = loginInfo.Email,
+                     UserName = loginInfo.DefaultUserName,
+                     Credit = 0
+                 };
+
+                 IdentityResult result = await userManager.CreateAsync(user);
+                 if (!result.Succeeded)
+                 {
+                     return View("Error", result.Errors);
+                 }
+                 else
+                 {
+                     result = await userManager.AddLoginAsync(user.Id, loginInfo.Login);
+                     if (!result.Succeeded)
+                     {
+                         return View("Error", result.Errors);
+                     }
+                 }
+             }
+
+             ClaimsIdentity ident = await userManager.CreateIdentityAsync(user,
+                 DefaultAuthenticationTypes.ApplicationCookie);
+
+             ident.AddClaims(loginInfo.ExternalIdentity.Claims);
+
+             AuthManager.SignIn(new AuthenticationProperties
+             {
+                 IsPersistent = false
+             }, ident);
+
+             return Redirect(returnUrl ?? "/");
+         }
+
     }
 }
