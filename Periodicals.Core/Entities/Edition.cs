@@ -1,15 +1,9 @@
 ﻿using Periodicals.Core.SharedKernel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Periodicals.Core.Identity;
-using Periodicals.Core.Entities;
 
-namespace Periodicals.Core
+namespace Periodicals.Core.Entities
 {
     public class Edition : BaseEntity, IEquatable<Edition>
     {

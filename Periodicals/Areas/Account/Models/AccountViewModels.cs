@@ -1,20 +1,12 @@
-﻿using Periodicals.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Periodicals.Areas.Account.Models;
+
 
 namespace Periodicals.Areas.Account.Models
 {
     public class LoginViewModel
     {
 
-        /*[Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }*/
         [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }
@@ -61,7 +53,6 @@ namespace Periodicals.Areas.Account.Models
         public string Email { get; set; }
 
         [Required]
-        //[DataType(Dat)]
         [Display(Name = "Your username")]
         public string Username { get; set; }
 
@@ -70,7 +61,5 @@ namespace Periodicals.Areas.Account.Models
 
         [Display(Name = "Your subscriptions:")]
         public List<EditionAccountModel> Subscriptions { get; set; }
-
-
     }
 }

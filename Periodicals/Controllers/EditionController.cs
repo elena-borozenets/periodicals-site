@@ -1,26 +1,19 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Periodicals.Core;
 using Periodicals.Core.Entities;
 using Periodicals.Core.Interfaces;
-using Periodicals.Infrastructure.Data;
 using Periodicals.Infrastructure.Identity;
 using Periodicals.Models;
 using Periodicals.Services;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using System.Web.WebPages;
-using Microsoft.Owin.Security;
 using Periodicals.Infrastructure.Repositories;
-using Ninject;
 using NLog;
 using Periodicals.Exceptions;
 
@@ -40,7 +33,7 @@ namespace Periodicals.Controllers
         private readonly IRepository<Topic> _topicRepository;
         private readonly EditionServices _editionService;
         private readonly IUserRepository _userRepository;
-        Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public EditionController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository, IUserRepository userRepository)
         {
@@ -80,10 +73,8 @@ namespace Periodicals.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
-                //var userManager = HttpContext.GetOwinCon text().GetUserManager<ApplicationUserManager>();
-                //var user = userManager.FindById(userId);
                     var user = _userRepository.GetById(userId);
-                    if (user != null && user.Subscription != null && user.Subscription.Contains(item))
+                    if (user?.Subscription != null && user.Subscription.Contains(item))
                     {
                         ViewBag.Subscpiption = true;
                     }
@@ -104,9 +95,8 @@ namespace Periodicals.Controllers
             var userId = User.Identity.GetUserId();
             if ((_editionRepository as EditionRepository).AddSubscription(userId, editionId))
             {
-                logger.Info("user " + User.Identity.Name + " subscribe for " + editionId + " edition");
-            };
-
+                _logger.Info("user " + User.Identity.Name + " subscribe for " + editionId + " edition");
+            }
             return RedirectToAction("Edition", new { area = "", editionId = editionId });
         }
 
@@ -116,7 +106,7 @@ namespace Periodicals.Controllers
             var url = HttpContext.Request.UrlReferrer;
                 var userId = User.Identity.GetUserId();
                 (_editionRepository as EditionRepository)?.RemoveSubscription(userId, editionId);
-            logger.Info("user " + User.Identity.Name + " unsubscribe for " + editionId + " edition");
+            _logger.Info("user " + User.Identity.Name + " unsubscribe for " + editionId + " edition");
 
             if (url==null) return RedirectToAction("Edition", new { area = "", editionId = editionId });
             return Redirect(url.AbsoluteUri);
@@ -229,7 +219,6 @@ namespace Periodicals.Controllers
             {
                 return View(newEdition);
             }
-            return RedirectToAction("Index");
         }
 
         /*public ActionResult Search()

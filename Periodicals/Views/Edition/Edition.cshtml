@@ -22,12 +22,6 @@
         <p>@Model.Price $</p>
     </div>
 </div>
-@*
-    <h2>@Model.Name</h2>
-    <time>@Model.DateNextPublication</time>
-
-
-    <p>@Model.Description</p>*@
 
 @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
 {
@@ -59,4 +53,3 @@
 <br />
 
 @Html.Action("Reviews", "Review", new { editionId = Model.Id })
-@*@Html.RenderAction("Reviews", "Review", new { editionId = Model.Id })*@

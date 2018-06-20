@@ -1,12 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Periodicals.Core;
-using Periodicals.Infrastructure.Identity;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Periodicals.Core.Identity;
 using Periodicals.Core.Entities;
 

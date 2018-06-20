@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Periodicals.Areas.Admin.Models;
-using Periodicals.Core.Identity;
 using Periodicals.Infrastructure.Data;
 using Periodicals.Infrastructure.Identity;
 
@@ -19,7 +18,6 @@ namespace Periodicals.Areas.Admin.Controllers
         // GET: Admin/Admin
         public ActionResult Administration()
         {
-            //var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             List<UserModel> users;
             using (var db = new PeriodicalDbContext())
             {
@@ -38,10 +36,6 @@ namespace Periodicals.Areas.Admin.Controllers
 
         public ActionResult BlockUser(string userId)
         {
-            //var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            //var user = userManager.FindById(userId);
-            //user.LockoutEnabled = !user.LockoutEnabled;
-            
             using (var db = new PeriodicalDbContext())
             {
                 var user = db.Users.Find(userId);

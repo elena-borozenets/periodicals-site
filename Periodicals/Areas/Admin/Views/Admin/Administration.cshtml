@@ -47,10 +47,10 @@
                         <td>@m.Username</td>
                         <td>@m.Email</td>
                         <td>@m.Credit</td>
-                        <td>@Html.ActionLink(m.isBlocked.ToString(), "BlockUser", "Admin", new { area = "Admin", userId = m.Id }, null) </td>
-                        @if (!m.isBlocked)
+                        <td>@Html.ActionLink(m.IsBlocked.ToString(), "BlockUser", "Admin", new { area = "Admin", userId = m.Id }, null) </td>
+                        @if (!m.IsBlocked)
                         {
-                            if (m.isModerator)
+                            if (m.IsModerator)
                             {
                                 <td>
                                     @Html.ActionLink("Disappoint as moderator", "AppointmentModerators", "Admin", new { area = "Admin", userId = m.Id }, new { @class = "btn btn-default" })

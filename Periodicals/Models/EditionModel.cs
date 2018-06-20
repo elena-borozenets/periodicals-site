@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using Periodicals.Core.Entities;
-using Periodicals.Core.Identity;
 
 namespace Periodicals.Models
 {
@@ -15,7 +12,7 @@ namespace Periodicals.Models
         [Required]
         [Display(Name = "Title")]
         public string Name { get; set; }
-        //[Required]
+
         public float Price { get; set; }
 
         public DateTime DateNextPublication { get; set; }
@@ -30,9 +27,7 @@ namespace Periodicals.Models
         public string Type { get; set; }
         public string Language { get; set; }
         public string Image { get; set; }
-
-        //public List<string> SubscribersNames { get; set; }
-
+        
         public static EditionModel FromEdition(Edition item) => new EditionModel()
         {
             Id = item.Id,
@@ -46,25 +41,19 @@ namespace Periodicals.Models
             Type=item.Type ?? "DefaultType",
             Language=item.Language ?? "???",
             Image = item.Image ?? ""
-            //SubscribersNames= (from i in item.Subscribers
-            //select i.UserName).ToList<string>()
         };
 
         public Edition ToEdition()
         {
-            
             var newEdition = new Edition();
             newEdition.Name = Name ?? "Noname";
             newEdition.Price = this.Price;
             newEdition.DateNextPublication = DateTime.UtcNow;
             newEdition.ISSN = ISSN ?? "####-####";
-            //newEdition.Topic = new Topic(){TopicName = (this.TopicName==null)? "Without topic": this.TopicName};
-            newEdition.Periodicity = this.Periodicity;
             newEdition.Description = Description ?? "None";
             newEdition.Type = Type ?? "DefaultType";
             newEdition.Language = Language ?? "???";
             newEdition.Reviews = new List<Review>();
-            //newEdition.Subscribers=new List<ApplicationUser>();
             newEdition.Image = Image ?? "";
             return newEdition;
         }
@@ -78,7 +67,6 @@ namespace Periodicals.Models
                 {
                     editions.Add(EditionModel.FromEdition(item));
                 }
-
             }
             return editions;
         }

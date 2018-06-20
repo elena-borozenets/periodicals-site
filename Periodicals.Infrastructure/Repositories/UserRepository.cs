@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Periodicals.Core.Identity;
 using Periodicals.Core.Interfaces;
 using Periodicals.Infrastructure.Data;
@@ -34,7 +30,6 @@ namespace Periodicals.Infrastructure.Repositories
                 db.SaveChanges();
                 return true;
             }
-            return false;
         }
     }
 }

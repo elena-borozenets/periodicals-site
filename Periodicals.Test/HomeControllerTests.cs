@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Periodicals.Controllers;
 using Moq;
-using Periodicals.Core;
 using Periodicals.Core.Entities;
-using Periodicals.Core.Identity;
 using Periodicals.Core.Interfaces;
 using System.Web.Mvc;
 

@@ -1,13 +1,11 @@
 ﻿using Periodicals.Core.Interfaces;
 using Periodicals.Core.SharedKernel;
 using System.Data.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Periodicals.Infrastructure.Data;
 
-namespace Periodicals.Infrastructure.Data
+namespace Periodicals.Infrastructure.Repositories
 {
     public class EfRepository<T> : IRepository<T> where T : BaseEntity
     {

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Periodicals.Controllers;
-using Periodicals.Core;
 using Periodicals.Core.Entities;
 using Periodicals.Core.Interfaces;
-using Periodicals.Models;
 using Periodicals.Services;
 
 namespace Periodicals.Test

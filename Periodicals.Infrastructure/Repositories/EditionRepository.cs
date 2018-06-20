@@ -1,27 +1,14 @@
 ﻿using Periodicals.Core.Interfaces;
-using Periodicals.Core.SharedKernel;
 using System.Data.Entity;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Periodicals.Core;
 using Periodicals.Core.Entities;
-using Periodicals.Core.Identity;
 using Periodicals.Infrastructure.Data;
 
 namespace Periodicals.Infrastructure.Repositories
 {
     public class EditionRepository : IRepository<Edition>
     {
-        /*private readonly PeriodicalDbContext _dbContext;
-
-        public EditionRepository(PeriodicalDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }*/
 
         public Edition GetById(int id)
         {
@@ -107,20 +94,13 @@ namespace Periodicals.Infrastructure.Repositories
                     return false;
                 }
 
-            /*var user = db.Users.Find(userId);
-            var editionDb = db.Editions.Find(editionId);
-                //if (user.Subscription == null) user.Subscription = new List<Edition>();
-                user.Subscription.Add(editionDb);
-                //editionDb?.Subscribers.Add(user);*/
-
-                }
+            }
         }
 
         public bool RemoveSubscription(string userId, int editionId)
         {
             using (var db = new PeriodicalDbContext())
                 {
-
                     var resultUser = (from user in db.Users where user.Id == userId select user)
                         .Include(e => e.Subscription).FirstOrDefault();
                     var resultEdition = (from edition in db.Editions where edition.Id == editionId select edition)
@@ -130,14 +110,6 @@ namespace Periodicals.Infrastructure.Repositories
                         resultUser.Subscription.Remove(resultEdition);
                         //editionDb?.Subscribers.Remove(user);
                     }
-
-               /* var user = db.Users.Find(userId);
-                    var editionDb = db.Editions.Find(editionId);
-                    if (user.Subscription.Contains(editionDb))
-                    {
-                        user.Subscription.Remove(editionDb);
-                        //editionDb?.Subscribers.Remove(user);
-                }*/
                     db.SaveChanges();
                     return true;
                 }

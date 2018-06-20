@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
 using Periodicals.Infrastructure.Identity;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -18,9 +15,7 @@ using Periodicals.Areas.Account.Models;
 using Periodicals.Core.Identity;
 using Periodicals.Core.Interfaces;
 using Periodicals.Exceptions;
-using Periodicals.Infrastructure.Data;
-using Periodicals.Infrastructure.Repositories;
-using Periodicals.Models;
+
 
 namespace Periodicals.Areas.Account.Controllers
 {
@@ -35,12 +30,14 @@ namespace Periodicals.Areas.Account.Controllers
     public class AccountController : Controller
     {
         private readonly IUserRepository _userRepository;
-        Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IAuthenticationManager AuthManager => HttpContext.GetOwinContext().Authentication;
+
         public AccountController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
+
         // GET: Login/Login
         [AllowAnonymous]
         public ActionResult Login()
@@ -55,21 +52,19 @@ namespace Periodicals.Areas.Account.Controllers
             {
                 return View(model);
             }
-
-            bool shouldLockout = false;
             var signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             var signInStatus =
-                   signInManager.PasswordSignIn(model.Username, model.Password, model.RememberMe, shouldLockout);
+                   signInManager.PasswordSignIn(model.Username, model.Password, model.RememberMe, false);
             if (signInStatus == SignInStatus.Success)
             {
                 ViewBag.signInStatus = 1;
-                logger.Info("user login to site " + model.Username);
+                _logger.Info("user login to site " + model.Username);
             }
             else
             {
                 ViewBag.signInStatus = false;
                 ViewBag.signInMessage = "Incorrectly entered login or password";
-                logger.Info("user failed to login " + model.Username );
+                _logger.Info("user failed to login " + model.Username );
                 return View(model);
             }
             return RedirectToAction("Index", "Edition", new { area = "" });
@@ -88,7 +83,6 @@ namespace Periodicals.Areas.Account.Controllers
             {
                 return View("RegisterNew", model);
             }
-
             var newUser = new ApplicationUser
             {
                 Email = model.Email,
@@ -97,50 +91,36 @@ namespace Periodicals.Areas.Account.Controllers
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var result = userManager.Create(newUser, model.Password);
             if (result.Succeeded)
-            {ViewBag.o1 = newUser.UserName;
+            {
+                ViewBag.o1 = newUser.UserName;
                 ViewBag.o0 = "It's Ok! Return to main page to log in!";
-
-                logger.Info("new user "+newUser.UserName+" is registered");
-
-                //var signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-                //var signInStatus =signInManager.PasswordSignIn(model.Username, model.Password, false, false);
+                _logger.Info("new user "+newUser.UserName+" is registered");
                 var addUserRoleResult = userManager.AddToRole(newUser.Id, "Subscriber");
                 if(addUserRoleResult.Succeeded)
                 {
                     return View("RegisterResult");
-                    //return RedirectToAction("Account");
                 }
                 return View("RegisterResult");
-
             }
             else
             {
                 var errors = new List<string>(){ "It's not ok! User with such email or username is registered"};
                 return View("Error", errors);
-                //ViewBag.o0 = "It's not ok! Maybe you";
-                //ViewBag.o1 = ":(";
-                
             }
-            return View();
         }
 
         public ActionResult Account()
         {
             var userId = User.Identity.GetUserId();
-            
-                var user = _userRepository.GetById(userId);
-
-
-                var userModel = new AccountViewModel() {
-                    Username = user.UserName,
-                    Email = user.Email,
+            var user = _userRepository.GetById(userId);
+            var userModel = new AccountViewModel()
+            {
+                Username = user.UserName,
+                Email = user.Email,
                     Credit = user.Credit,
-                    Subscriptions = EditionAccountModel.ToModelList(user.Subscription) };
-                ViewBag.Blocked = user.LockoutEnabled;
-
-            //var user = userManager.FindByName(User.Identity.Name);// var m =user.Subscription;
-            
-
+                Subscriptions = EditionAccountModel.ToModelList(user.Subscription)
+            };
+            ViewBag.Blocked = user.LockoutEnabled;
             return View(userModel);
         }
 
@@ -166,7 +146,7 @@ namespace Periodicals.Areas.Account.Controllers
                 var userId = User.Identity.GetUserId();
                 if (_userRepository.TopUp(userId, model.Amount))
                 {
-                    logger.Info("user"+ User.Identity.Name+" reilled the account for " + model.Amount);
+                    _logger.Info("user"+ User.Identity.Name+" reilled the account for " + model.Amount);
                     ViewBag.TopUpResult = "Your account has been credited";
                 }
             }
@@ -178,6 +158,7 @@ namespace Periodicals.Areas.Account.Controllers
             return RedirectToAction("Account");
         }
 
+        [Authorize]
         public ActionResult ChangeInfo(string message="")
         {
             var userId = User.Identity.GetUserId();
@@ -192,6 +173,7 @@ namespace Periodicals.Areas.Account.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult ChangePassword(string oldPassword, string password, string confirmPassword)
         {
             string passMessage="";
@@ -201,7 +183,6 @@ namespace Periodicals.Areas.Account.Controllers
 
                 return RedirectToAction("ChangeInfo", "Account", new { message = passMessage });
             }
-
             if (password != null && confirmPassword != null && password == confirmPassword)
             {
                 var userId = User.Identity.GetUserId();
@@ -210,29 +191,27 @@ namespace Periodicals.Areas.Account.Controllers
                 if (result.Succeeded)
                 {
                     passMessage = "Your password has been changed successfully!";
-                    logger.Info("user changed password " + User.Identity.Name);
-                    return RedirectToAction("ChangeInfo", "Account", new { message = passMessage });
+                    _logger.Info("user changed password " + User.Identity.Name);
                 }
                 else
                 {
                     passMessage = "Your password has not been changed! Maybe you entered wrong password!";
-                    return RedirectToAction("ChangeInfo", "Account", new { message =  passMessage});
+                    _logger.Info("user failed in changing password " + User.Identity.Name);
                 }
             }
-
             return RedirectToAction("ChangeInfo", "Account", new { message = passMessage });
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult ChangeUsername(AccountViewModel model)
         {
             string usernameMessage;
             if (string.IsNullOrEmpty(model.Username))
             {
                 usernameMessage = "The username is not correct";
-                return RedirectToAction("ChangeInfo");
+                return RedirectToAction("ChangeInfo", "Account", new { message = usernameMessage });
             }
-
             var userId = User.Identity.GetUserId();
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindById(userId);
@@ -241,25 +220,28 @@ namespace Periodicals.Areas.Account.Controllers
             if (result.Succeeded)
             {
                 usernameMessage = "Your username has been changed successfully!";
-                logger.Info("user changed username " + userId);
+                _logger.Info("user changed username " + userId);
 
             }
             else
             {
                 usernameMessage = "Your username has not been changed!";
+                _logger.Info("user failed in changing username " + User.Identity.Name);
+
 
             }
             return RedirectToAction("ChangeInfo","Account", new{ message = usernameMessage});
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult ChangeEmail(AccountViewModel model)
         {
             string emailMessage;
             if (string.IsNullOrEmpty(model.Email))
             {
                 emailMessage = "The email is not correct";
-                return RedirectToAction("ChangeInfo");
+                return RedirectToAction("ChangeInfo", "Account", new { message = emailMessage });
             }
 
             var userId = User.Identity.GetUserId();
@@ -267,11 +249,10 @@ namespace Periodicals.Areas.Account.Controllers
             var user = userManager.FindById(userId);
             user.Email = model.Email;
             var result = userManager.Update(user);
-            //var r = userManager.Update()
             if (result.Succeeded)
             {
                 emailMessage = "Your email has been changed successfully!";
-                logger.Info("user changed email " + userId);
+                _logger.Info("user changed email " + userId);
             }
             else
             {
@@ -307,44 +288,41 @@ namespace Periodicals.Areas.Account.Controllers
                 if(resultName?.Email!=null)
                 {
                     user = resultName;
-                //userManager.SendEmail(resultName.Id, "Confirm changing password", "");
                 }
                 else if (resultEmail != null)
                 {
                     user = resultEmail;
-                    //userManager.SendEmail();
                 }
                 else
                 {
                     return View();
 
                 }
-
+                _logger.Info("user requested for reseting password " + user.UserName);
                 var provider = new DpapiDataProtectionProvider("Sample");
                 userManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
                     provider.Create("EmailConfirmation"));
 
                 string code = userManager.GeneratePasswordResetToken(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account",
-                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    new { userId = user.Id, code=code }, protocol: Request.Url.Scheme);
 
-                MailAddress from = new MailAddress("elena.borozenets.applications@gmail.com");
-                MailAddress to = new MailAddress(user.Email);
-                MailMessage message = new MailMessage(from, to);
-
-                message.Subject = "Сброс пароля";
-                message.Body = $" {"Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>"}";
-                message.IsBodyHtml = true;
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-                smtp.Credentials = new NetworkCredential("elena.borozenets.applications@gmail.com", "Some00Pass11");
-                smtp.EnableSsl = true;
-
+                var from = new MailAddress("elena.borozenets.applications@gmail.com");
+                var to = new MailAddress(user.Email);
+                var message = new MailMessage(from, to)
+                {
+                    Subject = "Сброс пароля",
+                    Body = $" {"Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>"}",
+                    IsBodyHtml = true
+                };
+                var smtp = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("elena.borozenets.applications@gmail.com", "Some00Pass11"),
+                    EnableSsl = true
+                };
                 smtp.Send(message);
-                //userManager.SendEmail(user.Id, "Сброс пароля",
-                //    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
               }
-            return View();
         }
 
         public ActionResult ForgotPasswordConfirmation()
@@ -372,12 +350,10 @@ namespace Periodicals.Areas.Account.Controllers
             if (resultName?.Email != null)
             {
                 user = resultName;
-                //userManager.SendEmail(resultName.Id, "Confirm changing password", "");
             }
             else if (resultEmail != null)
             {
                 user = resultEmail;
-                //userManager.SendEmail();
             }
             else
             {
@@ -397,8 +373,8 @@ namespace Periodicals.Areas.Account.Controllers
             string token = userManager.GeneratePasswordResetToken(user.Id);
             var result = userManager.ResetPassword(user.Id, token, password);
             if (result.Succeeded) {
+                _logger.Info("user set a new password " + User.Identity.Name);
                 return View("ResetPasswordConfirmation");
-                //ViewBag.ResetPasswordResult = "Your password has been changed successfully!";
 
             }
             else
@@ -461,8 +437,10 @@ namespace Periodicals.Areas.Account.Controllers
                  }
                  else
                  {
+
                      var newUser= userManager.FindByEmail(loginInfo.Email);
-                     var addUserRoleResult = userManager.AddToRole(newUser.Id, "Subscriber");
+                     _logger.Info("user login with social network " + newUser.UserName);
+                    var addUserRoleResult = userManager.AddToRole(newUser.Id, "Subscriber");
                     result = await userManager.AddLoginAsync(user.Id, loginInfo.Login);
                      if (!result.Succeeded)
                      {
@@ -470,7 +448,6 @@ namespace Periodicals.Areas.Account.Controllers
                      }
                  }
              }
-
              ClaimsIdentity ident = await userManager.CreateIdentityAsync(user,
                  DefaultAuthenticationTypes.ApplicationCookie);
 

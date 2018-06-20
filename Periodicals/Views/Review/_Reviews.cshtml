@@ -13,14 +13,12 @@
         if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
          {
              @Html.ActionLink("Delete", "DeleteReview", "Review", new {reviewId = m.Id, editionId = m.EditionId}, new {@class = ""});
-
          }
     }
 </div>
 
 @{
-    var newReview = new ReviewModel();
-    newReview.EditionId = ViewBag.EditionId;
+    var newReview = new ReviewModel {EditionId = ViewBag.EditionId};
     if (HttpContext.Current.User.Identity.IsAuthenticated)
     {
         newReview.NameAuthor = HttpContext.Current.User.Identity.Name;

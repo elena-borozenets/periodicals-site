@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Periodicals.Areas.Account.Models
 {
@@ -12,7 +8,8 @@ namespace Periodicals.Areas.Account.Models
         public float Amount { get; set; }
 
         [Required(ErrorMessage = "Enter card number")]
-        [RegularExpression(@"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}", ErrorMessage = "The format should be ####-####-####-####, where # - 0-9 numbers")]
+        [RegularExpression(@"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}", 
+            ErrorMessage = "The format should be ####-####-####-####, where # - 0-9 numbers")]
         public string Card { get; set; }
 
         [Required(ErrorMessage = "Enter mounth")]
@@ -25,6 +22,6 @@ namespace Periodicals.Areas.Account.Models
 
         [Required(ErrorMessage = "Enter your CVV")]
         [RegularExpression(@"[0-9]{3}", ErrorMessage = "It should be three numbers!")]
-    public int CVV { get; set; }
+        public int CVV { get; set; }
     }
 }

@@ -47,13 +47,11 @@
 
         <div>@Html.LabelFor(m => newEdition.Language, new { @class = "" })</div>
         <div>@Html.DropDownListFor(m => newEdition.Language, new SelectList(new List<string>(){"ru", "eng"}), new { @class = "form-control" })</div>
-        @*<div>@Html.TextBoxFor(m => newEdition.Language, new { @class = "form-control" })</div>*@
         <div>@Html.ValidationMessageFor(m => newEdition.Language, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => newEdition.Periodicity, new { @class = "" })</div>
 
         <div>@Html.DropDownListFor(m => newEdition.Periodicity, new SelectList(new List<int>(){1, 7, 14, 30, 365}), new { @class = "form-control" })</div>
-        @*<div>@Html.TextBoxFor(m => newEdition.Periodicity, new { @class = "form-control" })</div>*@
         <div>@Html.ValidationMessageFor(m => newEdition.Periodicity, "", new { @class = "text-danger" })</div>
 
 

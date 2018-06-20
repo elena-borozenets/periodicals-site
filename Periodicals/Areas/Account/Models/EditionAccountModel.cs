@@ -1,11 +1,7 @@
-﻿using Periodicals.Core;
+﻿using Periodicals.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Periodicals.Core.Entities;
-using Periodicals.Core.Identity;
 
 namespace Periodicals.Areas.Account.Models
 {
@@ -16,15 +12,12 @@ namespace Periodicals.Areas.Account.Models
         [Required]
         [Display(Name = "Title")]
         public string Name { get; set; }
-        //[Required]
-        public float Price { get; set; }
 
+        public float Price { get; set; }
 
         public DateTime DateNextPublication { get; set; }
 
         public string Language { get; set; }
-
-        //public List<string> SubscribersNames { get; set; }
 
         public static EditionAccountModel FromEdition(Edition item) => new EditionAccountModel()
         {
@@ -32,9 +25,7 @@ namespace Periodicals.Areas.Account.Models
             Name = item.Name ?? "Noname",
             Price=item.Price,
             DateNextPublication = item.DateNextPublication,
-            Language=item.Language ?? "???",
-            //SubscribersNames= (from i in item.Subscribers
-            //select i.UserName).ToList<string>()
+            Language=item.Language ?? "???"
         };
 
         public static List<EditionAccountModel> ToModelList(IList<Edition> items)
@@ -46,7 +37,6 @@ namespace Periodicals.Areas.Account.Models
                 {
                     editions.Add(EditionAccountModel.FromEdition(item));
                 }
-
             }
             return editions;
         }

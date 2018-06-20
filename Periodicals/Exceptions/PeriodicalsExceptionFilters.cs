@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NLog;
 
@@ -9,17 +6,10 @@ namespace Periodicals.Exceptions
 {
     public class IndexOutOfRangePeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            /*logger.Trace("trace message");
-            logger.Debug("debug message");
-            logger.Info("info message");
-            logger.Warn("warn message");
-            logger.Error("error message");
-            logger.Fatal("fatal message");*/
-
             if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is IndexOutOfRangeException)
             {
                 exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/IndexOutOfRangeError.html");
@@ -31,90 +21,90 @@ namespace Periodicals.Exceptions
 
     public class ArgumentPeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is ArgumentException) //Catch our exc
+            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is ArgumentException)
             {
-                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/ArgumentError.html"); // User get that page
+                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/ArgumentError.html");
                 logger.Error($"Some user get ArgumentException");
-                exceptionContext.ExceptionHandled = true; // exc handled, huray
+                exceptionContext.ExceptionHandled = true;
             }
         }
     }
 
     public class NullReferencePeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is NullReferenceException) //Catch our exc
+            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is NullReferenceException)
             {
-                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/NullReferenceError.html"); // User get that page
+                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/NullReferenceError.html");
                 logger.Error($"Some user get NullReferenceException");
-                exceptionContext.ExceptionHandled = true; // exc handled, huray
+                exceptionContext.ExceptionHandled = true;
             }
         }
     }
 
     public class InvalidOperationPeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is InvalidOperationException) //Catch our exc
+            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is InvalidOperationException)
             {
-                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/InvalidOperationError.html"); // User get that page
+                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/InvalidOperationError.html");
                 logger.Error($"Some user get InvalidOperationException");
-                exceptionContext.ExceptionHandled = true; // exc handled, huray
+                exceptionContext.ExceptionHandled = true;
             }
         }
     }
 
     public class ArgumentNullPeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is ArgumentNullException) //Catch our exc
+            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is ArgumentNullException)
             {
-                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/ArgumentNullError.html"); // User get that page
-                logger.Error($"Some user get ArgumentNullException");
-                exceptionContext.ExceptionHandled = true; // exc handled, huray
+                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/ArgumentNullError.html");
+                _logger.Error($"Some user get ArgumentNullException");
+                exceptionContext.ExceptionHandled = true;
             }
         }
     }
 
     public class ArgumentOutOfRangePeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is ArgumentOutOfRangeException) //Catch our exc
+            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is ArgumentOutOfRangeException)
             {
-                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/ArgumentOutOfRangeError.html"); // User get that page
+                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/ArgumentOutOfRangeError.html");
                 logger.Error($"Some user get ArgumentOutOfRangeException");
-                exceptionContext.ExceptionHandled = true; // exc handled, huray
+                exceptionContext.ExceptionHandled = true;
             }
         }
     }
 
     public class PeriodicalsException : FilterAttribute, IExceptionFilter
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is Exception) //Catch our exc
+            if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is Exception)
             {
-                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/Error.html"); // User get that page
+                exceptionContext.Result = new RedirectResult("~/Content/ErrorsInfo/Error.html");
                 logger.Error($"Some user get Exception");
-                exceptionContext.ExceptionHandled = true; // exc handled, huray
+                exceptionContext.ExceptionHandled = true;
             }
         }
     }

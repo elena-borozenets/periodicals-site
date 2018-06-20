@@ -271,6 +271,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\colorfulDevelopers.css" />
     <Content Include="Content\ErrorsInfo\ArgumentError.html" />
     <Content Include="Content\ErrorsInfo\ArgumentOutOfRangeError.html" />
     <Content Include="Content\ErrorsInfo\ArgumentNullError.html" />
@@ -286,6 +287,8 @@
     <Content Include="Content\im.png" />
     <Content Include="Content\ErrorsInfo\IndexOutOfRangeError.html" />
     <Content Include="Content\Payment.new.css" />
+    <Content Include="Content\pictureZoom.css" />
+    <Content Include="Content\up-arrow.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

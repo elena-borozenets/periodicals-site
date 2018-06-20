@@ -9,12 +9,10 @@
 
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "well form-horizontal", id = "register_form" }))
         {
-            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
             @Html.AntiForgeryToken()
             <h4>Create a new account.</h4>
             <hr />
             <fieldset>
-                <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label">Username</label>
                     <div class="col-md-4 inputGroupContainer">
@@ -77,16 +75,3 @@
     </fieldset>
     }
 
-<script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
-<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" />
-
-<link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />
-@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.10.2/validator.min.js"></script>*@
-
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
-
-
-
-    <script src="~/Scripts/registerValidate.js"></script>

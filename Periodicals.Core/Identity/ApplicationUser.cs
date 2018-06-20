@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Periodicals.Core;
-using Periodicals.Core.SharedKernel;
+using Periodicals.Core.Entities;
 
 namespace Periodicals.Core.Identity
 {

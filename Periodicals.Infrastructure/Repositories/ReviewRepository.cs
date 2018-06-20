@@ -1,12 +1,7 @@
 ﻿using Periodicals.Core.Interfaces;
-using Periodicals.Core.SharedKernel;
 using System.Data.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Periodicals.Core;
 using Periodicals.Core.Entities;
 using Periodicals.Infrastructure.Data;
 
@@ -14,7 +9,6 @@ namespace Periodicals.Infrastructure.Repositories
 {
     public class ReviewRepository : IRepository<Review>
     {
-
 
         public Review GetById(int id)
         {
@@ -69,8 +63,6 @@ namespace Periodicals.Infrastructure.Repositories
                 db.SaveChanges();
             }
         }
-
-        
 
     }
 }

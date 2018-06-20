@@ -1,6 +1,4 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,7 +8,7 @@
     @*@Scripts.Render("~/bundles/modernizr")*@
     <link rel="stylesheet" href="~/Content/bootstrap.css">
     <link rel="stylesheet" href="~/Content/Site.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>*@
     @Scripts.Render("~/scripts/jquery-1.10.2.min.js")
     @Scripts.Render("~/scripts/jquery-1.10.2.js")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
@@ -72,43 +70,25 @@
                         </ul>
                     </li>
                     <li>
-                        @*<form class="navbar-form navbar-left" role="search">
-                            *@
-
-                            @* @using (Html.BeginForm("Search", "Edition", FormMethod.Post, new { @class = "navbar-form navbar-left", @role = "search", @onsubmit = "return false;", @name="form" }))*@
-                            @using (Ajax.BeginForm("Search", "Edition",
+                        @using (Ajax.BeginForm("Search", "Edition",
                             new { area = "" },
                             new AjaxOptions
                             {
-                            UpdateTargetId = "resSearch"
+                                UpdateTargetId = "resSearch"
 
                             },
                             new { @class = "navbar-form navbar-left", @role = "search", @onsubmit = "return false;", @name = "form" }))
-                            {
+                        {
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Search" name="search" id="search" />
                             </div>
-
-                            @*<input type="submit" class="btn btn-default my-btn1" value="Поиск" />*@
-                            }
-
-
-                            @* @Scripts.Render("~/scripts/jquery-1.10.2.min.js")*@
-                            @*@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")*@
-                            @*<div class="form-group">
-                                *@
-                                @*<input type="text" class="form-control" placeholder="Search">*@
-                                @*
-                            </div> *@
-                            @*<button type="submit" class="btn btn-default my-btn1">Отправить</button>*@
-                            @*
-                        </form>*@
+                        }
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("ru", "Languages", "Edition", new { area = "", language="ru" }, new { @class = "" })</li>
-                            <li>@Html.ActionLink("eng", "Languages", "Edition", new { area = "", language = "eng" }, new { @class = "" })</li>
+                            <li>@Html.ActionLink("ru", "Languages", "Edition", new {area = "", language = "ru"}, new {@class = ""})</li>
+                            <li>@Html.ActionLink("eng", "Languages", "Edition", new {area = "", language = "eng"}, new {@class = ""})</li>
                         </ul>
                     </li>
                 </ul>
@@ -125,16 +105,8 @@
 
         <div class="right-sidebar">
             <ul class="nav nav-pills nav-stacked">
-                @*<li> @Html.ActionLink("Главная", "Index", "Edition", new { area = "" }, null)</li>*@
-
-                @*
-                <li> @Html.ActionLink("Гостевая", "Guest", "Guest", new { area = "" }, null)</li>*@
-                @*
-                <li> @Html.ActionLink("Анкета", "Blank", "Blank", new { area = "" }, null)</li>*@
                 <li> @RenderSection("Login", false) </li>
 
-                @*
-                <li> @RenderSection("Vote", false) </li>*@
             </ul>
         </div>
         <hr/>
