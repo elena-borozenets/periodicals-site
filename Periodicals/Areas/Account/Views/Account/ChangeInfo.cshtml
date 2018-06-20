@@ -11,9 +11,25 @@
 <div class="form-group">
     @using (Html.BeginForm("ChangeUsername", "Account", new { area = "Account" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
+        if (ViewBag.Message != "")
+        {
+            if (ViewBag.Message.Contains("successfully"))
+            {
+                <p class="alert-success">@ViewBag.Message</p>
+            }
+            else
+            {
+                <p class="alert-danger">@ViewBag.Message</p>
+            }
+            
+        }
 
         <div>@Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })</div>
-        <div>@Html.TextBoxFor(m => m.Username, new { @class = "form-control" })</div>
+        <div>
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Username, null, new { @class = "text-danger" })
+        </div>
+        <div></div>
         <br />
         <input type="submit" value="Change" class="btn btn-default" />
 
@@ -24,6 +40,7 @@
     {
         <div>@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })</div>
         <div>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</div>
+        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
         <br />
         <input type="submit" value="Change" class="btn btn-default" />
 
@@ -32,20 +49,23 @@
     <hr />
     @using (Html.BeginForm("ChangePassword", "Account", new { area = "Account" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-        if (Html.ViewBag.PassMessage != null) { 
+        if (Html.ViewBag.PassMessage != null)
+        {
             <div class="alert alert - danger">@Html.ViewBag.PassMessage</div>
         }
 
         <div>@Html.Label("Old password", new { @class = "col-md-2 control-label" })</div>
-        <div>@Html.TextBox("oldPassword", null, new { @class = "form-control", type = "password" })</div>
+        <div>@Html.TextBox("oldPassword", null, new { @class = "form-control", type = "password", required = true })</div>
+
+        @Html.ValidationMessage("oldPassword", "", new { @class = "text-danger" })
         <br />
 
         <div>@Html.Label("New password", new { @class = "col-md-2 control-label" })</div>
-        <div>@Html.TextBox("password", null, new { @class = "form-control", type = "password" })</div>
+        <div>@Html.TextBox("password", null, new { @class = "form-control", type = "password", required=true, minlength = "6" })</div>
         <br />
 
         <div>@Html.Label("Confirm password", new { @class = "col-md-2 control-label" })</div>
-        <div>@Html.TextBox("confirmPassword", null, new { @class = "form-control", type = "password" })</div>
+        <div>@Html.TextBox("confirmPassword", null, new { @class = "form-control", type = "password", required = true, minlength = "6" })</div>
         <br />
         <input type="submit" value="Change" class="btn btn-default" />
         @Html.ActionLink("Cancel", "Account", "Account", new { area = "Account" }, new { @class = "btn btn-default", @role = "button" })

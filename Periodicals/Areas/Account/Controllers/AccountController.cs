@@ -178,7 +178,7 @@ namespace Periodicals.Areas.Account.Controllers
             return RedirectToAction("Account");
         }
 
-        public ActionResult ChangeInfo()
+        public ActionResult ChangeInfo(string message="")
         {
             var userId = User.Identity.GetUserId();
             var user = _userRepository.GetById(userId);
@@ -187,16 +187,19 @@ namespace Periodicals.Areas.Account.Controllers
                 Username = user.UserName,
                 Email = user.Email
             };
+            ViewBag.Message = message;
             return View(model);
         }
 
         [HttpPost]
         public ActionResult ChangePassword(string oldPassword, string password, string confirmPassword)
         {
+            string passMessage="";
             if (password != confirmPassword)
             {
-                ViewBag.PassMessage = "Your password has not been changed! The password and confirm password fields do not match!";
-                return RedirectToAction("ChangeInfo");
+                passMessage = "Your password has not been changed! The password and confirm password fields do not match!";
+
+                return RedirectToAction("ChangeInfo", "Account", new { message = passMessage });
             }
 
             if (password != null && confirmPassword != null && password == confirmPassword)
@@ -206,25 +209,27 @@ namespace Periodicals.Areas.Account.Controllers
                 var result = userManager.ChangePassword(userId, oldPassword, password);
                 if (result.Succeeded)
                 {
-                    ViewBag.PassMessage = "Your password has been changed successfully!";
+                    passMessage = "Your password has been changed successfully!";
                     logger.Info("user changed password " + User.Identity.Name);
+                    return RedirectToAction("ChangeInfo", "Account", new { message = passMessage });
                 }
                 else
                 {
-                    ViewBag.PassMessage = "Your password has not been changed! Maybe you entered wrong password!";
-                    return RedirectToAction("ChangeInfo");
+                    passMessage = "Your password has not been changed! Maybe you entered wrong password!";
+                    return RedirectToAction("ChangeInfo", "Account", new { message =  passMessage});
                 }
             }
 
-            return RedirectToAction("ChangeInfo");
+            return RedirectToAction("ChangeInfo", "Account", new { message = passMessage });
         }
 
         [HttpPost]
         public ActionResult ChangeUsername(AccountViewModel model)
         {
+            string usernameMessage;
             if (string.IsNullOrEmpty(model.Username))
             {
-                ViewBag.UsernameMessage = "The username is not correct";
+                usernameMessage = "The username is not correct";
                 return RedirectToAction("ChangeInfo");
             }
 
@@ -233,26 +238,27 @@ namespace Periodicals.Areas.Account.Controllers
             var user = userManager.FindById(userId);
             user.UserName = model.Username;
             var result = userManager.Update(user);
-            //var r = userManager.Update()
-                if (result.Succeeded)
-                {
-                    ViewBag.UsernameMessage = "Your username has been changed successfully!";
-                    logger.Info("user changed username " + userId);
-            }
-                else
-                {
-                ViewBag.UsernameMessage = "Your username has not been changed!";
-            }
+            if (result.Succeeded)
+            {
+                usernameMessage = "Your username has been changed successfully!";
+                logger.Info("user changed username " + userId);
 
-            return RedirectToAction("ChangeInfo");
+            }
+            else
+            {
+                usernameMessage = "Your username has not been changed!";
+
+            }
+            return RedirectToAction("ChangeInfo","Account", new{ message = usernameMessage});
         }
 
         [HttpPost]
         public ActionResult ChangeEmail(AccountViewModel model)
         {
+            string emailMessage;
             if (string.IsNullOrEmpty(model.Email))
             {
-                ViewBag.EmailMessage = "The email is not correct";
+                emailMessage = "The email is not correct";
                 return RedirectToAction("ChangeInfo");
             }
 
@@ -264,15 +270,15 @@ namespace Periodicals.Areas.Account.Controllers
             //var r = userManager.Update()
             if (result.Succeeded)
             {
-                ViewBag.EmailMessage = "Your email has been changed successfully!";
+                emailMessage = "Your email has been changed successfully!";
                 logger.Info("user changed email " + userId);
             }
             else
             {
-                ViewBag.EmailMessage = "Your email has not been changed!";
+                emailMessage = "Your email has not been changed!";
             }
 
-            return RedirectToAction("ChangeInfo");
+            return RedirectToAction("ChangeInfo", "Account", new { message = emailMessage});
         }
 
         public ActionResult ForgotPassword()
@@ -394,6 +400,10 @@ namespace Periodicals.Areas.Account.Controllers
                 return View("ResetPasswordConfirmation");
                 //ViewBag.ResetPasswordResult = "Your password has been changed successfully!";
 
+            }
+            else
+            {
+                ViewBag.ResetPasswordResult = "Your password has not been changed!";
             }
                 return View();
         }
