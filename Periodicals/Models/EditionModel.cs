@@ -36,36 +36,36 @@ namespace Periodicals.Models
         public static EditionModel FromEdition(Edition item) => new EditionModel()
         {
             Id = item.Id,
-            Name = item.Name,
+            Name = item.Name ?? "Noname",
             Price=item.Price,
             DateNextPublication = item.DateNextPublication,
-            ISSN=item.ISSN,
-            TopicName=item.Topic.TopicName,
+            ISSN=item.ISSN ?? "####-####",
+            TopicName=item.Topic?.TopicName ?? "Other",
             Periodicity=item.Periodicity,
-            Description=item.Description,
-            Type=item.Type,
-            Language=item.Language,
-            Image = item.Image
+            Description=item.Description ?? "None",
+            Type=item.Type ?? "DefaultType",
+            Language=item.Language ?? "???",
+            Image = item.Image ?? ""
             //SubscribersNames= (from i in item.Subscribers
-                           //select i.UserName).ToList<string>()
+            //select i.UserName).ToList<string>()
         };
 
         public Edition ToEdition()
         {
             
             var newEdition = new Edition();
-            newEdition.Name = (this.Name == null) ? "Noname" : this.Name;
+            newEdition.Name = Name ?? "Noname";
             newEdition.Price = this.Price;
-            newEdition.DateNextPublication = DateTime.Now;
-            newEdition.ISSN = (this.ISSN == null) ? "####-####" : this.ISSN;
+            newEdition.DateNextPublication = DateTime.UtcNow;
+            newEdition.ISSN = ISSN ?? "####-####";
             //newEdition.Topic = new Topic(){TopicName = (this.TopicName==null)? "Without topic": this.TopicName};
             newEdition.Periodicity = this.Periodicity;
-            newEdition.Description = (this.Description == null) ? "None" : this.Description;
-            newEdition.Type = (this.Type == null) ? "DefaultType" : this.Type;
-            newEdition.Language = (this.Language == null) ? "???" : this.Language;
+            newEdition.Description = Description ?? "None";
+            newEdition.Type = Type ?? "DefaultType";
+            newEdition.Language = Language ?? "???";
             newEdition.Reviews = new List<Review>();
             //newEdition.Subscribers=new List<ApplicationUser>();
-            newEdition.Image = (this.Image == null) ? "" : this.Image;
+            newEdition.Image = Image ?? "";
             return newEdition;
         }
 
@@ -77,7 +77,6 @@ namespace Periodicals.Models
                 foreach (var item in items)
                 {
                     editions.Add(EditionModel.FromEdition(item));
-
                 }
 
             }

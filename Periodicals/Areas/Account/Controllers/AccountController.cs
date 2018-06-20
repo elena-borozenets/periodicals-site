@@ -97,27 +97,29 @@ namespace Periodicals.Areas.Account.Controllers
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var result = userManager.Create(newUser, model.Password);
             if (result.Succeeded)
-            {
-                ViewBag.o0 = "Все ок!";
-                ViewBag.o1 = newUser.UserName;
+            {ViewBag.o1 = newUser.UserName;
+                ViewBag.o0 = "It's Ok! Return to main page to log in!";
 
                 logger.Info("new user "+newUser.UserName+" is registered");
 
-                var signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-                var signInStatus =signInManager.PasswordSignIn(model.Username, model.Password, false, false);
+                //var signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                //var signInStatus =signInManager.PasswordSignIn(model.Username, model.Password, false, false);
                 var addUserRoleResult = userManager.AddToRole(newUser.Id, "Subscriber");
                 if(addUserRoleResult.Succeeded)
                 {
-
+                    return View("RegisterResult");
+                    //return RedirectToAction("Account");
                 }
                 return View("RegisterResult");
 
             }
             else
             {
-                ViewBag.o0 = "Все не ок!";
-                ViewBag.o1 = ":(";
-                return View("RegisterResult");
+                var errors = new List<string>(){ "It's not ok! User with such email or username is registered"};
+                return View("Error", errors);
+                //ViewBag.o0 = "It's not ok! Maybe you";
+                //ViewBag.o1 = ":(";
+                
             }
             return View();
         }
@@ -498,7 +500,9 @@ namespace Periodicals.Areas.Account.Controllers
                  }
                  else
                  {
-                     result = await userManager.AddLoginAsync(user.Id, loginInfo.Login);
+                     var newUser= userManager.FindByEmail(loginInfo.Email);
+                     var addUserRoleResult = userManager.AddToRole(newUser.Id, "Subscriber");
+                    result = await userManager.AddLoginAsync(user.Id, loginInfo.Login);
                      if (!result.Succeeded)
                      {
                          return View("Error", result.Errors);

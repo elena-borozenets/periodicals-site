@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Periodicals.Controllers;
 using Moq;
@@ -9,13 +11,18 @@ using Periodicals.Core.Identity;
 using Periodicals.Core.Interfaces;
 using System.Web.Mvc;
 
+using Periodicals.Models;
+using XAssert = Xunit.Assert;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+
 namespace Periodicals.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class HomeControllerTests
     {
+
         [TestMethod]
-        public void TestMethod1()
+        public void Index_ReturnsAViewResult_WithAListOfEditionModel()
         {
             //Arrange
             var mock = new Mock<IRepository<Edition>>();
@@ -23,8 +30,16 @@ namespace Periodicals.Test
             {
                 new Edition()
                 {
+                    Id=0,
                     Name = "Edition",
                     Description = "Edition is Edition",
+                    DateNextPublication = DateTime.UtcNow
+                },
+                new Edition()
+                {
+                    Id=1,
+                    Name = "Edition1",
+                    Description = "Edition is Edition1",
                     DateNextPublication = DateTime.UtcNow
                 }
             });
@@ -40,9 +55,18 @@ namespace Periodicals.Test
             HomeController controller = new HomeController(mock.Object, mockT.Object, mockU.Object);
 
             //Act
-            var result = controller.Index();
+            var result = controller.Index() as ViewResult;
+            //var m = result.Model as IEnumerable<EditionModel>;
             //Assert
-            //(result as ViewResult).
+            var viewResult = XAssert.IsType<ViewResult>(result);
+            var model = XAssert.IsAssignableFrom<IEnumerable<EditionModel>>(
+                viewResult.ViewData.Model);
+            ////Assert.IsNull(model);
+            XAssert.Equal(2, model.Count());
+            //Assert.AreEqual(2, model.Count());
+
         }
+
+
     }
 }

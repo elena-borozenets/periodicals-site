@@ -124,6 +124,7 @@ namespace Periodicals.Controllers
             return RedirectToAction("Edition", new { area = "", editionId = editionId });
         }
 
+        [Authorize(Roles = "Subscriber")]
         public ActionResult Unsubscribe(int editionId)
         {
             var url = HttpContext.Request.UrlReferrer;

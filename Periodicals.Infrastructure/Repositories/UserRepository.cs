@@ -18,7 +18,8 @@ namespace Periodicals.Infrastructure.Repositories
             using (var db = new PeriodicalDbContext())
             {
                 var result = (from user in db.Users where user.Id == userId select user)
-                    .Include(e => e.Subscription).FirstOrDefault();
+                    .Include(e => e.Subscription).Include(e=>e.Roles)
+                    .FirstOrDefault();
 
                 return result;
             }

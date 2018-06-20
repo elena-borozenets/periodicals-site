@@ -14,11 +14,12 @@
         @Html.LabelFor(m => m.Email)
         @Model.Email
         <br />
+        <br />
         @Html.ActionLink("Change info", "ChangeInfo", "Account", new
-   {
-       area = "Account"
+    {
+        area = "Account"
 
-   }, new { @class = "btn btn-success btn-lg btn-xs", @role = "button" })
+    }, new { @class = "btn btn-success btn-lg btn-xs", @role = "button" })
     </div>
     <br />
     @if (!ViewBag.Blocked)
