@@ -7,35 +7,35 @@
 <h2>EditEdition</h2>
 <nav class="navbar navbar-default edit" role="navigation">
 
-    @using (Html.BeginForm("EditEdition", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditEdition", "Edition", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
         <div>@Html.LabelFor(m => m.Name, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => m.Name)</div>
+        <div>@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => m.Description, new { @class = "" })</div>
         <div>@Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "10", @cols = "45" })</div>
-        <div>@Html.ValidationMessageFor(m => m.Description)</div>
+        <div>@Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => m.Price, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.Price, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => m.Price)</div>
+        <div>@Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => m.ISSN, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.ISSN, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => m.ISSN)</div>
+        <div>@Html.ValidationMessageFor(m => m.ISSN, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => m.Type, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.Type, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => m.Type)</div>
+        <div>@Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => m.TopicName, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.TopicName, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => m.TopicName)</div>
+        <div>@Html.ValidationMessageFor(m => m.TopicName, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => m.DateNextPublication, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => m.DateNextPublication, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => m.DateNextPublication)</div>
+        <div>@Html.ValidationMessageFor(m => m.DateNextPublication, "", new { @class = "text-danger" })</div>
 
         <div>@Html.HiddenFor(m => m.Id)</div>
 

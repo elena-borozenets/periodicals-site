@@ -47,18 +47,18 @@
     @*Html.ActionLink("Register as a new user", "Account", "Account", new { area = "Login" }, null)*@
 
 
-    using (Html.BeginForm("GoogleLogin", "Account", new {area = "Account"}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    using (Html.BeginForm("GoogleLogin", "Account", new {area = "Account"}, FormMethod.Post, new {@class = "iconform", role = "form"}))
      {
          <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl"/>
 
-         <button type="submit" class="icon"><image src="~/Content/iconGoogle.png"/></button>
+         <button type="submit" class="icon"><image class="iconpic" src="~/Content/iconGoogle.png"/></button>
      }
 
-    using (Html.BeginForm("FbLogin", "Account", new {area = "Account"}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    using (Html.BeginForm("FbLogin", "Account", new {area = "Account"}, FormMethod.Post, new {@class = "iconform", role = "form"}))
     {
         <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl"/>
 
-        <button type="submit" class="icon"><image src="~/Content/iconFb.png" /></button>
+        <button type="submit" class="icon"><image class="iconpic" src="~/Content/iconFb.png" /></button>
     }
 }
 else

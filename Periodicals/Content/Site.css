@@ -236,11 +236,12 @@ em.tag :hover {
 .edit {
     padding: 10px;
 }
-/*
+
 .icon{
-    width: 3%;
+    /*width: 3%;*/
 
     display: inline-block;
+    background-color: white;
     border-radius: 2px;
     padding: 5px;	
     border: 1px solid white;
@@ -253,4 +254,13 @@ em.tag :hover {
 
 .icon:hover{
     border: 1px solid #de2b24;
-}*/
+}
+
+.iconform {
+    display: inline-block;
+
+}
+
+.iconpic {
+    size: 50px;
+}

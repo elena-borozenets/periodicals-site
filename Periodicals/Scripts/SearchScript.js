@@ -6,7 +6,7 @@ $(function () {
             type: "POST",
             //url: "search",
             data: { "search": search },
-            url: "Home/Search",
+            url: "Edition/Search",
             cache: false,
             success: function (response) {
                 $("#resSearch").html(response);

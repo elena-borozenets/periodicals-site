@@ -52,7 +52,7 @@ namespace Periodicals.Test
                 }
             });
             var mockU = new Mock<IUserRepository>();
-            HomeController controller = new HomeController(mock.Object, mockT.Object, mockU.Object);
+            EditionController controller = new EditionController(mock.Object, mockT.Object, mockU.Object);
 
             //Act
             var result = controller.Index() as ViewResult;

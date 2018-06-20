@@ -3,7 +3,7 @@
 @model List<EditionModel>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Edition Page";
 }
 
 <div id="resSearch">
@@ -33,9 +33,9 @@
         @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
     {
         <p class="navbar-text navbar-right">
-            @Html.ActionLink("Edit", "EditEdition", "Home", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
+            @Html.ActionLink("Edit", "EditEdition", "Edition", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
 
-            @Html.ActionLink("Delete", "DeleteEdition", "Home", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
+            @Html.ActionLink("Delete", "DeleteEdition", "Edition", new { editionId = @m.Id }, new { @class = "btn btn-info crud" })
 
             @Html.ActionLink("Add new", "AddEdition", null, new { @class = "btn btn-info crud" })
 

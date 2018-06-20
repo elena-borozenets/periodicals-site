@@ -19,6 +19,7 @@ namespace Periodicals.Areas.Account.Models
         //[Required]
         public float Price { get; set; }
 
+
         public DateTime DateNextPublication { get; set; }
 
         public string Language { get; set; }
@@ -28,12 +29,12 @@ namespace Periodicals.Areas.Account.Models
         public static EditionAccountModel FromEdition(Edition item) => new EditionAccountModel()
         {
             Id = item.Id,
-            Name = item.Name,
+            Name = item.Name ?? "Noname",
             Price=item.Price,
             DateNextPublication = item.DateNextPublication,
-            Language=item.Language,
+            Language=item.Language ?? "???",
             //SubscribersNames= (from i in item.Subscribers
-                           //select i.UserName).ToList<string>()
+            //select i.UserName).ToList<string>()
         };
 
         public static List<EditionAccountModel> ToModelList(IList<Edition> items)
@@ -44,7 +45,6 @@ namespace Periodicals.Areas.Account.Models
                 foreach (var item in items)
                 {
                     editions.Add(EditionAccountModel.FromEdition(item));
-
                 }
 
             }

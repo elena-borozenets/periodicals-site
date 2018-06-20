@@ -12,49 +12,49 @@
 
         var newEdition = new EditionModel();
     }
-    @using (Html.BeginForm("AddEdition", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddEdition", "Edition", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div>@Html.LabelFor(m => newEdition.Name, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => newEdition.Name, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.Name)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.Name, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => newEdition.Description, new { @class = "" })</div>
         <div>@Html.TextAreaFor(m => newEdition.Description, new { @class = "form-control", @rows = "10", @cols = "45" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.Description)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.Description, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => newEdition.Price, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => newEdition.Price, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.Price)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.Price, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => newEdition.ISSN, new { @class = "" })</div>
-        <div>@Html.TextBoxFor(m => newEdition.ISSN, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.ISSN)</div>
+        <div>@Html.TextBoxFor(m => newEdition.ISSN, new { @class = "form-control", pattern = "[0-9]{4}-[0-9]{4}", plaseholdeplaceholder = "XXXX-XXXX" })</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.ISSN, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => newEdition.Type, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => newEdition.Type, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.Type)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.Type,"", new { @class = "text-danger" })</div>
 
 
         <div>@Html.LabelFor(m => newEdition.TopicName, new { @class = "" })</div>
         <div>@Html.TextBoxFor(m => newEdition.TopicName, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.TopicName)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.TopicName, "", new{ @class = "text-danger" })</div>
 
 
-        <div>@Html.LabelFor(m => newEdition.DateNextPublication, new { @class = "" })</div>
+        <div>@Html.LabelFor(m => newEdition.DateNextPublication, new { @class = "" , plaseholdeplaceholder = "mm/dd/yyy" })</div>
         <div>@Html.TextBoxFor(m => newEdition.DateNextPublication, new { @class = "form-control" })</div>
-        <div>@Html.ValidationMessageFor(m => newEdition.DateNextPublication)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.DateNextPublication, "", new { @class = "text-danger" })</div>
 
 
         <div>@Html.LabelFor(m => newEdition.Language, new { @class = "" })</div>
         <div>@Html.DropDownListFor(m => newEdition.Language, new SelectList(new List<string>(){"ru", "eng"}), new { @class = "form-control" })</div>
         @*<div>@Html.TextBoxFor(m => newEdition.Language, new { @class = "form-control" })</div>*@
-        <div>@Html.ValidationMessageFor(m => newEdition.Language)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.Language, "", new { @class = "text-danger" })</div>
 
         <div>@Html.LabelFor(m => newEdition.Periodicity, new { @class = "" })</div>
 
         <div>@Html.DropDownListFor(m => newEdition.Periodicity, new SelectList(new List<int>(){1, 7, 14, 30, 365}), new { @class = "form-control" })</div>
         @*<div>@Html.TextBoxFor(m => newEdition.Periodicity, new { @class = "form-control" })</div>*@
-        <div>@Html.ValidationMessageFor(m => newEdition.Periodicity)</div>
+        <div>@Html.ValidationMessageFor(m => newEdition.Periodicity, "", new { @class = "text-danger" })</div>
 
 
         <div><input name="image" type="file" /></div>

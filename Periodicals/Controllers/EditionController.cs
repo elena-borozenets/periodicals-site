@@ -34,7 +34,7 @@ namespace Periodicals.Controllers
     [ArgumentNullPeriodicalsException]
     [ArgumentOutOfRangePeriodicalsException]
     [RequireHttps]
-    public class HomeController : Controller
+    public class EditionController : Controller
     {
         private readonly IRepository<Edition> _editionRepository;
         private readonly IRepository<Topic> _topicRepository;
@@ -42,16 +42,8 @@ namespace Periodicals.Controllers
         private readonly IUserRepository _userRepository;
         Logger logger = LogManager.GetCurrentClassLogger();
 
-        public HomeController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository, IUserRepository userRepository)
+        public EditionController(IRepository<Edition> editionRepository, IRepository<Topic> topicRepository, IUserRepository userRepository)
         {
-
-
-
-            //IKernel ninjectKernel = new StandardKernel();
-            //ninjectKernel.Bind<IRepository<Edition>>().To<EditionRepository>();
-            //_editionRepository = ninjectKernel.Get<IRepository<Edition>>();
-            //_editionRepository = new EditionRepository();
-            //_topicRepository = new EfRepository<Topic>(new PeriodicalDbContext());
             _editionRepository = editionRepository;
             _topicRepository = topicRepository;
             TopicModel.SetTopicsList(_topicRepository.List());
@@ -62,14 +54,9 @@ namespace Periodicals.Controllers
         public ActionResult Index()
         {
             var editions = EditionModel.ToModelList(_editionRepository.List());
-            //throw new ArgumentOutOfRangeException();
             return View(editions);
         }
 
-        /*public ActionResult Index(List<EditionModel> editions)
-        {
-            return View(editions);
-        }*/
 
         public ActionResult Topics(int topicId)
         {
@@ -80,7 +67,6 @@ namespace Periodicals.Controllers
 
         public ActionResult Languages(string language)
         {
-            //List<EditionModel> editions;
             var dbEditions = _editionService.GetEditionsByLanguage(language);
             var editions = EditionModel.ToModelList(dbEditions.ToList());
 
@@ -278,15 +264,15 @@ namespace Periodicals.Controllers
         }
 
         [HttpPost]
-        public ActionResult Contact(string email, string name, string subject, string text)
+        public ActionResult Contact(ContactModel model)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 var userId = HttpContext.User.Identity.GetUserId();
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var user = userManager.FindById(userId);
-                email = user.Email;
-                name = User.Identity.Name;
+                model.Email = user.Email;
+                if(string.IsNullOrEmpty(model.Name))  model.Name=User.Identity.Name;
             }
 
             MailAddress from = new MailAddress("elena.borozenets.applications@gmail.com");
@@ -294,8 +280,8 @@ namespace Periodicals.Controllers
             MailMessage message = new MailMessage(from, to);
 
             
-            message.Subject = (!string.IsNullOrEmpty(subject))?subject:"Message from Periodicals!";
-            message.Body = $"(From: {email} User: {name}) \nMessage: {text}";
+            message.Subject = (!string.IsNullOrEmpty(model.Subject))?model.Subject:"Message from Periodicals!";
+            message.Body = $"(From: {model.Email} User: {model.Name}) \nMessage: {model.Text}";
             message.IsBodyHtml = false;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.Credentials = new NetworkCredential("elena.borozenets.applications@gmail.com", "Some00Pass11");

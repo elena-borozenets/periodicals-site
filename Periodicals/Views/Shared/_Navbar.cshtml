@@ -7,7 +7,7 @@
     <ul class="dropdown-menu mynav">
         @foreach (var item in TopicModel.Topics)
         {
-        <li>@Html.ActionLink(item.TopicName, "Topics", "Home", new { area = "", topicId=item.Id }, null)</li>
+        <li>@Html.ActionLink(item.TopicName, "Topics", "Edition", new { area = "", topicId=item.Id }, null)</li>
         }
     </ul>
 </li>

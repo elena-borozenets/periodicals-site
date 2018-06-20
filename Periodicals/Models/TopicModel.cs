@@ -10,6 +10,7 @@ namespace Periodicals.Models
     public class TopicModel
     {
         public int Id { get; private set; }
+        
         public string TopicName { get; private set; }
 
         public static TopicModel FromTopic(Topic item) => new TopicModel()

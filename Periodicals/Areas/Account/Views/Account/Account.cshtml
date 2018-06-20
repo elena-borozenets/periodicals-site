@@ -41,8 +41,8 @@
         foreach (var m in Model.Subscriptions)
         {
             <br />
-            @Html.ActionLink(m.Name, "Edition", "Home", new { area = "", editionId = m.Id }, new { @class = "btn btn-link btn-lg", @role = "button" })
-            @Html.ActionLink("Unsubscribe", "Unsubscribe", "Home", new { area = "", editionId = m.Id }, new { @class = "btn btn-success btn-lg btn-xs", @role = "button" })
+            @Html.ActionLink(m.Name, "Edition", "Edition", new { area = "", editionId = m.Id }, new { @class = "btn btn-link btn-lg", @role = "button" })
+            @Html.ActionLink("Unsubscribe", "Unsubscribe", "Edition", new { area = "", editionId = m.Id }, new { @class = "btn btn-success btn-lg btn-xs", @role = "button" })
         }
     }
     else

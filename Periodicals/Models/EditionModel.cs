@@ -12,7 +12,6 @@ namespace Periodicals.Models
     public class EditionModel
     {
         public int Id { get; set; }
-        
         [Required]
         [Display(Name = "Title")]
         public string Name { get; set; }
@@ -21,6 +20,7 @@ namespace Periodicals.Models
 
         public DateTime DateNextPublication { get; set; }
 
+        [RegularExpression(@"[0-9]{4}-[0-9]{4}", ErrorMessage = "The format should be ####-####, where # - 0-9 numbers")]
         public string ISSN { get; set; }
         public string TopicName { get; set; }
         public int Periodicity { get; set; }

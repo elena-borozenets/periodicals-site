@@ -16,7 +16,6 @@ namespace Periodicals.Areas.Account.Models
         [EmailAddress]
         public string Email { get; set; }*/
         [Required]
-        //[DataType(Dat)]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
@@ -38,7 +37,6 @@ namespace Periodicals.Areas.Account.Models
         public string Email { get; set; }
 
         [Required]
-        //[DataType(Dat)]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
@@ -48,6 +46,7 @@ namespace Periodicals.Areas.Account.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

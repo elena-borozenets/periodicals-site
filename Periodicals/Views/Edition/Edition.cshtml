@@ -31,8 +31,8 @@
 
 @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))
 {
-    @Html.ActionLink("Edit", "EditEdition", "Home", new { editionId = Model.Id }, new { @class = "btn btn-info crud" })
-    @Html.ActionLink("Delete", "DeleteEdition", "Home", new { editionId = Model.Id }, new { @class = "btn btn-info crud" })
+    @Html.ActionLink("Edit", "EditEdition", "Edition", new { editionId = Model.Id }, new { @class = "btn btn-info crud" })
+    @Html.ActionLink("Delete", "DeleteEdition", "Edition", new { editionId = Model.Id }, new { @class = "btn btn-info crud" })
     @Html.ActionLink("Add new", "AddEdition", null, new { @class = "btn btn-info crud" })
 }
 
@@ -42,11 +42,11 @@
     {
         if (ViewBag.Subscpiption)
         {
-            @Html.ActionLink("Unsubscribe", "Unsubscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-success btn-lg", @role = "button" })
+            @Html.ActionLink("Unsubscribe", "Unsubscribe", "Edition", new { area = "", editionId = Model.Id }, new { @class = "btn btn-success btn-lg", @role = "button" })
         }
         else
         {
-            @Html.ActionLink("Subscribe", "Subscribe", "Home", new { area = "", editionId = Model.Id }, new { @class = "btn btn-primary btn-lg", @role = "button" })
+            @Html.ActionLink("Subscribe", "Subscribe", "Edition", new { area = "", editionId = Model.Id }, new { @class = "btn btn-primary btn-lg", @role = "button" })
         }
     }
     else

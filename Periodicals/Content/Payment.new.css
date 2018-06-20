@@ -153,7 +153,7 @@ input:not([type]) {
 #main_content #page_content .payment-form .forms.type-card  .card .cvv-block,
 #main_content #page_content .payment-form .forms.type-card  .card .dates-block{text-align:right}
 #main_content #page_content .payment-form .forms.type-card  .card .cvv-block span::after,
-#main_content #page_content .payment-form .forms.type-card  .card .dates-block span::after{display:inline;content:':'}
+/*#main_content #page_content .payment-form .forms.type-card  .card .dates-block span::after{display:inline;content:':'}*/
 #main_content #page_content .payment-form .forms.type-card  .card .cvv-block input,
 #main_content #page_content .payment-form .forms.type-card  .card .dates-block input{width:5rem}
 #main_content #page_content .payment-form .forms.type-card  .card .dates-block{margin-bottom:1rem}

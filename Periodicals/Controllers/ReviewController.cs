@@ -75,7 +75,7 @@ namespace Periodicals.Controllers
                 // _reviewRepository.Add(newItem.ToReview());
             }
 
-            return RedirectToAction("Edition", "Home", new{editionId=newReview.EditionId});
+            return RedirectToAction("Edition", "Edition", new{editionId=newReview.EditionId});
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
@@ -83,7 +83,7 @@ namespace Periodicals.Controllers
         {
            //var review= _reviewRepository.GetById(reviewId);
             _reviewRepository.Delete(reviewId);
-            return RedirectToAction("Edition", "Home", new { editionId = editionId});
+            return RedirectToAction("Edition", "Edition", new { editionId = editionId});
         }
     }
 }

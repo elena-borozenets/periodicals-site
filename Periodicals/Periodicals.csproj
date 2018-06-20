@@ -254,12 +254,13 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\EditionController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Exceptions\PeriodicalsExceptionFilters.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\EditionModel.cs" />
     <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\TopicModel.cs" />
@@ -348,17 +349,17 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Edition\About.cshtml" />
+    <Content Include="Views\Edition\Contact.cshtml" />
+    <Content Include="Views\Edition\Index.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
-    <Content Include="Views\Home\Edition.cshtml" />
-    <Content Include="Views\Home\EditEdition.cshtml" />
-    <Content Include="Views\Home\AddEdition.cshtml" />
-    <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Home\_EditionSearch.cshtml" />
+    <Content Include="Views\Edition\Edition.cshtml" />
+    <Content Include="Views\Edition\EditEdition.cshtml" />
+    <Content Include="Views\Edition\AddEdition.cshtml" />
+    <Content Include="Views\Edition\Search.cshtml" />
+    <Content Include="Views\Edition\_EditionSearch.cshtml" />
     <Content Include="Views\Review\_Reviews.cshtml" />
-    <Content Include="Views\Home\ContactMessageResult.cshtml" />
+    <Content Include="Views\Edition\ContactMessageResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

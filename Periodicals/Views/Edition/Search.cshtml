@@ -7,7 +7,7 @@
 
 <h2>Search</h2>
 
-@using (Ajax.BeginForm("Search", "Home", null, new AjaxOptions { UpdateTargetId = "results" }, new { @class = "navbar-form navbar-left", @role = "search" }))
+@using (Ajax.BeginForm("Search", "Edition", null, new AjaxOptions { UpdateTargetId = "results" }, new { @class = "navbar-form navbar-left", @role = "search" }))
 {
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" name="name" />

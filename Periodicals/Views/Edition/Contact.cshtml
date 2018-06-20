@@ -1,0 +1,49 @@
+﻿@using Periodicals.Models
+@model ContactModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Contact";
+}
+
+@{
+    var newModel = new ContactModel();
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        newModel.Name = HttpContext.Current.User.Identity.Name;
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+@using (Html.BeginForm("Contact", "Edition", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            <div>@Html.LabelFor(m=>newModel.Email, new { @class = "" })</div>
+            <div>@Html.TextBoxFor(m => newModel.Email, new { @class = "form-control", type="email"})</div>
+            <div>@Html.ValidationMessageFor(m => newModel.Email,null,  new { @class = "text-danger" })</div>
+        }
+        <div>@Html.LabelFor(m=>newModel.Name, new { @class = "" })</div>
+        <div>@Html.TextBoxFor(m => newModel.Name, new { @class = "form-control"})</div>
+        <div>@Html.ValidationMessageFor(m => newModel.Name, null,  new { @class = "text-danger" })</div>
+
+        <div>@Html.LabelFor(m=>newModel.Subject, new { @class = "" })</div>
+        <div>@Html.TextBoxFor(m => newModel.Subject, new { @class = "form-control"})</div>
+        <div>@Html.ValidationMessageFor(m => newModel.Subject, null,  new { @class = "text-danger" })</div>
+
+        <div>@Html.LabelFor(m=>newModel.Text, new { @class = "" })</div>
+        <div>@Html.TextBoxFor(m => newModel.Text, new { @class = "form-control"})</div>
+        <div>@Html.ValidationMessageFor(m => newModel.Text, null,  new { @class = "text-danger" })</div>
+    </div>
+
+    <input type="submit" value="Send" class="btn btn-default" />
+}
+<br />
+<br />
+<address>
+    <strong>Support:</strong>   <a href="mailto:elena.borozenets.applications@gmail.com">elena.borozenets.applications@gmail.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:elena.borozenets.applications@gmail.com">elena.borozenets.applications@gmail.com</a>
+</address>

@@ -72,7 +72,7 @@ namespace Periodicals.Areas.Account.Controllers
                 logger.Info("user failed to login " + model.Username );
                 return View(model);
             }
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Index", "Edition", new { area = "" });
         }
 
         [AllowAnonymous]
@@ -149,7 +149,7 @@ namespace Periodicals.Areas.Account.Controllers
         {
             var autentificationManager = HttpContext.GetOwinContext().Authentication;
             autentificationManager.SignOut();
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Index", "Edition", new { area = "" });
         }
 
         public ActionResult TopUp()
@@ -398,11 +398,6 @@ namespace Periodicals.Areas.Account.Controllers
                 return View();
         }
 
-        /*public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }*/
-
         [HttpPost]
         [AllowAnonymous]
         public ActionResult GoogleLogin(string returnUrl)
@@ -432,50 +427,6 @@ namespace Periodicals.Areas.Account.Controllers
             HttpContext.GetOwinContext().Authentication.Challenge(properties, "Facebook");
             return new HttpUnauthorizedResult();
         }
-        /*
-        [AllowAnonymous]
-        public ActionResult GoogleLoginCallback(string returnUrl)
-        {
-            ExternalLoginInfo loginInfo = AuthManager.GetExternalLoginInfo();
-            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var user = userManager.Find(loginInfo.Login);
-
-            if (user == null)
-            {
-                user = new ApplicationUser
-                {
-                    Email = loginInfo.Email,
-                    UserName = loginInfo.DefaultUserName,
-                    Credit = 0
-                };
-
-                IdentityResult result = userManager.Create(user);
-                if (!result.Succeeded)
-                {
-                    return View("Error", result.Errors);
-                }
-                else
-                {
-                    result = userManager.AddLogin(user.Id, loginInfo.Login);
-                    if (!result.Succeeded)
-                    {
-                        return View("Error", result.Errors);
-                    }
-                }
-            }
-
-            ClaimsIdentity ident = userManager.CreateIdentity(user,
-                DefaultAuthenticationTypes.ApplicationCookie);
-
-            ident.AddClaims(loginInfo.ExternalIdentity.Claims);
-
-            AuthManager.SignIn(new AuthenticationProperties
-            {
-                IsPersistent = false
-            }, ident);
-
-            return Redirect(returnUrl ?? "/");
-        }*/
 
         [AllowAnonymous]
       public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
