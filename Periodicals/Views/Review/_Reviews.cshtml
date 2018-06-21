@@ -28,15 +28,15 @@
 
 @using (Html.BeginForm("AddNew", "Review"))
 {
-    <div>@Html.Label("Имя")</div>
+    <div>@Html.Label("Name")</div>
     <div>@Html.TextBoxFor(m => newReview.NameAuthor, new { @class = "form-control" })</div>
     <div>@Html.ValidationMessageFor(m => newReview.NameAuthor, "", new { @class = "text-danger" })</div>
-    <div>@Html.Label("Отзыв")</div>
+    <div>@Html.Label("Review")</div>
     <div>@Html.TextAreaFor(m => newReview.TextReview, new { @class = "form-control" })</div>
     <div>@Html.ValidationMessageFor(m => newReview.TextReview, "", new { @class = "text-danger" })</div>
     <div>@Html.HiddenFor(m=> newReview.EditionId)</div>
 
     <br />
-    <input type="submit" class="btn" value="Добавить" />
+    <input type="submit" class="btn" value="Add" />
 
 }

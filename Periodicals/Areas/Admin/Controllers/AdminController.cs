@@ -43,7 +43,6 @@ namespace Periodicals.Areas.Admin.Controllers
                 db.SaveChanges();
                 if (user.LockoutEnabled) user.LockoutEndDateUtc = DateTime.UtcNow.AddMinutes(5);
             }
-            
 
                 return RedirectToAction("Administration");
         }
@@ -55,6 +54,7 @@ namespace Periodicals.Areas.Admin.Controllers
             if (user.LockoutEnabled) return RedirectToAction("Administration"); 
             //user.LockoutEnabled = !user.LockoutEnabled;
             var addModeratorRoleResult = userManager.AddToRole(userId, "Moderator");
+            var removeSubscriberRoleResult = userManager.RemoveFromRole(userId, "Subscribers");
 
             if (addModeratorRoleResult.Succeeded)
             {
@@ -63,6 +63,7 @@ namespace Periodicals.Areas.Admin.Controllers
             else
             {
                 var removeModeratorRoleResult = userManager.RemoveFromRole(userId, "Moderator");
+                var addSubscriberRoleResult = userManager.AddToRole(userId, "Subscribers");
             }
             return RedirectToAction("Administration");
         }

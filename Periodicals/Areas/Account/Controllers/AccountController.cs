@@ -2,6 +2,7 @@
 using Periodicals.Infrastructure.Identity;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -433,7 +434,7 @@ namespace Periodicals.Areas.Account.Controllers
                  IdentityResult result = await userManager.CreateAsync(user);
                  if (!result.Succeeded)
                  {
-                     return View("Error", result.Errors);
+                        return View("Error", result.Errors);
                  }
                  else
                  {
