@@ -40,7 +40,7 @@ namespace Periodicals.Models
             Description=item.Description ?? "None",
             Type=item.Type ?? "DefaultType",
             Language=item.Language ?? "???",
-            Image = item.Image ?? ""
+            Image = item.Image ?? "default.jpg"
         };
 
         public Edition ToEdition()

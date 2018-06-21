@@ -24,7 +24,7 @@ namespace Periodicals.Test
                     Name = "Edition",
                     Description = "Edition is Edition",
                     DateNextPublication = DateTime.UtcNow,
-                    Language = "eng"
+                    Language = "ru"
                 },
                 new Edition()
                 {
@@ -39,11 +39,53 @@ namespace Periodicals.Test
             //Act
             var result = service.GetEditionsByLanguage("eng");
             //Assert
-            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual(1, result.Count());
+        }
+
+        public void GetEditionsByLanguageMethod_ReturnsEmptyList()
+        {
+            //Arrange
+            var mock = new Mock<IRepository<Edition>>();
+            mock.Setup(a => a.List()).Returns(new List<Edition>());
+            EditionServices service = new EditionServices(mock.Object);
+
+            //Act
+            var result = service.GetEditionsByLanguage("eng");
+            //Assert
+            Assert.AreEqual(0, result.Count());
+        }
+
+        public void GetEditionsByLanguageMethod_ByUA_ReturnsEmptyList()
+        {
+            //Arrange
+            var mock = new Mock<IRepository<Edition>>();
+            mock.Setup(a => a.List()).Returns(new List<Edition>()
+            {
+                new Edition()
+                {
+                    Name = "Edition",
+                    Description = "Edition is Edition",
+                    DateNextPublication = DateTime.UtcNow,
+                    Language = "ru"
+                },
+                new Edition()
+                {
+                    Name = "Edition1",
+                    Description = "Edition is Edition1",
+                    DateNextPublication = DateTime.UtcNow,
+                    Language = "eng"
+                }
+            });
+            EditionServices service = new EditionServices(mock.Object);
+
+            //Act
+            var result = service.GetEditionsByLanguage("ua");
+            //Assert
+            Assert.AreEqual(0, result.Count());
         }
 
         [TestMethod]
-        public void SortByNameTest()
+        public void SortByNameTest_ReturnsSortedList()
         {
             //Arrange
             var mock = new Mock<IRepository<Edition>>();
@@ -73,7 +115,21 @@ namespace Periodicals.Test
         }
 
         [TestMethod]
-        public void SortByPriceTest()
+        public void SortByNameTest_ReturnsEmptyList()
+        {
+            //Arrange
+            var mock = new Mock<IRepository<Edition>>();
+            mock.Setup(a => a.List()).Returns(new List<Edition>());
+            EditionServices service = new EditionServices(mock.Object);
+
+            //Act
+            var result = service.SortByName(true);
+            //Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
+        public void SortByPriceTest_ReturnsSortedList()
         {
             //Arrange
             var mock = new Mock<IRepository<Edition>>();

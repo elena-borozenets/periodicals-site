@@ -27,10 +27,31 @@ p .articleText {
 }
 
 img {
-    height: 60px;
+    /*height: 60px;*/
     display: inline-block;
+
 }
 
+.log {
+    height: 60px;
+}
+
+.per {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    width: 120px;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    overflow: hidden;
+}
+
+.imgblock {
+    width: 140px;
+    height: 100px;
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -262,5 +283,27 @@ em.tag :hover {
 }
 
 .iconpic {
-    size: 50px;
+    size: 30px;
 }
+
+.g-price {
+    background: #fff3b5;
+    border-radius: 4px;
+    display: inline-block;
+    padding: 7px 7px 5px;
+    vertical-align: middle;
+    margin-right: .5em;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.g-price-uah {
+    display: inline-block;
+    font-size: 1.38462em;
+    line-height: 1em;
+}
+/*
+.g-price-uah-sign {
+    font-size: .75rem;
+    line-height: 1em;
+}*/

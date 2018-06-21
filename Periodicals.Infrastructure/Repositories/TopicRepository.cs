@@ -20,6 +20,16 @@ namespace Periodicals.Infrastructure.Repositories
                 return result;
             }
         }
+
+        public Topic GetByName(string topicName)
+        {
+            using (var db = new PeriodicalDbContext())
+            {
+                var result = (from topic in db.Topics where topic.TopicName == topicName select topic)
+                    .Include(e => e.Editions).FirstOrDefault();
+                return result;
+            }
+        }
         public List<Topic> List()
         {
             using (var db = new PeriodicalDbContext())

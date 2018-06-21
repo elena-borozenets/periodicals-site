@@ -133,8 +133,6 @@ namespace Periodicals.Controllers
         public ActionResult DeleteEdition(int editionId)
         {
             var image = _editionRepository.GetById(editionId).Image;
-
-            //var item = _editionRepository.GetById(editionId);
             _editionRepository.Delete(editionId);
 
             foreach (var topic in _topicRepository.List())
@@ -173,14 +171,41 @@ namespace Periodicals.Controllers
 
                     var filename = image.FileName;
                     var filePathOriginal = Server.MapPath("~/Content/dbImg");
-                    //var filePathThumbnail = Server.MapPath("/Content/Uploads/Thumbnails");
                     string savedFileName = Path.Combine(filePathOriginal, filename);
                     image.SaveAs(savedFileName);
                     item.Image = filename;
                 }
 
                 item.Name = edition.Name;
-                item.Description = edition.Description;
+                
+                item.Price = edition.Price;
+                item.DateNextPublication = edition.DateNextPublication;
+                if (!string.IsNullOrEmpty(edition.ISSN))
+                {
+                    item.ISSN = edition.ISSN;
+                }
+                if (edition.Periodicity != 0)
+                {
+                    item.Periodicity = edition.Periodicity;
+                }
+                if (!string.IsNullOrEmpty(edition.Description))
+                {
+                    item.Description = edition.Description;
+                }
+                if (!string.IsNullOrEmpty(edition.Type))
+                {
+                    item.Type = edition.Type;
+                }
+                if (!string.IsNullOrEmpty(edition.Language))
+                {
+                    item.Language = edition.Language;
+                }
+                if (!string.IsNullOrEmpty(edition.TopicName))
+                {
+                    var topicResult = (_topicRepository as TopicRepository).GetByName(edition.TopicName);
+                    item.Topic = topicResult ?? new Topic() { TopicName = edition.TopicName };
+                }
+
                 _editionRepository.Update(item);
                 return RedirectToAction("Edition", new { editionId = edition.Id });
             }
@@ -200,18 +225,22 @@ namespace Periodicals.Controllers
             if (ModelState.IsValid)
             {
                 var edition = newEdition.ToEdition();
-                edition.Topic = new Topic() { TopicName = newEdition.TopicName };
-
+                if (!string.IsNullOrEmpty(newEdition.TopicName))
+                {
+                    var topicResult = ( _topicRepository as TopicRepository).GetByName(newEdition.TopicName);
+                    edition.Topic = topicResult ?? new Topic() { TopicName = newEdition.TopicName };
+                }
+                else edition.Topic = new Topic() { TopicName =  "No topic"};
                 if (image != null)
                 {
-
                     var filename = image.FileName;
                     var filePathOriginal = Server.MapPath("~/Content/dbImg");
-                    //var filePathThumbnail = Server.MapPath("/Content/Uploads/Thumbnails");
                     string savedFileName = Path.Combine(filePathOriginal, filename);
                     image.SaveAs(savedFileName);
                     edition.Image = filename;
                 }
+                else edition.Image = "default.jpg";
+
                 _editionRepository.Add(edition);
                 return RedirectToAction("Index");
             }
@@ -220,11 +249,6 @@ namespace Periodicals.Controllers
                 return View(newEdition);
             }
         }
-
-        /*public ActionResult Search()
-        {
-            return View();
-        }*/
 
         [HttpPost]
         public ActionResult Search(string search)

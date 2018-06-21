@@ -18,7 +18,7 @@ namespace Periodicals.Models
         public Topic ToTopic() => new Topic()
         {
             Id = this.Id,
-            TopicName = this.TopicName,
+            TopicName = this.TopicName ?? "No topic",
         };
 
         public static void SetTopicsList(List<Topic> topics)

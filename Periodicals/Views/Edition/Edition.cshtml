@@ -15,12 +15,14 @@
         </div>
     </div>
     </a>
-    <div class="media-body">
-        <h2 class="media-heading">@Model.Name</h2>
-        <time>@Model.DateNextPublication</time>
-        <p>@Model.Description</p>
-        <p>@Model.Price $</p>
+<div class="media-body">
+    <h2 class="media-heading">@Model.Name</h2>
+    <time>@Model.DateNextPublication</time>
+    <p>@Model.Description</p>
+    <div name="price" class="g-price">
+        <div class="g-price-uah">@Model.Price<span class="g-price-uah-sign"> $</span></div>
     </div>
+</div>
 </div>
 
 @if (HttpContext.Current.User.IsInRole("Administrator") || HttpContext.Current.User.IsInRole("Moderator"))

@@ -54,7 +54,7 @@ namespace Periodicals.Areas.Admin.Controllers
             if (user.LockoutEnabled) return RedirectToAction("Administration"); 
             //user.LockoutEnabled = !user.LockoutEnabled;
             var addModeratorRoleResult = userManager.AddToRole(userId, "Moderator");
-            var removeSubscriberRoleResult = userManager.RemoveFromRole(userId, "Subscribers");
+            var removeSubscriberRoleResult = userManager.RemoveFromRole(userId, "Subscriber");
 
             if (addModeratorRoleResult.Succeeded)
             {
@@ -63,7 +63,7 @@ namespace Periodicals.Areas.Admin.Controllers
             else
             {
                 var removeModeratorRoleResult = userManager.RemoveFromRole(userId, "Moderator");
-                var addSubscriberRoleResult = userManager.AddToRole(userId, "Subscribers");
+                var addSubscriberRoleResult = userManager.AddToRole(userId, "Subscriber");
             }
             return RedirectToAction("Administration");
         }

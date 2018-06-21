@@ -4,7 +4,7 @@
     ViewBag.Title = "EditEdition";
 }
 
-<h2>EditEdition</h2>
+<h2>Edit edition</h2>
 <nav class="navbar navbar-default edit" role="navigation">
 
     @using (Html.BeginForm("EditEdition", "Edition", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
@@ -39,7 +39,7 @@
 
         <div>@Html.HiddenFor(m => m.Id)</div>
 
-        <div><input name="image" type="file" /></div>
+        <div><input name="image" type="file" accept="image/*"/></div>
         <br />
         <input type="submit" class="btn" value="Добавить" />
     }
